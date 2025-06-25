@@ -1,10 +1,21 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
+import { Link } from "expo-router";
 
 const About = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>About Page</Text>
+      <Link
+        href="/"
+        style={{
+          color: "blue",
+          marginVertical: 10,
+          cursor: "pointer",
+        }}
+      >
+        Back
+      </Link>
     </View>
   );
 };
