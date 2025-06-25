@@ -1,17 +1,18 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
 import { Colors } from "../../constants/Colors";
+import ThemedButton from "../../components/ThemedButton";
 
 const Login = () => {
+  const handleSubmit = () => {
+    console.log("logged");
+  };
+
   return (
     <View>
       <Text>Login</Text>
-      <Pressable
-        style={({ pressed }) => [styles.btn, pressed && styles.pressed]}
-      >
-        Click me!
-      </Pressable>
+      <ThemedButton label="Submit" onClick={handleSubmit} />
       <Link href="/register">Register Instead</Link>
     </View>
   );
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: Colors.primary,
     padding: 15,
+    color: "#fff",
     borderRadius: 5,
   },
   pressed: {
