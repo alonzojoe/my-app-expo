@@ -1,29 +1,37 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, useColorScheme, View } from "react-native";
 import { Stack } from "expo-router";
-import React from "react";
+import { Colors } from "../constants/Colors";
+import { StatusBar } from "expo-status-bar";
 
 const RootLayout = () => {
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme] ?? Colors.light;
+
+  console.log(theme);
   return (
     // <View style={{ flex: 1 }}>
-    <Stack
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: "#ddd",
-        },
-        headerTintColor: "#333",
-      }}
-    >
-      <Stack.Screen
-        name="index"
-        options={{
-          title: "Home",
+    <>
+      <StatusBar style="auto" />
+      <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: theme.navBackground,
+          },
+          headerTintColor: theme.title,
         }}
-      />
-      <Stack.Screen
-        name="about"
-        options={{ title: "About Page", headerShown: false }}
-      />
-    </Stack>
+      >
+        <Stack.Screen
+          name="index"
+          options={{
+            title: "Home",
+          }}
+        />
+        <Stack.Screen
+          name="about"
+          options={{ title: "About Page", headerShown: true }}
+        />
+      </Stack>
+    </>
     //Stack component Renders child component with page title and back button
     //Slot component Renders child component without page title and back button same as children in React
     //   <Text>Footer</Text>

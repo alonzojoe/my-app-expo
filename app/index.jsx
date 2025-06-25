@@ -10,14 +10,24 @@ const Auth = () => {
       <Text style={styles.title}>Auth</Text>
       <Text>Rendering Items</Text>
       <Link
-        href="/about"
+        href="/login"
         style={{
           color: "blue",
           marginVertical: 10,
           cursor: "pointer",
         }}
       >
-        Go To About
+        Login
+      </Link>
+      <Link
+        href="/register"
+        style={{
+          color: "blue",
+          marginVertical: 10,
+          cursor: "pointer",
+        }}
+      >
+        Register
       </Link>
     </View>
   );
