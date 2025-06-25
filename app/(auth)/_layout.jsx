@@ -9,7 +9,8 @@ const AuthLayout = () => {
       <StatusBar style="auto" />
       <Stack
         screenOptions={{
-          headerShown: false,
+          headerShown: true,
+          title: "",
           animation: "none",
         }}
       />
@@ -19,4 +20,11 @@ const AuthLayout = () => {
 
 export default AuthLayout;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
