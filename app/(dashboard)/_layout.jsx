@@ -1,9 +1,9 @@
-import { StyleSheet, StatusBar, Stack, useColorScheme } from "react-native";
+import { StyleSheet, Stack, useColorScheme } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import { Colors } from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { name } from "./../../node_modules/ajv/dist/compile/codegen/code";
+import { StatusBar } from "expo-status-bar";
 
 const DashboardLayout = () => {
   const colorScheme = useColorScheme();
@@ -12,12 +12,14 @@ const DashboardLayout = () => {
 
   return (
     <>
+      <StatusBar style="auto" />
       <Tabs
         screenOptions={{
-          headerTitle: "",
+          title: "",
+          headerShown: false,
           tabBarStyle: {
             backgroundColor: theme.navBackground,
-            paddingTop: 10,
+            paddingTop: 5,
             height: 90,
           },
           tabBarActiveTintColor: theme.iconColourFocused,
