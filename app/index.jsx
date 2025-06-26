@@ -29,6 +29,16 @@ const Auth = () => {
       >
         Register
       </Link>
+      <Link
+        href="/profile"
+        style={{
+          color: "blue",
+          marginVertical: 10,
+          cursor: "pointer",
+        }}
+      >
+        Profile
+      </Link>
     </View>
   );
 };
