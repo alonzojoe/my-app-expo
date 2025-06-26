@@ -10,9 +10,10 @@ import { TextInput } from "react-native-paper";
 import Spacer from "../components/Spacer";
 import { Background } from "./../node_modules/@react-navigation/elements/lib/module/Background";
 import { Button } from "react-native-paper";
-
+import { useRouter } from "expo-router";
 const Auth = () => {
   const [visible, setVisible] = useState(true);
+  const router = useRouter();
   return (
     <SafeView safe={true} style={styles.container}>
       <Spacer />
@@ -37,7 +38,9 @@ const Auth = () => {
         <Button
           icon="login"
           mode="contained"
-          onPress={() => console.log("Pressed")}
+          onPress={() => {
+            router.replace("/profile");
+          }}
           style={styles.btn}
         >
           Login
