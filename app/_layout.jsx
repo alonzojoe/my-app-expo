@@ -2,7 +2,7 @@ import { StyleSheet, Text, useColorScheme, View } from "react-native";
 import { Stack } from "expo-router";
 import { Colors } from "../constants/Colors";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { PaperProvider } from "react-native-paper";
 
 const RootLayout = () => {
   const colorScheme = useColorScheme();
@@ -11,7 +11,7 @@ const RootLayout = () => {
   console.log(theme);
   return (
     // <View style={{ flex: 1 }}>
-    <>
+    <PaperProvider>
       <StatusBar style="auto" />
       <Stack
         screenOptions={{
@@ -26,6 +26,7 @@ const RootLayout = () => {
           name="index"
           options={{
             title: "Home",
+            headerShown: false,
           }}
         />
         <Stack.Screen
@@ -45,7 +46,7 @@ const RootLayout = () => {
           options={{ title: "About Page", headerShown: true }}
         />
       </Stack>
-    </>
+    </PaperProvider>
     //Stack component Renders child component with page title and back button
     //Slot component Renders child component without page title and back button same as children in React
     //   <Text>Footer</Text>
