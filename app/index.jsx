@@ -7,22 +7,47 @@ import SafeView from "../components/SafeView";
 import { Badge } from "react-native-paper";
 import { Text as PaperText } from "react-native-paper";
 import { TextInput } from "react-native-paper";
+import Spacer from "../components/Spacer";
+import { Background } from "./../node_modules/@react-navigation/elements/lib/module/Background";
+import { Button } from "react-native-paper";
 
 const Auth = () => {
   const [visible, setVisible] = useState(true);
   return (
     <SafeView safe={true} style={styles.container}>
-      <Image source={AppLogo} style={styles.img} />
+      <Spacer />
+      <View style={styles.textGroup}>
+        <Image source={AppLogo} style={[styles.img, styles.textGroup]} />
+      </View>
       <View style={styles.textGroup}>
         <PaperText variant="headlineMedium">Welcome back!</PaperText>
         <PaperText variant="titleMedium">Login your account</PaperText>
       </View>
+      <Spacer />
       <View style={styles.textGroup}>
         <TextInput label="Hospital No." mode="outlined" style={styles.input} />
         <TextInput label="Password" mode="outlined" style={styles.input} />
       </View>
-      <Image source={AppLogo} style={styles.img} />
-
+      <View style={styles.textForgot}>
+        <Link href="/" style={styles.forgot}>
+          Forgot Password
+        </Link>
+      </View>
+      <View style={styles.textGroup}>
+        <Button
+          icon="login"
+          mode="contained"
+          onPress={() => console.log("Pressed")}
+          style={styles.btn}
+        >
+          Login
+        </Button>
+      </View>
+      <View style={styles.textCreate}>
+        <Link href="/" style={styles.create}>
+          Create an account
+        </Link>
+      </View>
       {/* <Text style={styles.title}>Auth</Text>
       <Text>Rendering Items</Text>
       <Link
@@ -81,8 +106,35 @@ const styles = StyleSheet.create({
   textGroup: {
     alignItems: "center",
   },
+  textForgot: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    width: "80%",
+    alignSelf: "center",
+    marginTop: 4,
+  },
+  forgot: {
+    color: "white",
+    textDecorationLine: "underline",
+  },
   input: {
     width: "80%",
     marginVertical: 8,
+  },
+  btn: {
+    width: "80%",
+    marginVertical: 12,
+  },
+
+  textCreate: {
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "100%",
+    alignSelf: "center",
+    marginTop: 4,
+  },
+  create: {
+    color: "white",
+    fontSize: 16,
   },
 });
