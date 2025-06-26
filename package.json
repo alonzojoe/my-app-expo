@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
+    "@react-native-vector-icons/material-design-icons": "^12.0.1",
     "expo": "~53.0.12",
     "expo-constants": "~17.1.6",
     "expo-linking": "~7.1.5",
@@ -18,6 +19,7 @@
     "my-app": "file:",
     "react": "19.0.0",
     "react-native": "0.79.4",
+    "react-native-paper": "^5.14.5",
     "react-native-safe-area-context": "^5.5.0",
     "react-native-screens": "~4.11.1"
   },
