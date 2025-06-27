@@ -42,7 +42,7 @@ const Auth = () => {
           style={styles.input}
           right={
             <TextInput.Icon
-              icon={!show ? "eye-off" : "eye"}
+              icon={!show ? "eye" : "eye-off"}
               onPress={() => setShow((prev) => !prev)}
             />
           }
