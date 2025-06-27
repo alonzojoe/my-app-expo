@@ -2,7 +2,18 @@ import { StyleSheet, Text, useColorScheme, View } from "react-native";
 import { Stack } from "expo-router";
 import { Colors } from "../constants/Colors";
 import { StatusBar } from "expo-status-bar";
-import { PaperProvider } from "react-native-paper";
+import {
+  PaperProvider,
+  MD3LightTheme as DefaultTheme,
+} from "react-native-paper";
+
+const appTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#2EAAE1",
+  },
+};
 
 const RootLayout = () => {
   const colorScheme = useColorScheme();
@@ -11,7 +22,7 @@ const RootLayout = () => {
   console.log(theme);
   return (
     // <View style={{ flex: 1 }}>
-    <PaperProvider>
+    <PaperProvider theme={appTheme}>
       <StatusBar style="auto" />
       <Stack
         screenOptions={{

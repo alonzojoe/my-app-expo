@@ -11,11 +11,14 @@ import Spacer from "../components/Spacer";
 import { Background } from "./../node_modules/@react-navigation/elements/lib/module/Background";
 import { Button } from "react-native-paper";
 import { useRouter } from "expo-router";
+
 const Auth = () => {
   const [visible, setVisible] = useState(true);
+  const [show, setShow] = useState(false);
   const router = useRouter();
   return (
     <SafeView safe={true} style={styles.container}>
+      <Spacer />
       <Spacer />
       <View style={styles.textGroup}>
         <Image source={AppLogo} style={[styles.img, styles.textGroup]} />
@@ -24,10 +27,26 @@ const Auth = () => {
         <PaperText variant="headlineMedium">Welcome back!</PaperText>
         <PaperText variant="titleMedium">Login your account</PaperText>
       </View>
-      <Spacer />
       <View style={styles.textGroup}>
-        <TextInput label="Hospital No." mode="outlined" style={styles.input} />
-        <TextInput label="Password" mode="outlined" style={styles.input} />
+        <TextInput
+          keyboardType="numeric"
+          type="number"
+          label="Hospital No. eg .000446853"
+          mode="outlined"
+          style={styles.input}
+        />
+        <TextInput
+          secureTextEntry={!show}
+          label="Password"
+          mode="outlined"
+          style={styles.input}
+          right={
+            <TextInput.Icon
+              icon={!show ? "eye-off" : "eye"}
+              onPress={() => setShow((prev) => !prev)}
+            />
+          }
+        />
       </View>
       <View style={styles.textForgot}>
         <Link href="/" style={styles.forgot}>
@@ -95,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     // alignItems: "center",
 
-    backgroundColor: "#0545AD",
+    // backgroundColor: "#fff",
   },
   title: {
     fontWeight: "bold",
@@ -114,10 +133,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     width: "80%",
     alignSelf: "center",
-    marginTop: 4,
+    marginVertical: 10,
   },
   forgot: {
-    color: "white",
+    color: "black",
     textDecorationLine: "underline",
   },
   input: {
@@ -137,7 +156,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   create: {
-    color: "white",
+    // color: "white",
     fontSize: 16,
   },
 });
