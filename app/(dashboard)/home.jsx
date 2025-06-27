@@ -1,22 +1,24 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import SafeView from "../../components/SafeView";
+import Header from "../../components/Header";
 
-const Create = () => {
+const Home = () => {
   return (
-    <SafeView style={styles.container}>
-      <Text style={styles.title}>Create</Text>
+    <SafeView safe={true} style={styles.container}>
+      <Header />
+      <Text style={styles.title}>Home</Text>
     </SafeView>
   );
 };
 
-export default Create;
+export default Home;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: "#fff",
-    alignItems: "center",
+    // alignItems: "center",
     // justifyContent: "center",
   },
   title: {

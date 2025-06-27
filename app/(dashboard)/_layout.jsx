@@ -4,7 +4,6 @@ import { Tabs } from "expo-router";
 import { Colors } from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
-
 const DashboardLayout = () => {
   const colorScheme = useColorScheme();
 
@@ -19,6 +18,7 @@ const DashboardLayout = () => {
           headerShown: false,
           tabBarStyle: {
             backgroundColor: theme.navBackground,
+            // backgroundColor: '#D1E1E2',
             paddingTop: 5,
             height: 90,
           },
@@ -27,26 +27,39 @@ const DashboardLayout = () => {
         }}
       >
         <Tabs.Screen
-          name="create"
+          name="home"
           options={{
-            title: "Create",
+            title: "Home",
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 size={24}
-                name={focused ? "create" : "create-outline"}
+                name={focused ? "home" : "home-outline"}
                 color={focused ? theme.iconColourFocused : theme.iconColour}
               />
             ),
           }}
         />
         <Tabs.Screen
-          name="todos"
+          name="schedule"
           options={{
-            title: "Todos",
+            title: "Schedule",
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 size={24}
-                name={focused ? "list" : "list-outline"}
+                name={focused ? "calendar" : "calendar-outline"}
+                color={focused ? theme.iconColourFocused : theme.iconColour}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="map"
+          options={{
+            title: "Map",
+            tabBarIcon: ({ focused }) => (
+              <Ionicons
+                size={24}
+                name={focused ? "map" : "map-outline"}
                 color={focused ? theme.iconColourFocused : theme.iconColour}
               />
             ),

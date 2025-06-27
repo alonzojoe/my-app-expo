@@ -58,7 +58,7 @@ const Auth = () => {
           icon="login"
           mode="contained"
           onPress={() => {
-            router.replace("/profile");
+            router.replace("/home");
           }}
           style={styles.btn}
         >
