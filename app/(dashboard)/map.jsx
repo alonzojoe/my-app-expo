@@ -51,7 +51,10 @@ const Map = () => {
   `;
 
   return (
-    <SafeView safe={true} style={[styles.container, { paddingBottom: 0 }]}>
+    <SafeView
+      safe={true}
+      style={[styles.container, { paddingBottom: 0, overflow: "hidden" }]}
+    >
       {loading && (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#0000ff" />
@@ -110,6 +113,7 @@ const styles = StyleSheet.create({
   webview: {
     flex: 1,
     height: "100%",
+    overflow: "hidden",
   },
   loadingContainer: {
     position: "absolute",

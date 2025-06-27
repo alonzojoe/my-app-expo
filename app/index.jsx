@@ -30,7 +30,7 @@ const Auth = () => {
         <TextInput
           keyboardType="numeric"
           type="number"
-          label="Hospital No. eg .000446853"
+          label="Hospital No"
           mode="outlined"
           style={styles.input}
         />
