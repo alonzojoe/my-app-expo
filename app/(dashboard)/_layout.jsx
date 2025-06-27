@@ -42,7 +42,7 @@ const DashboardLayout = () => {
         <Tabs.Screen
           name="schedule"
           options={{
-            title: "Schedule",
+            title: "Appointment",
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 size={24}

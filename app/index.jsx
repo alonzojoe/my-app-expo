@@ -8,7 +8,6 @@ import { Badge } from "react-native-paper";
 import { Text as PaperText } from "react-native-paper";
 import { TextInput } from "react-native-paper";
 import Spacer from "../components/Spacer";
-import { Background } from "./../node_modules/@react-navigation/elements/lib/module/Background";
 import { Button } from "react-native-paper";
 import { useRouter } from "expo-router";
 

@@ -1,13 +1,18 @@
 import { StyleSheet, Text, View } from "react-native";
+import { Text as PaperText } from "react-native-paper";
 import React from "react";
 import SafeView from "../../components/SafeView";
 import Header from "../../components/Header";
 
 const Home = () => {
   return (
-    <SafeView safe={true} style={styles.container}>
+    <SafeView safe={true}>
       <Header />
-      <Text style={styles.title}>Home</Text>
+      <View style={styles.container}>
+        <PaperText variant="headlineSmall" style={{ fontWeight: "bold" }}>
+          Services
+        </PaperText>
+      </View>
     </SafeView>
   );
 };
@@ -16,7 +21,9 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    marginTop: 10,
+    paddingHorizontal: 16,
+
     // backgroundColor: "#fff",
     // alignItems: "center",
     // justifyContent: "center",
