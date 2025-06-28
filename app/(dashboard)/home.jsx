@@ -1,22 +1,16 @@
 import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
-import { Text as PaperText } from "react-native-paper";
+import { Text as PaperText, Card } from "react-native-paper";
 import React from "react";
 import SafeView from "../../components/SafeView";
 import Header from "../../components/Header";
-import { Avatar, Button, Card } from "react-native-paper";
 import Banner from "../../assets/banner.jpg";
 import Subtitle from "../../components/Subtitle";
-import Consultation from "../../assets/image/consult.png";
-import Records from "../../assets/image/medical-record.png";
-import Health from "../../assets/image/haelth.png";
-import Appointment from "../../assets/image/calendar.png";
-import Profile from "../../assets/image/account.png";
 import ServiceItem from "./../../components/Services/ServiceItem";
 import BlankImg from "../../assets/image/blank.png";
+import { MENUS } from "../../constants/Menus";
 
 const ITEMS = Array.from({ length: 2 }).map((_, index) => index + 1);
 
-const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 const Home = () => {
   return (
     <SafeView safe={true}>
@@ -31,26 +25,14 @@ const Home = () => {
         contentContainerStyle={{ paddingHorizontal: 16, flexGrow: 1 }}
       >
         <View style={styles.serviceContainer}>
-          <ServiceItem
-            onClick={() => console.log("service item")}
-            label="Consultation"
-            icon={Consultation}
-          />
-          <ServiceItem
-            onClick={() => console.log("Records")}
-            label="Medical Records"
-            icon={Health}
-          />
-          <ServiceItem
-            onClick={() => console.log("Records")}
-            label="Appointment"
-            icon={Appointment}
-          />
-          <ServiceItem
-            onClick={() => console.log("Profile")}
-            label="Profile"
-            icon={Profile}
-          />
+          {MENUS.map((menu) => (
+            <ServiceItem
+              key={menu.id}
+              onClick={menu.fn}
+              label={menu.name}
+              icon={menu.Icon}
+            />
+          ))}
           {ITEMS.map((i) => (
             <Card key={i} style={styles.card}>
               <Card.Cover source={BlankImg} />
