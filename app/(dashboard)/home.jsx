@@ -8,6 +8,7 @@ import Subtitle from "../../components/Subtitle";
 import ServiceItem from "./../../components/Services/ServiceItem";
 import BlankImg from "../../assets/image/blank.png";
 import { MENUS } from "../../constants/Menus";
+import Spacer from "../../components/Spacer";
 
 const ITEMS = Array.from({ length: 2 }).map((_, index) => index + 1);
 
@@ -33,11 +34,15 @@ const Home = () => {
               icon={menu.Icon}
             />
           ))}
-          {ITEMS.map((i) => (
+          <Spacer />
+          <Spacer />
+          <Spacer />
+          <Spacer />
+          {/* {ITEMS.map((i) => (
             <Card key={i} style={styles.card}>
               <Card.Cover source={BlankImg} />
             </Card>
-          ))}
+          ))} */}
         </View>
       </ScrollView>
     </SafeView>

@@ -2,6 +2,9 @@ import Consultation from "../assets/image/consult.png";
 import Health from "../assets/image/haelth.png";
 import Appointment from "../assets/image/calendar.png";
 import Profile from "../assets/image/account.png";
+import { useRouter } from "expo-router";
+
+const router = useRouter();
 
 export const MENUS = [
   {
@@ -25,7 +28,7 @@ export const MENUS = [
     name: "Appointment",
     Icon: Appointment,
     fn: () => {
-      console.log("Appointment");
+      router.replace("/schedule");
     },
   },
   {
@@ -33,7 +36,7 @@ export const MENUS = [
     name: "Profile",
     Icon: Profile,
     fn: () => {
-      console.log("Profile");
+      router.replace("/profile");
     },
   },
 ];
