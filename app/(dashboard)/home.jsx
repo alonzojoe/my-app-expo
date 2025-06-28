@@ -7,8 +7,14 @@ import { Avatar, Button, Card } from "react-native-paper";
 import Banner from "../../assets/banner.jpg";
 import Subtitle from "../../components/Subtitle";
 import Consultation from "../../assets/image/consult.png";
+import Records from "../../assets/image/medical-record.png";
+import Health from "../../assets/image/haelth.png";
+import Appointment from "../../assets/image/calendar.png";
+import Profile from "../../assets/image/account.png";
+import ServiceItem from "./../../components/Services/ServiceItem";
+import BlankImg from "../../assets/image/blank.png";
 
-const ITEMS = Array.from({ length: 6 }).map((_, index) => index + 1);
+const ITEMS = Array.from({ length: 2 }).map((_, index) => index + 1);
 
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 const Home = () => {
@@ -25,25 +31,29 @@ const Home = () => {
         contentContainerStyle={{ paddingHorizontal: 16, flexGrow: 1 }}
       >
         <View style={styles.serviceContainer}>
-          {/* <Pressable
-            style={styles.press}
-            onPress={() => console.log("clicked")}
-          > */}
-          <Card
-            onPress={({ pressed }) => console.log("card")}
-            style={[styles.cardIcon, { padding: 0 }]}
-          >
-            <Card.Content style={styles.cardContent}>
-              <Avatar.Image size={120} source={Consultation} />
-              <PaperText variant="bodyMedium" style={{ fontWeight: "bold" }}>
-                Consultation
-              </PaperText>
-            </Card.Content>
-          </Card>
-          {/* </Pressable> */}
+          <ServiceItem
+            onClick={() => console.log("service item")}
+            label="Consultation"
+            icon={Consultation}
+          />
+          <ServiceItem
+            onClick={() => console.log("Records")}
+            label="Medical Records"
+            icon={Health}
+          />
+          <ServiceItem
+            onClick={() => console.log("Records")}
+            label="Appointment"
+            icon={Appointment}
+          />
+          <ServiceItem
+            onClick={() => console.log("Profile")}
+            label="Profile"
+            icon={Profile}
+          />
           {ITEMS.map((i) => (
             <Card key={i} style={styles.card}>
-              <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
+              <Card.Cover source={BlankImg} />
             </Card>
           ))}
         </View>
