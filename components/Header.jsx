@@ -3,8 +3,10 @@ import { Avatar, Button, Card, Text as PaperText } from "react-native-paper";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useRouter } from "expo-router";
 
 const Header = () => {
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <View>
@@ -23,7 +25,12 @@ const Header = () => {
       </View>
 
       <View>
-        <FontAwesome size={35} name={"user-circle"} color={"#2F344E"} />
+        <FontAwesome
+          onPress={() => router.replace("/profile")}
+          size={35}
+          name={"user-circle"}
+          color={"#2F344E"}
+        />
       </View>
     </View>
   );

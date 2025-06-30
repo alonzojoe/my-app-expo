@@ -1,15 +1,17 @@
-import { StyleSheet, Text, View, ScrollView } from "react-native";
-import { Text as PaperText } from "react-native-paper";
+import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
+import { Text as PaperText, Card } from "react-native-paper";
 import React from "react";
 import SafeView from "../../components/SafeView";
 import Header from "../../components/Header";
-import { Avatar, Button, Card } from "react-native-paper";
 import Banner from "../../assets/banner.jpg";
 import Subtitle from "../../components/Subtitle";
+import ServiceItem from "./../../components/Services/ServiceItem";
+import BlankImg from "../../assets/image/blank.png";
+import { MENUS } from "../../constants/Menus";
+import Spacer from "../../components/Spacer";
 
-const ITEMS = Array.from({ length: 6 }).map((_, index) => index + 1);
+const ITEMS = Array.from({ length: 2 }).map((_, index) => index + 1);
 
-const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 const Home = () => {
   return (
     <SafeView safe={true}>
@@ -19,32 +21,28 @@ const Home = () => {
         <Card.Cover source={Banner} />
       </View>
 
-      <Subtitle
-        label={`Services: ${ITEMS.length}`}
-        style={{ marginVertical: 15 }}
-      />
+      <Subtitle label={`Services`} style={{ marginVertical: 15 }} />
       <ScrollView
         contentContainerStyle={{ paddingHorizontal: 16, flexGrow: 1 }}
       >
         <View style={styles.serviceContainer}>
-          {ITEMS.map((i) => (
-            <Card key={i} style={styles.card}>
-              {/* <Card.Title
-                title="Card Title"
-                subtitle="Card Subtitle"
-                left={LeftContent}
-              /> */}
-              {/* <Card.Content>
-                <PaperText variant="titleLarge">Card title</PaperText>
-                <PaperText variant="bodyMedium">Card content</PaperText>
-              </Card.Content> */}
-              <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
-              {/* <Card.Actions>
-                <Button>Cancel</Button>
-                <Button>Ok</Button>
-              </Card.Actions> */}
-            </Card>
+          {MENUS.map((menu) => (
+            <ServiceItem
+              key={menu.id}
+              onClick={menu.fn}
+              label={menu.name}
+              icon={menu.Icon}
+            />
           ))}
+          <Spacer />
+          <Spacer />
+          <Spacer />
+          <Spacer />
+          {/* {ITEMS.map((i) => (
+            <Card key={i} style={styles.card}>
+              <Card.Cover source={BlankImg} />
+            </Card>
+          ))} */}
         </View>
       </ScrollView>
     </SafeView>
@@ -73,8 +71,28 @@ const styles = StyleSheet.create({
   card: {
     width: "48%",
   },
+  cardIcon: {
+    width: "48%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cardContent: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: 10,
+  },
+  press: {
+    width: "48%",
+    backgroundColor: "red",
+    padding: 0,
+  },
   title: {
     fontWeight: "bold",
     fontSize: 18,
+  },
+  pressed: {
+    opacity: 0.5,
   },
 });

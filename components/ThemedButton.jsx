@@ -8,7 +8,13 @@ const ThemedButton = ({ onClick, label }) => {
       style={({ pressed }) => [styles.btn, pressed && styles.pressed]}
       onPress={onClick}
     >
-      <Text style={{ textAlign: "center", color: "#fff" }}>{label}</Text>
+      <Text
+        style={
+          ({ textAlign: "center", color: "#fff" }, pressed && styles.pressed)
+        }
+      >
+        {label}
+      </Text>
     </Pressable>
   );
 };
