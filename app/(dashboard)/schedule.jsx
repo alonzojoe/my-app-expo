@@ -3,25 +3,21 @@ import React from "react";
 import SafeView from "../../components/SafeView";
 import Header from "../../components/Header";
 import {
-  Avatar,
-  Button,
-  Card,
   Text as PaperText,
   List,
   Divider,
-  MD3Colors,
   IconButton,
 } from "react-native-paper";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 const Schedule = () => {
   return (
     <SafeView safe={true}>
       <Header />
       <View style={styles.container}>
         <List.Item
-          title="First Item"
-          description="Item description"
+          title="Pediatrics"
+          description="July 21, 2025 10:00 AM"
           left={(props) => (
             <View
               style={{
@@ -41,25 +37,16 @@ const Schedule = () => {
               />
             </View>
           )}
-          right={(props) => <List.Icon {...props} icon="" />}
+          right={(props) => (
+            <FontAwesome
+              onPress={() => console.log("cancel")}
+              name="times"
+              size={24}
+              color="#DD3353"
+            />
+          )}
         />
         <Divider />
-        {/* <Card>
-          <Card.Title
-            title="Card Title"
-            subtitle="Card Subtitle"
-            left={LeftContent}
-          />
-          <Card.Content>
-            <PaperText variant="titleLarge">Card title</PaperText>
-            <PaperText variant="bodyMedium">Card content</PaperText>
-          </Card.Content>
-          <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
-          <Card.Actions>
-            <Button>Cancel</Button>
-            <Button>Ok</Button>
-          </Card.Actions>
-        </Card> */}
       </View>
     </SafeView>
   );
