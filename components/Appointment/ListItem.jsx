@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import { List, Divider, IconButton } from "react-native-paper";
+import { StyleSheet, View, Text } from "react-native";
+import { List, Divider, IconButton, Badge } from "react-native-paper";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
 const ListItem = ({ service, appointment, onCancel }) => {
@@ -7,7 +7,7 @@ const ListItem = ({ service, appointment, onCancel }) => {
     <>
       <List.Item
         title={service}
-        description={appointment}
+        description={<Text>{appointment}</Text>}
         left={(props) => (
           <View
             style={{

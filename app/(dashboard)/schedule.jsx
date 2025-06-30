@@ -35,14 +35,15 @@ const Schedule = () => {
 
       <Portal>
         <Dialog visible={confirmation} onDismiss={hideDialog}>
-          <Dialog.Title>Confirmation</Dialog.Title>
+          <Dialog.Icon icon="alert" />
+          <Dialog.Title style={styles.title}>Confirmation</Dialog.Title>
           <Dialog.Content>
             <PaperText variant="bodyMedium">
               Are you sure to cancel your appointment?
             </PaperText>
           </Dialog.Content>
           <Dialog.Actions>
-            <Button onPress={hideDialog} textColor="#888">
+            <Button onPress={hideDialog} textColor="#DD3353">
               Cancel
             </Button>
             <Button onPress={hideDialog} textColor="#007BFF">
@@ -65,5 +66,8 @@ const styles = StyleSheet.create({
     // backgroundColor: "#fff",
     // alignItems: "center",
     // justifyContent: "center",
+  },
+  title: {
+    textAlign: "center",
   },
 });
