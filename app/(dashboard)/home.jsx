@@ -1,5 +1,14 @@
 import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
-import { Text as PaperText, Card } from "react-native-paper";
+import {
+  Text as PaperText,
+  Card,
+  Modal,
+  Portal,
+  Button,
+  IconButton,
+  Avatar,
+  Divider,
+} from "react-native-paper";
 import React from "react";
 import SafeView from "../../components/SafeView";
 import Header from "../../components/Header";
@@ -9,10 +18,19 @@ import ServiceItem from "./../../components/Services/ServiceItem";
 import BlankImg from "../../assets/image/blank.png";
 import { MENUS } from "../../constants/Menus";
 import Spacer from "../../components/Spacer";
-
+import useToggle from "../../hooks/useToggle";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 const ITEMS = Array.from({ length: 2 }).map((_, index) => index + 1);
 
 const Home = () => {
+  const [show, toggleShow] = useToggle(false);
+  const containerStyle = { backgroundColor: "white", padding: 20 };
+
+  const showConsultation = () => {
+    toggleShow(true);
+  };
+
   return (
     <SafeView safe={true}>
       <Header />
@@ -29,7 +47,7 @@ const Home = () => {
           {MENUS.map((menu) => (
             <ServiceItem
               key={menu.id}
-              onClick={menu.fn}
+              onClick={menu.id != 1 ? menu.fn : showConsultation}
               label={menu.name}
               icon={menu.Icon}
             />
@@ -45,6 +63,91 @@ const Home = () => {
           ))} */}
         </View>
       </ScrollView>
+      <Portal>
+        <Modal
+          visible={show}
+          onDismiss={() => toggleShow(false)}
+          contentContainerStyle={containerStyle}
+        >
+          <>
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <PaperText variant="titleMedium">
+                SELECT APPOINTMENT TYPE
+              </PaperText>
+            </View>
+            <View style={{ marginVertical: 10 }} />
+            <View>
+              <Card
+                onPress={() => console.log("online")}
+                style={{ backgroundColor: "#0066ED" }}
+              >
+                <Card.Title
+                  titleStyle={{ color: "#fff" }}
+                  subtitleStyle={{ color: "#fff" }}
+                  title="ONLINE CONSULTATION"
+                  subtitle="(OK-OPD)"
+                  left={(props) => (
+                    <View
+                      style={{
+                        backgroundColor: "#e0e0e0",
+                        borderRadius: 24,
+                        width: 40,
+                        height: 40,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <FontAwesome
+                        name="video-camera"
+                        size={24}
+                        color="#0066ED"
+                      />
+                    </View>
+                  )}
+                />
+              </Card>
+            </View>
+            <View style={{ marginVertical: 10 }} />
+            <View>
+              <Card
+                onPress={() => console.log("face to face")}
+                style={{ backgroundColor: "#3CA4E6" }}
+              >
+                <Card.Title
+                  titleStyle={{ color: "#fff" }}
+                  subtitleStyle={{ color: "#fff" }}
+                  title="FACE TO FACE CONSULTATION"
+                  subtitle="(OPD APPOINTMENT)"
+                  left={(props) => (
+                    <View
+                      style={{
+                        backgroundColor: "#e0e0e0",
+                        borderRadius: 24,
+                        width: 40,
+                        height: 40,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <FontAwesome5
+                        name="head-side-mask"
+                        size={24}
+                        color="#3CA4E6"
+                      />
+                    </View>
+                  )}
+                />
+              </Card>
+            </View>
+          </>
+        </Modal>
+      </Portal>
     </SafeView>
   );
 };
