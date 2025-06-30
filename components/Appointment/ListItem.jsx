@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native";
 import { List, Divider, IconButton } from "react-native-paper";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-const ListItem = ({ service, appointment }) => {
+const ListItem = ({ service, appointment, onCancel }) => {
   return (
     <>
       <List.Item
@@ -29,7 +29,7 @@ const ListItem = ({ service, appointment }) => {
         )}
         right={(props) => (
           <FontAwesome
-            onPress={() => console.log("cancel")}
+            onPress={onCancel}
             name="times"
             size={24}
             color="#DD3353"
