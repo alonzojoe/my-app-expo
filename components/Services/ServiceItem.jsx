@@ -1,12 +1,17 @@
 import { StyleSheet } from "react-native";
 import React from "react";
 import { Card, Text as PaperText, Avatar } from "react-native-paper";
-
+import { Image } from "react-native";
 const ServiceItem = ({ onClick, label, icon }) => {
   return (
     <Card onPress={onClick} style={[styles.cardIcon, { padding: 0 }]}>
       <Card.Content style={styles.cardContent}>
         <Avatar.Image size={120} source={icon} />
+        {/* <Image
+          source={icon}
+          style={{ width: 100, height: 100 }}
+          resizeMode="contain"
+        /> */}
         <PaperText variant="bodyMedium" style={{ fontWeight: "bold" }}>
           {label}
         </PaperText>
