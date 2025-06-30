@@ -10,7 +10,11 @@ const Schedule = () => {
       <Header />
       <View style={styles.container}>
         {APPOINTMENTS.map((a) => (
-          <ListItem service={a.service} appointment={a.appointment} />
+          <ListItem
+            key={a.id}
+            service={a.service}
+            appointment={a.appointment}
+          />
         ))}
       </View>
     </SafeView>
