@@ -4,6 +4,7 @@ import SafeView from "../../components/SafeView";
 import Header from "../../components/Header";
 import ListItem from "../../components/Appointment/ListItem";
 import { APPOINTMENTS } from "../../constants/Appointments";
+
 const Schedule = () => {
   return (
     <SafeView safe={true}>
