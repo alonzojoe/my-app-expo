@@ -18,17 +18,6 @@ const Profile = () => {
         {/* <Text style={styles.title}>Profile</Text> */}
 
         <View style={styles.container}>
-          <Appbar.Header
-            style={{
-              backgroundColor: "#2F4F7F",
-              marginTop: 0,
-            }}
-          >
-            <Appbar.BackAction onPress={() => {}} />
-            <Appbar.Content title="Title" />
-            <Appbar.Action icon="calendar" onPress={() => {}} />
-            <Appbar.Action icon="magnify" onPress={() => {}} />
-          </Appbar.Header>
           <Card>
             <Card.Title
               title="Card Title"

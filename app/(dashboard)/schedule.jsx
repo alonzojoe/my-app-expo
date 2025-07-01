@@ -22,16 +22,29 @@ const Schedule = () => {
   return (
     <SafeView safe={true}>
       <Header />
-      <View style={styles.container}>
-        {APPOINTMENTS.map((a) => (
-          <ListItem
-            onCancel={showDialog}
-            key={a.id}
-            service={a.service}
-            appointment={a.appointment}
-          />
-        ))}
-      </View>
+      {APPOINTMENTS.length === 0 ? (
+        <>
+          <View style={{ marginTop: 10 }}>
+            <PaperText
+              variant="titleMedium"
+              style={{ textAlign: "center", color: "#FF2245" }}
+            >
+              You don’t have any upcoming appointments at this time.
+            </PaperText>
+          </View>
+        </>
+      ) : (
+        <View style={styles.container}>
+          {APPOINTMENTS.map((a) => (
+            <ListItem
+              onCancel={showDialog}
+              key={a.id}
+              service={a.service}
+              appointment={a.appointment}
+            />
+          ))}
+        </View>
+      )}
 
       <Portal>
         <Dialog visible={confirmation} onDismiss={hideDialog}>
