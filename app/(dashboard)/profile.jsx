@@ -8,8 +8,13 @@ import {
   IconButton,
   Button,
   Appbar,
+  List,
+  Divider,
 } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
+
+import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 const Profile = () => {
   return (
@@ -29,6 +34,38 @@ const Profile = () => {
               <PaperText variant="bodyMedium">Card content</PaperText>
             </Card.Content>
           </Card>
+          <View style={{ paddingHorizontal: 10 }}>
+            <>
+              <List.Item
+                title="Virtual Blue Card"
+                titleStyle={{ fontWeight: "bold" }}
+                left={(props) => (
+                  <FontAwesome name="vcard" size={24} color="black" />
+                )}
+              />
+              <Divider />
+            </>
+            <>
+              <List.Item
+                title="Rate this app"
+                titleStyle={{ fontWeight: "bold" }}
+                left={(props) => (
+                  <FontAwesome name="star" size={24} color="black" />
+                )}
+              />
+              <Divider />
+            </>
+            <>
+              <List.Item
+                title="Logout"
+                titleStyle={{ color: "#FF2245", fontWeight: "bold" }}
+                left={(props) => (
+                  <FontAwesome name="power-off" size={24} color="#FF2245" />
+                )}
+              />
+              <Divider />
+            </>
+          </View>
         </View>
       </SafeView>
     </>
@@ -39,6 +76,7 @@ export default Profile;
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 10,
     paddingHorizontal: 16,
     // justifyContent: "center",
   },
