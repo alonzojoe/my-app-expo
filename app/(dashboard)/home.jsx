@@ -145,6 +145,28 @@ const Home = () => {
                 />
               </Card>
             </View>
+            <View style={{ marginVertical: 10 }} />
+            <View
+              style={{
+                flexDirection: "row",
+                display: "flex",
+                alignContent: "center",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button
+                width={120}
+                icon="close"
+                mode="contained"
+                onPress={() => toggleShow(false)}
+                style={{
+                  color: "#fff",
+                  backgroundColor: "#DD3254",
+                }}
+              >
+                Cancel
+              </Button>
+            </View>
           </>
         </Modal>
       </Portal>
