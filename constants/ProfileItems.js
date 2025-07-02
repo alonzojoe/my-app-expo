@@ -1,6 +1,3 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-
 export const PROFILEITEMS = [
   {
     id: 1,
@@ -9,7 +6,8 @@ export const PROFILEITEMS = [
     onPress: () => {
       console.log("My Account clicked");
     },
-    Icon: <FontAwesome5 name="user-alt" size={24} color="#3A71FA" />,
+    Icon: "FontAwesome5",
+    iconName: "user-circle-o",
   },
   {
     id: 2,
@@ -18,7 +16,8 @@ export const PROFILEITEMS = [
     onPress: () => {
       console.log("My Virtual Blue Card clicked");
     },
-    Icon: <FontAwesome name="vcard" size={24} color="#3A71FA" />,
+    Icon: "FontAwesome",
+    iconName: "id-card",
   },
   {
     id: 3,
@@ -27,7 +26,8 @@ export const PROFILEITEMS = [
     onPress: () => {
       console.log("Settings clicked");
     },
-    Icon: <FontAwesome name="vcard" size={24} color="#3A71FA" />,
+    Icon: "FontAwesome",
+    iconName: "cog",
   },
   {
     id: 4,
@@ -36,7 +36,8 @@ export const PROFILEITEMS = [
     onPress: () => {
       console.log("Rate this app clicked");
     },
-    Icon: <FontAwesome name="star" size={24} color="#3A71FA" />,
+    Icon: "FontAwesome",
+    iconName: "star",
   },
   {
     id: 5,
@@ -45,6 +46,7 @@ export const PROFILEITEMS = [
     onPress: () => {
       console.log("Logout clicked");
     },
-    Icon: <FontAwesome name="power-off" size={24} color="#FF2245" />,
+    Icon: "FontAwesome",
+    iconName: "power-off",
   },
 ];
