@@ -1,11 +1,23 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import SafeView from "../components/SafeView";
 import { Searchbar, List, Avatar, Card, IconButton } from "react-native-paper";
 import { FAQS } from "../constants/global";
 import FaqItem from "../components/Faq/FaqItem";
+
+import useDebounce from "./../hooks/useDebounce";
 const Faqs = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const debounceValue = useDebounce(searchQuery);
+
+  const filteredFaqs = useMemo(() => {
+    const safeQuery = (debounceValue || "").toLowerCase();
+
+    return FAQS.filter((f) =>
+      (f.question || "").toLowerCase().includes(safeQuery)
+    );
+  }, [debounceValue]);
+
   return (
     <SafeView>
       <View style={styles.container}>
@@ -16,7 +28,7 @@ const Faqs = () => {
         />
       </View>
       <View style={{ paddingHorizontal: 15, marginTop: 15, gap: 10 }}>
-        {FAQS.map((faq) => (
+        {filteredFaqs.map((faq) => (
           <FaqItem faq={faq} key={faq.id} />
         ))}
       </View>
