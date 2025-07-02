@@ -12,31 +12,13 @@ import {
 import { PROFILEITEMS } from "./../../constants/ProfileItems";
 import ProfileItem from "./../../components/Profile/ProfileItem";
 import ProfileImg from "../../assets/image/Default_pfp.jpg";
-const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
-
+import { FontAwesome } from "@expo/vector-icons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 const Profile = () => {
   return (
     <>
       <SafeView safe={true}>
         <View style={styles.container}>
-          {/* <Card
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Card.Title
-              title="Card Title"
-              subtitle="Card Subtitle"
-              left={LeftContent}
-            />
-            <Card.Content>
-              <PaperText variant="titleLarge">Card title</PaperText>
-              <PaperText variant="bodyMedium">Card content</PaperText>
-            </Card.Content>
-          </Card> */}
           <View
             style={{
               display: "flex",
@@ -61,14 +43,24 @@ const Profile = () => {
               </PaperText>
             </View>
           </View>
-          <View>
+          <View style={{ paddingHorizontal: 10, marginTop: 5 }}>
             <List.Item
               title="000590599"
-              left={(props) => <List.Icon {...props} icon="card" />}
+              titleStyle={{ color: "#6E7AA3" }}
+              left={(props) => (
+                <FontAwesome5
+                  name="hospital-symbol"
+                  size={24}
+                  color="#6E7AA3"
+                />
+              )}
             />
             <List.Item
               title="095632145896"
-              left={(props) => <List.Icon {...props} icon="phone" />}
+              titleStyle={{ color: "#6E7AA3" }}
+              left={(props) => (
+                <FontAwesome name="phone" size={24} color="#6E7AA3" />
+              )}
             />
           </View>
           <View style={{ paddingHorizontal: 10, marginTop: 10 }}>

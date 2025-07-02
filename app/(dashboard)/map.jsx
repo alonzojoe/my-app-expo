@@ -55,11 +55,11 @@ const Map = () => {
       safe={true}
       style={[styles.container, { paddingBottom: 0, overflow: "hidden" }]}
     >
-      {loading && (
+      {/* {loading && (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
-      )}
+      )} */}
 
       {error.error ? <Text style={styles.error}>{error.error}</Text> : null}
       {error.httpError ? (
