@@ -15,6 +15,7 @@ import { StatusBar } from "expo-status-bar";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 const Profile = () => {
   return (
@@ -37,20 +38,41 @@ const Profile = () => {
           <View style={{ paddingHorizontal: 10 }}>
             <>
               <List.Item
-                title="Virtual Blue Card"
-                titleStyle={{ fontWeight: "bold" }}
+                title="My Account"
+                titleStyle={{ color: "#3A71FA", fontWeight: "bold" }}
                 left={(props) => (
-                  <FontAwesome name="vcard" size={24} color="black" />
+                  <FontAwesome5 name="user-alt" size={24} color="#3A71FA" />
                 )}
               />
               <Divider />
             </>
             <>
               <List.Item
-                title="Rate this app"
-                titleStyle={{ fontWeight: "bold" }}
+                title="My Virtual Blue Card"
+                titleStyle={{ color: "#3A71FA", fontWeight: "bold" }}
                 left={(props) => (
-                  <FontAwesome name="star" size={24} color="black" />
+                  <FontAwesome name="vcard" size={24} color="#3A71FA" />
+                )}
+              />
+              <Divider />
+            </>
+            <>
+              <List.Item
+                title="Settings"
+                titleStyle={{ color: "#3A71FA", fontWeight: "bold" }}
+                left={(props) => (
+                  <FontAwesome name="cog" size={24} color="#3A71FA" />
+                )}
+                onPress={() => console.log("settings")}
+              />
+              <Divider />
+            </>
+            <>
+              <List.Item
+                title="Rate this app"
+                titleStyle={{ color: "#3A71FA", fontWeight: "bold" }}
+                left={(props) => (
+                  <FontAwesome name="star" size={24} color="#3A71FA" />
                 )}
               />
               <Divider />
