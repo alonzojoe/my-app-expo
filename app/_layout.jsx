@@ -5,7 +5,9 @@ import { StatusBar } from "expo-status-bar";
 import {
   PaperProvider,
   MD3LightTheme as DefaultTheme,
+  IconButton,
 } from "react-native-paper";
+import { useRouter } from "expo-router";
 
 const appTheme = {
   ...DefaultTheme,
@@ -18,6 +20,7 @@ const appTheme = {
 const RootLayout = () => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme] ?? Colors.light;
+  const router = useRouter();
 
   console.log(theme);
   return (
@@ -55,6 +58,23 @@ const RootLayout = () => {
         <Stack.Screen
           name="about"
           options={{ title: "About Page", headerShown: true }}
+        />
+        {/* <Stack.Screen
+          name="faqs"
+          options={{ title: "FAQ", headerShown: true }}
+        /> */}
+        <Stack.Screen
+          name="faqs"
+          options={{
+            title: "FAQ",
+            headerShown: true,
+            headerLeft: () => (
+              <IconButton
+                icon="arrow-left"
+                onPress={() => router.replace("/home")}
+              />
+            ),
+          }}
         />
       </Stack>
     </PaperProvider>

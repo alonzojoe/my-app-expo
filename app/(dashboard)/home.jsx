@@ -95,7 +95,7 @@ const Home = () => {
                   left={(props) => (
                     <View
                       style={{
-                        backgroundColor: "#e0e0e0",
+                        backgroundColor: "#FFF",
                         borderRadius: 24,
                         width: 40,
                         height: 40,
@@ -127,7 +127,7 @@ const Home = () => {
                   left={(props) => (
                     <View
                       style={{
-                        backgroundColor: "#e0e0e0",
+                        backgroundColor: "#FFF",
                         borderRadius: 24,
                         width: 40,
                         height: 40,
