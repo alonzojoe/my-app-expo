@@ -13,6 +13,7 @@ import { PROFILEITEMS } from "./../../constants/ProfileItems";
 import ProfileItem from "./../../components/Profile/ProfileItem";
 import ProfileImg from "../../assets/image/Default_pfp.jpg";
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
+
 const Profile = () => {
   return (
     <>
