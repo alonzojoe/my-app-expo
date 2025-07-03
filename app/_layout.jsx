@@ -76,6 +76,19 @@ const RootLayout = () => {
             ),
           }}
         />
+        <Stack.Screen
+          name="medical"
+          options={{
+            title: "Medical Records",
+            headerShown: true,
+            headerLeft: () => (
+              <IconButton
+                icon="arrow-left"
+                onPress={() => router.replace("/home")}
+              />
+            ),
+          }}
+        />
       </Stack>
     </PaperProvider>
     //Stack component Renders child component with page title and back button

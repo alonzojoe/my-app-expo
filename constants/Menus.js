@@ -22,7 +22,7 @@ export const MENUS = [
     name: "Medical Records",
     Icon: Health,
     fn: () => {
-      console.log("Medical Records");
+      router.replace("/medical");
     },
   },
   {
