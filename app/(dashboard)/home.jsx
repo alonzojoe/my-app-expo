@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, ScrollView, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Pressable,
+  Image,
+} from "react-native";
 import {
   Text as PaperText,
   Card,
@@ -21,6 +28,8 @@ import Spacer from "../../components/Spacer";
 import useToggle from "../../hooks/useToggle";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import BlueF from "../../assets/image/bluef.jpg";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 const ITEMS = Array.from({ length: 2 }).map((_, index) => index + 1);
 
 const Home = () => {
@@ -31,19 +40,29 @@ const Home = () => {
     toggleShow(true);
   };
 
+  const { bottom } = useSafeAreaInsets();
+
   return (
     <SafeView safe={true}>
       <Header />
-
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
         <Card.Cover source={Banner} />
+      </View> */}
+      <View style={styles.imgcontainer}>
+        <View style={styles.cardContainer}>
+          <Image source={BlueF} style={styles.cardImage} />
+        </View>
       </View>
 
       <Subtitle label={`Services`} style={{ marginVertical: 15 }} />
       <ScrollView
-        contentContainerStyle={{ paddingHorizontal: 16, flexGrow: 1 }}
+        contentContainerStyle={{
+          paddingHorizontal: 18,
+          flexGrow: 1,
+          paddingBottom: 5 + bottom,
+        }}
       >
-        <View style={styles.serviceContainer}>
+        <View style={[styles.serviceContainer]}>
           {MENUS.map((menu) => (
             <ServiceItem
               key={menu.id}
@@ -219,5 +238,25 @@ const styles = StyleSheet.create({
   },
   pressed: {
     opacity: 0.5,
+  },
+  imgcontainer: {
+    marginTop: 5,
+  },
+  cardContainer: {
+    width: "90%",
+    aspectRatio: 1.6,
+    alignSelf: "center",
+    borderRadius: 12,
+    overflow: "hidden",
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  cardImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
 });
