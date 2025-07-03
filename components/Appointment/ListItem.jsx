@@ -11,7 +11,7 @@ const ListItem = ({ service, appointment, onCancel }) => {
         left={(props) => (
           <View
             style={{
-              backgroundColor: "#e0e0e0",
+              backgroundColor: "#3A71FA",
               borderRadius: 24,
               width: 40,
               height: 40,
@@ -22,7 +22,7 @@ const ListItem = ({ service, appointment, onCancel }) => {
             <IconButton
               icon="calendar"
               size={25}
-              iconColor="black"
+              iconColor="#FFF"
               style={{ margin: 0 }}
             />
           </View>
