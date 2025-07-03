@@ -5,6 +5,7 @@ import { Searchbar, List, Avatar, Card, IconButton } from "react-native-paper";
 import { FAQS } from "../constants/global";
 import FaqItem from "../components/Faq/FaqItem";
 import { ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import useDebounce from "./../hooks/useDebounce";
 const Faqs = () => {
@@ -19,9 +20,11 @@ const Faqs = () => {
     );
   }, [debounceValue]);
 
+  const { bottom } = useSafeAreaInsets();
+
   return (
     <SafeView>
-      <ScrollView>
+      <ScrollView style={{ paddingBottom: bottom }}>
         <View style={styles.container}>
           <Searchbar
             placeholder="Search"
