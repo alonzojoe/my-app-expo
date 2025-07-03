@@ -19,6 +19,7 @@ export const PROFILEITEMS = [
     color: "#3A71FA",
     onPress: () => {
       console.log("My Virtual Blue Card clicked");
+      router.replace("/bluecard");
     },
     Icon: "FontAwesome",
     iconName: "id-card",

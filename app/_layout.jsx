@@ -89,6 +89,19 @@ const RootLayout = () => {
             ),
           }}
         />
+        <Stack.Screen
+          name="bluecard"
+          options={{
+            title: "My Virtual Blue Card",
+            headerShown: true,
+            headerLeft: () => (
+              <IconButton
+                icon="arrow-left"
+                onPress={() => router.replace("/profile")}
+              />
+            ),
+          }}
+        />
       </Stack>
     </PaperProvider>
     //Stack component Renders child component with page title and back button
