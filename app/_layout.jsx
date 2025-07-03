@@ -13,7 +13,7 @@ const appTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: "#2EAAE1",
+    primary: "#3A71FA",
   },
 };
 
@@ -72,6 +72,32 @@ const RootLayout = () => {
               <IconButton
                 icon="arrow-left"
                 onPress={() => router.replace("/home")}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="medical"
+          options={{
+            title: "Medical Records",
+            headerShown: true,
+            headerLeft: () => (
+              <IconButton
+                icon="arrow-left"
+                onPress={() => router.replace("/home")}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="bluecard"
+          options={{
+            title: "My Virtual Blue Card",
+            headerShown: true,
+            headerLeft: () => (
+              <IconButton
+                icon="arrow-left"
+                onPress={() => router.replace("/profile")}
               />
             ),
           }}

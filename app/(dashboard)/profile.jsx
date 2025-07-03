@@ -86,7 +86,7 @@ export default Profile;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: 15,
     paddingHorizontal: 16,
   },
   fluid: {

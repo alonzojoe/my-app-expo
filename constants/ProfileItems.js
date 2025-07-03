@@ -1,3 +1,7 @@
+import { useRouter } from "expo-router";
+
+const router = useRouter();
+
 export const PROFILEITEMS = [
   {
     id: 1,
@@ -15,6 +19,7 @@ export const PROFILEITEMS = [
     color: "#3A71FA",
     onPress: () => {
       console.log("My Virtual Blue Card clicked");
+      router.replace("/bluecard");
     },
     Icon: "FontAwesome",
     iconName: "id-card",
@@ -45,6 +50,7 @@ export const PROFILEITEMS = [
     color: "#FF2245",
     onPress: () => {
       console.log("Logout clicked");
+      router.replace("/");
     },
     Icon: "FontAwesome",
     iconName: "power-off",

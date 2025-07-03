@@ -4,7 +4,10 @@ import { Text as PaperText } from "react-native-paper";
 const Subtitle = ({ label, style, ...props }) => {
   return (
     <View style={[styles.container, style]}>
-      <PaperText variant="headlineSmall" style={{ fontWeight: "bold" }}>
+      <PaperText
+        variant="headlineSmall"
+        style={{ fontWeight: "bold", color: "#001C63" }}
+      >
         {label}
       </PaperText>
     </View>

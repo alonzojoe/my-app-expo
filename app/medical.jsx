@@ -3,24 +3,13 @@ import React, { useState, useMemo } from "react";
 import SafeView from "../components/SafeView";
 import { Searchbar, List, Avatar, Card, IconButton } from "react-native-paper";
 import { FAQS } from "../constants/global";
-import FaqItem from "../components/Faq/FaqItem";
+import TransactionItem from "../components/Transactions/TransactionItem";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import useDebounce from "./../hooks/useDebounce";
-const Faqs = () => {
+const Medical = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const debounceValue = useDebounce(searchQuery);
-
-  const filteredFaqs = useMemo(() => {
-    const safeQuery = (debounceValue || "").toLowerCase();
-
-    return FAQS.filter((f) =>
-      (f.question || "").toLowerCase().includes(safeQuery)
-    );
-  }, [debounceValue]);
-
-  const { bottom } = useSafeAreaInsets();
+  const { bottom } = useSafeAreaInsets;
 
   return (
     <SafeView>
@@ -32,17 +21,29 @@ const Faqs = () => {
             value={searchQuery}
           />
         </View>
-        <View style={{ paddingHorizontal: 15, marginTop: 15, gap: 10 }}>
-          {filteredFaqs.map((faq) => (
-            <FaqItem faq={faq} key={faq.id} />
-          ))}
+        <View
+          style={{
+            paddingHorizontal: 15,
+            marginTop: 15,
+            gap: 10,
+            marginBottom: 5,
+          }}
+        >
+          <TransactionItem
+            transaction={`IN-72025-428087`}
+            transactionDate={`July 2, 2025 1:44 PM`}
+          />
+          <TransactionItem
+            transaction={`IN-72025-428087`}
+            transactionDate={`July 2, 2025 1:44 PM`}
+          />
         </View>
       </ScrollView>
     </SafeView>
   );
 };
 
-export default Faqs;
+export default Medical;
 
 const styles = StyleSheet.create({
   container: {

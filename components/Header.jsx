@@ -12,13 +12,13 @@ const Header = () => {
       <View>
         <PaperText
           variant="bodyLarge"
-          style={{ fontWeight: "bold", color: "#2F344E" }}
+          style={{ fontWeight: "bold", color: "#001C63" }}
         >
           Hello 👋🏻
         </PaperText>
         <PaperText
           variant="headlineSmall"
-          style={{ fontWeight: "bold", color: "#2F344E" }}
+          style={{ fontWeight: "bold", color: "#001C63" }}
         >
           Joenell Alonzo
         </PaperText>
@@ -29,7 +29,7 @@ const Header = () => {
           onPress={() => router.replace("/profile")}
           size={35}
           name={"user-circle"}
-          color={"#2F344E"}
+          color={"#001C63"}
         />
       </View>
     </View>
