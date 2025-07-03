@@ -4,6 +4,7 @@ import SafeView from "../components/SafeView";
 import { Searchbar, List, Avatar, Card, IconButton } from "react-native-paper";
 import { FAQS } from "../constants/global";
 import FaqItem from "../components/Faq/FaqItem";
+import { ScrollView } from "react-native";
 
 import useDebounce from "./../hooks/useDebounce";
 const Faqs = () => {
@@ -20,18 +21,20 @@ const Faqs = () => {
 
   return (
     <SafeView>
-      <View style={styles.container}>
-        <Searchbar
-          placeholder="Search"
-          onChangeText={setSearchQuery}
-          value={searchQuery}
-        />
-      </View>
-      <View style={{ paddingHorizontal: 15, marginTop: 15, gap: 10 }}>
-        {filteredFaqs.map((faq) => (
-          <FaqItem faq={faq} key={faq.id} />
-        ))}
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <Searchbar
+            placeholder="Search"
+            onChangeText={setSearchQuery}
+            value={searchQuery}
+          />
+        </View>
+        <View style={{ paddingHorizontal: 15, marginTop: 15, gap: 10 }}>
+          {filteredFaqs.map((faq) => (
+            <FaqItem faq={faq} key={faq.id} />
+          ))}
+        </View>
+      </ScrollView>
     </SafeView>
   );
 };
