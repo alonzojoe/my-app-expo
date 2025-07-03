@@ -1,3 +1,7 @@
+import { useRouter } from "expo-router";
+
+const router = useRouter();
+
 export const PROFILEITEMS = [
   {
     id: 1,
@@ -45,6 +49,7 @@ export const PROFILEITEMS = [
     color: "#FF2245",
     onPress: () => {
       console.log("Logout clicked");
+      router.replace("/");
     },
     Icon: "FontAwesome",
     iconName: "power-off",
