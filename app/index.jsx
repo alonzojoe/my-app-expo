@@ -23,8 +23,15 @@ const Auth = () => {
         <Image source={AppLogo} style={[styles.img, styles.textGroup]} />
       </View>
       <View style={styles.textGroup}>
-        <PaperText variant="headlineMedium">Welcome back!</PaperText>
-        <PaperText variant="titleMedium">Login your account</PaperText>
+        <PaperText variant="headlineMedium" style={{ color: "#001C63" }}>
+          Welcome back!
+        </PaperText>
+        <PaperText
+          variant="titleMedium"
+          style={{ color: "#48444E", marginBottom: 10 }}
+        >
+          Login your account
+        </PaperText>
       </View>
       <View style={styles.textGroup}>
         <TextInput
@@ -69,38 +76,6 @@ const Auth = () => {
           Create an account
         </Link>
       </View>
-      {/* <Text style={styles.title}>Auth</Text>
-      <Text>Rendering Items</Text>
-      <Link
-        href="/login"
-        style={{
-          color: "blue",
-          marginVertical: 10,
-          cursor: "pointer",
-        }}
-      >
-        Login
-      </Link>
-      <Link
-        href="/register"
-        style={{
-          color: "blue",
-          marginVertical: 10,
-          cursor: "pointer",
-        }}
-      >
-        Register
-      </Link>
-      <Link
-        href="/profile"
-        style={{
-          color: "blue",
-          marginVertical: 10,
-          cursor: "pointer",
-        }}
-      >
-        Profile
-      </Link> */}
     </SafeView>
   );
 };
@@ -113,7 +88,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     // alignItems: "center",
 
-    // backgroundColor: "#fff",
+    backgroundColor: "#fff",
   },
   title: {
     fontWeight: "bold",
@@ -135,8 +110,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   forgot: {
-    color: "black",
-    textDecorationLine: "underline",
+    color: "#48444E",
   },
   input: {
     width: "80%",
@@ -146,7 +120,6 @@ const styles = StyleSheet.create({
     width: "80%",
     marginVertical: 12,
   },
-
   textCreate: {
     flexDirection: "row",
     justifyContent: "center",
@@ -156,6 +129,8 @@ const styles = StyleSheet.create({
   },
   create: {
     // color: "white",
+    marginTop: 10,
     fontSize: 16,
+    color: "#001C63",
   },
 });
