@@ -8,6 +8,8 @@ const ListItem = ({ service, appointment, onCancel }) => {
       <List.Item
         title={service}
         description={<Text>{appointment}</Text>}
+        titleStyle={{ color: "#001C63", fontWeight: "bold" }}
+        descriptionStyle={{ color: "#6E7AA3" }}
         left={(props) => (
           <View
             style={{

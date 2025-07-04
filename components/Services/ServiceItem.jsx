@@ -7,12 +7,10 @@ const ServiceItem = ({ onClick, label, icon }) => {
     <Card onPress={onClick} style={[styles.cardIcon, { padding: 0 }]}>
       <Card.Content style={styles.cardContent}>
         <Avatar.Image size={120} source={icon} />
-        {/* <Image
-          source={icon}
-          style={{ width: 100, height: 100 }}
-          resizeMode="contain"
-        /> */}
-        <PaperText variant="bodyMedium" style={{ fontWeight: "bold" }}>
+        <PaperText
+          variant="bodyMedium"
+          style={{ fontWeight: "bold", color: "#001C63" }}
+        >
           {label}
         </PaperText>
       </Card.Content>

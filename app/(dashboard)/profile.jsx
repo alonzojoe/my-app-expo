@@ -3,7 +3,9 @@ import React from "react";
 import SafeView from "../../components/SafeView";
 import {
   Avatar,
-  Card,
+  Portal,
+  Dialog,
+  Button,
   List,
   Divider,
   Text as PaperText,
@@ -14,7 +16,11 @@ import ProfileItem from "./../../components/Profile/ProfileItem";
 import ProfileImg from "../../assets/image/Default_pfp.jpg";
 import { FontAwesome } from "@expo/vector-icons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import useToggle from "../../hooks/useToggle";
+import { useRouter } from "expo-router";
 const Profile = () => {
+  const [confirm, setConfirm] = useToggle(false);
+  const router = useRouter();
   return (
     <>
       <SafeView safe={true}>
@@ -70,13 +76,35 @@ const Profile = () => {
                 key={prof.id}
                 label={prof.label}
                 color={prof.color}
-                onPress={prof.onPress}
+                onPress={() => {
+                  if (prof.id === 5) {
+                    return setConfirm(true);
+                  }
+                  return prof.onPress;
+                }}
                 Icon={prof.Icon}
                 iconName={prof.iconName}
               />
             ))}
           </View>
         </View>
+        <Portal>
+          <Dialog visible={confirm} onDismiss={() => setConfirm(false)}>
+            <Dialog.Icon icon="alert" />
+            <Dialog.Title style={styles.dialogTitle}>Confirmation</Dialog.Title>
+            <Dialog.Content>
+              <PaperText variant="bodyMedium" style={styles.dialogTitle}>
+                Are you sure to logout your account?
+              </PaperText>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => setConfirm(false)} textColor="#DD3353">
+                Cancel
+              </Button>
+              <Button onPress={() => router.replace("/")}>Yes</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </SafeView>
     </>
   );
@@ -96,5 +124,8 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 18,
+  },
+  dialogTitle: {
+    textAlign: "center",
   },
 });
