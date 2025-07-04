@@ -1,7 +1,6 @@
 import { StyleSheet, View } from "react-native";
-import { Avatar, Button, Card, Text as PaperText } from "react-native-paper";
+import { Text as PaperText } from "react-native-paper";
 import React from "react";
-import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useRouter } from "expo-router";
 
@@ -20,7 +19,7 @@ const Header = () => {
           variant="headlineSmall"
           style={{ fontWeight: "bold", color: "#001C63" }}
         >
-          Joenell Alonzo
+          Joe Alonzo
         </PaperText>
       </View>
 
