@@ -39,7 +39,7 @@ export const MEDICAL_RECORDS = [
   {
     id: 2,
     transactionNo: "OPD-52025-328056",
-    transactionDate: "March 20, 2025",
+    transactionDate: "June 5, 2025",
   },
   {
     id: 4,
