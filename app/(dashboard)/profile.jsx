@@ -62,7 +62,7 @@ const Profile = () => {
               )}
             />
             <List.Item
-              title="095632145896"
+              title="09563214589"
               titleStyle={{ color: "#6E7AA3" }}
               left={(props) => (
                 <FontAwesome name="phone" size={24} color="#6E7AA3" />
@@ -78,9 +78,10 @@ const Profile = () => {
                 color={prof.color}
                 onPress={() => {
                   if (prof.id === 5) {
-                    return setConfirm(true);
+                    setConfirm(true);
+                    return;
                   }
-                  return prof.onPress;
+                  prof.onPress();
                 }}
                 Icon={prof.Icon}
                 iconName={prof.iconName}

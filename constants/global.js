@@ -29,3 +29,21 @@ export const FAQS = [
     question: "Is teleconsultation available and how do I access it?",
   },
 ];
+
+export const MEDICAL_RECORDS = [
+  {
+    id: 1,
+    transactionNo: "IN-72025-428087",
+    transactionDate: "July 2, 2025",
+  },
+  {
+    id: 2,
+    transactionNo: "OPD-52025-328056",
+    transactionDate: "June 5, 2025",
+  },
+  {
+    id: 4,
+    transactionNo: "ER-42025-228034",
+    transactionDate: "March 12, 2025",
+  },
+];
