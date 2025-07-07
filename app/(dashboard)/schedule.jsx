@@ -51,7 +51,7 @@ const Schedule = () => {
           <Dialog.Icon icon="alert" />
           <Dialog.Title style={styles.title}>Confirmation</Dialog.Title>
           <Dialog.Content>
-            <PaperText variant="bodyMedium">
+            <PaperText variant="bodyMedium" style={{ textAlign: "center" }}>
               Are you sure to cancel your appointment?
             </PaperText>
           </Dialog.Content>
