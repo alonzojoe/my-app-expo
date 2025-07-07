@@ -78,9 +78,10 @@ const Profile = () => {
                 color={prof.color}
                 onPress={() => {
                   if (prof.id === 5) {
-                    return setConfirm(true);
+                    setConfirm(true);
+                    return;
                   }
-                  return prof.onPress;
+                  prof.onPress();
                 }}
                 Icon={prof.Icon}
                 iconName={prof.iconName}
