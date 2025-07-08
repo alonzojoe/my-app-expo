@@ -13,7 +13,7 @@ const ListItem = ({ service, appointment, onCancel }) => {
         left={(props) => (
           <View
             style={{
-              backgroundColor: "#3A71FA",
+              backgroundColor: "#004C82",
               borderRadius: 24,
               width: 40,
               height: 40,
