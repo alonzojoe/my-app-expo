@@ -75,7 +75,14 @@ const Faqs = () => {
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Blanditiis, ducimus quo animi sunt enim aperiam! Totam fugit
                 illum voluptatem ullam, iusto culpa sit necessitatibus earum
-                ipsum nulla cum ipsam velit.
+                ipsum nulla cum ipsam velit. Lorem ipsum dolor sit amet,
+                consectetur adipisicing elit. Blanditiis, ducimus quo animi sunt
+                enim aperiam! Totam fugit illum voluptatem ullam, iusto culpa
+                sit necessitatibus earum ipsum nulla cum ipsam velit. Lorem
+                ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis,
+                ducimus quo animi sunt enim aperiam! Totam fugit illum
+                voluptatem ullam, iusto culpa sit necessitatibus earum ipsum
+                nulla cum ipsam velit.
               </PaperText>
             </ScrollView>
             <View style={{ marginVertical: 10 }} />
