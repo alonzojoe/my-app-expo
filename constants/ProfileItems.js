@@ -6,7 +6,7 @@ export const PROFILEITEMS = [
   {
     id: 1,
     label: "My Account",
-    color: "#3A71FA",
+    color: "#004C82",
     onPress: () => {
       console.log("My Account clicked");
     },
@@ -16,7 +16,7 @@ export const PROFILEITEMS = [
   {
     id: 2,
     label: "My Virtual Blue Card",
-    color: "#3A71FA",
+    color: "#004C82",
     onPress: () => {
       console.log("My Virtual Blue Card clicked");
       router.replace("/bluecard");
@@ -27,7 +27,7 @@ export const PROFILEITEMS = [
   {
     id: 3,
     label: "Settings",
-    color: "#3A71FA",
+    color: "#004C82",
     onPress: () => {
       console.log("Settings clicked");
     },
@@ -37,7 +37,7 @@ export const PROFILEITEMS = [
   {
     id: 4,
     label: "Rate this app",
-    color: "#3A71FA",
+    color: "#004C82",
     onPress: () => {
       console.log("Rate this app clicked");
     },
