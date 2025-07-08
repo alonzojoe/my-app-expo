@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Link } from "expo-router";
 import ReactLogo from "../assets/image/react.png";
-import AppLogo from "../assets/image/applogo.png";
+import AppLogo from "../assets/lingadcare.png";
 import { useState, Fragment } from "react";
 import SafeView from "../components/SafeView";
 import { Badge } from "react-native-paper";
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   img: {
     height: 100,
-    width: 100,
+    width: 250,
     marginVertical: 20,
   },
   textGroup: {
@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   forgot: {
+    textDecorationLine: "underline",
     color: "#48444E",
   },
   input: {

@@ -13,7 +13,7 @@ const appTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: "#3A71FA",
+    primary: "#004C82",
   },
 };
 
