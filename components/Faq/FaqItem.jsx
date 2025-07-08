@@ -9,7 +9,7 @@ const FaqItem = ({ faq, onPress }) => {
         title={faq.question}
         titleNumberOfLines={3}
         left={(props) => (
-          <FontAwesome name="question-circle" size={24} color="#3A71FA" />
+          <FontAwesome name="question-circle" size={24} color="#004C82" />
         )}
         right={(props) => (
           <IconButton {...props} icon="eye" onPress={() => {}} />
