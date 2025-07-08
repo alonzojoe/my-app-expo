@@ -18,9 +18,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import useToggle from "../../hooks/useToggle";
 import { useRouter } from "expo-router";
+import { useSelector } from "react-redux";
 const Profile = () => {
   const [confirm, setConfirm] = useToggle(false);
   const router = useRouter();
+
+  const { authUser } = useSelector((state) => state.auth);
+
   return (
     <>
       <SafeView safe={true}>
@@ -39,7 +43,7 @@ const Profile = () => {
                 variant="headlineSmall"
                 style={{ fontWeight: "bold", color: "#091D63" }}
               >
-                Joe Alonzo
+                {authUser?.name}
               </PaperText>
               <PaperText
                 variant="bodyMedium"
@@ -51,7 +55,7 @@ const Profile = () => {
           </View>
           <View style={{ paddingHorizontal: 10, marginTop: 5 }}>
             <List.Item
-              title="000590599"
+              title={authUser?.hospitalNo}
               titleStyle={{ color: "#6E7AA3" }}
               left={(props) => (
                 <FontAwesome5
@@ -62,7 +66,7 @@ const Profile = () => {
               )}
             />
             <List.Item
-              title="09563214589"
+              title={authUser?.phone}
               titleStyle={{ color: "#6E7AA3" }}
               left={(props) => (
                 <FontAwesome name="phone" size={24} color="#6E7AA3" />

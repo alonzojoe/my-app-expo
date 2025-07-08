@@ -2,7 +2,7 @@ import { StyleSheet, Text, useColorScheme, View } from "react-native";
 import { Stack } from "expo-router";
 import { Colors } from "../constants/Colors";
 import { StatusBar } from "expo-status-bar";
-import { Provider } from "react-native-paper";
+import { Provider } from "react-redux";
 import {
   PaperProvider,
   MD3LightTheme as DefaultTheme,

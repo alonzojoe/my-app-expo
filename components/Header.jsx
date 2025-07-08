@@ -3,9 +3,13 @@ import { Text as PaperText } from "react-native-paper";
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useRouter } from "expo-router";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const router = useRouter();
+
+  const { authUser } = useSelector((state) => state.auth);
+
   return (
     <View style={styles.container}>
       <View>
@@ -19,7 +23,7 @@ const Header = () => {
           variant="headlineSmall"
           style={{ fontWeight: "bold", color: "#001C63" }}
         >
-          Joe Alonzo
+          {authUser?.name}
         </PaperText>
       </View>
 
