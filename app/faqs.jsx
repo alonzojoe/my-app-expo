@@ -7,6 +7,7 @@ import {
   Avatar,
   Card,
   IconButton,
+  Button,
   Portal,
   Modal,
   Text as PaperText,
@@ -58,12 +59,54 @@ const Faqs = () => {
           onDismiss={() => toggleShow(false)}
           contentContainerStyle={styles.modalContainer}
         >
-          <PaperText>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-            Blanditiis, ducimus quo animi sunt enim aperiam! Totam fugit illum
-            voluptatem ullam, iusto culpa sit necessitatibus earum ipsum nulla
-            cum ipsam velit.
-          </PaperText>
+          <>
+            <View
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: 10,
+              }}
+            >
+              <PaperText variant="titleSmall">FAQ Title</PaperText>
+            </View>
+            <ScrollView>
+              <PaperText>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Blanditiis, ducimus quo animi sunt enim aperiam! Totam fugit
+                illum voluptatem ullam, iusto culpa sit necessitatibus earum
+                ipsum nulla cum ipsam velit.
+              </PaperText>
+            </ScrollView>
+            <View style={{ marginVertical: 10 }} />
+            <View
+              style={{
+                flexDirection: "row",
+                display: "flex",
+                alignContent: "center",
+                justifyContent: "flex-end",
+              }}
+            >
+              <PaperText
+                style={{ color: "#DD3254", fontWeight: "bold" }}
+                onPress={() => toggleShow(false)}
+              >
+                Close
+              </PaperText>
+              {/* <Button
+                width={120}
+                icon="close"
+                mode="contained"
+                onPress={() => toggleShow(false)}
+                style={{
+                  color: "#fff",
+                  backgroundColor: "#DD3254",
+                }}
+              >
+                Cancel
+              </Button> */}
+            </View>
+          </>
         </Modal>
       </Portal>
     </SafeView>
@@ -78,6 +121,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   modalContainer: {
+    borderRadius: 5,
     marginHorizontal: 20,
     backgroundColor: "white",
     padding: 20,
