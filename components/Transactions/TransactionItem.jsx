@@ -11,7 +11,7 @@ const TransactionItem = ({ transaction, transactionDate, onView }) => {
         titleStyle={{ color: "#001C63", fontWeight: "bold" }}
         subtitleStyle={{ color: "#6E7AA3" }}
         left={(props) => (
-          <FontAwesome5 name="notes-medical" size={24} color="#3A71FA" />
+          <FontAwesome5 name="notes-medical" size={24} color="#004C82" />
         )}
         right={(props) => <IconButton {...props} icon="eye" onPress={onView} />}
       />

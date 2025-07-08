@@ -47,3 +47,10 @@ export const MEDICAL_RECORDS = [
     transactionDate: "March 12, 2025",
   },
 ];
+
+export const AUTH_USER = {
+  id: 1,
+  name: "Joe Alonzo",
+  hospitalNo: "000590599",
+  phone: "09563214589",
+};

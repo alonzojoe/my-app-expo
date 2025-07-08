@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Link } from "expo-router";
 import ReactLogo from "../assets/image/react.png";
-import AppLogo from "../assets/image/applogo.png";
+import AppLogo from "../assets/lingadcare.png";
 import { useState, Fragment } from "react";
 import SafeView from "../components/SafeView";
 import { Badge } from "react-native-paper";
@@ -10,11 +10,17 @@ import { TextInput } from "react-native-paper";
 import Spacer from "../components/Spacer";
 import { Button } from "react-native-paper";
 import { useRouter } from "expo-router";
-
+import { Provider } from "react-native-paper";
+import { AUTH_USER } from "../constants/global";
+import { useDispatch } from "react-redux";
+import { setUser } from "../store/slices/auth-slice";
 const Auth = () => {
   const [visible, setVisible] = useState(true);
   const [show, setShow] = useState(false);
   const router = useRouter();
+
+  const dispatch = useDispatch();
+
   return (
     <SafeView safe={true} style={styles.container}>
       <Spacer />
@@ -64,6 +70,7 @@ const Auth = () => {
           icon="login"
           mode="contained"
           onPress={() => {
+            dispatch(setUser({ user: AUTH_USER }));
             router.replace("/home");
           }}
           style={styles.btn}
@@ -96,7 +103,7 @@ const styles = StyleSheet.create({
   },
   img: {
     height: 100,
-    width: 100,
+    width: 250,
     marginVertical: 20,
   },
   textGroup: {
@@ -110,6 +117,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   forgot: {
+    textDecorationLine: "underline",
     color: "#48444E",
   },
   input: {

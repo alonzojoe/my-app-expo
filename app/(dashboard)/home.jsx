@@ -34,8 +34,6 @@ const ITEMS = Array.from({ length: 2 }).map((_, index) => index + 1);
 
 const Home = () => {
   const [show, toggleShow] = useToggle(false);
-  const containerStyle = { backgroundColor: "white", padding: 20 };
-
   const showConsultation = () => {
     toggleShow(true);
   };
@@ -86,7 +84,7 @@ const Home = () => {
         <Modal
           visible={show}
           onDismiss={() => toggleShow(false)}
-          contentContainerStyle={containerStyle}
+          contentContainerStyle={styles.modalContainer}
         >
           <>
             <View
@@ -258,5 +256,11 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     resizeMode: "cover",
+  },
+  modalContainer: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 5,
+    marginHorizontal: 20,
   },
 });

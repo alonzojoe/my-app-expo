@@ -1,6 +1,6 @@
 import Consultation from "../assets/image/consult.png";
 import Health from "../assets/image/haelth.png";
-import Appointment from "../assets/image/calendar.png";
+import Appointment from "../assets/image/calendarv.png";
 import Profile from "../assets/image/user.png";
 import MapImg from "../assets/image/map.png";
 import Faq from "../assets/image/faq.png";
