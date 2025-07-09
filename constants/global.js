@@ -54,3 +54,12 @@ export const AUTH_USER = {
   hospitalNo: "000590599",
   phone: "09563214589",
 };
+
+export const PHYSICIANS = [
+  {
+    id: 1,
+    name: `MELODY NICDAO OLALIA`,
+    type: "Attending Physician",
+    isMain: "Yes",
+  },
+];

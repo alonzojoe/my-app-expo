@@ -16,6 +16,8 @@ import useToggle from "../hooks/useToggle";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import ContentTitle from "../components/Transactions/ContentTitle";
 import ContanteData from "../components/Transactions/ContentData";
+import { PHYSICIANS } from "../constants/global";
+import PhysicianItem from "./../components/Transactions/PhysicianItem";
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
   const [searchQuery, setSearchQuery] = useState("");
@@ -95,7 +97,17 @@ const Medical = () => {
             <ScrollView>
               <View>
                 <>
-                  <ContentTitle title="Physicians" />
+                  <ContentTitle title="Physicians" mb={5} />
+                  <View style={{ marginBottom: 5 }}>
+                    {PHYSICIANS.map((p) => (
+                      <PhysicianItem
+                        key={p.id}
+                        physician={p.name}
+                        type={p.type}
+                        isMain={p.isMain}
+                      />
+                    ))}
+                  </View>
                 </>
                 <>
                   <ContentTitle title="Diagnosis" />

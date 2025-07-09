@@ -1,36 +1,29 @@
 import { StyleSheet, View, Text } from "react-native";
-import { List, Divider, IconButton, Badge } from "react-native-paper";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-
+import { List, Divider, IconButton } from "react-native-paper";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 const PhysicianItem = ({ physician, type, isMain }) => {
   return (
     <>
       <List.Item
-        onPress={onPress}
         title={physician}
-        description={
-          <Text>
-            {type} | Main Physician: {isMain}
-          </Text>
-        }
-        titleStyle={{ color: "#001C63", fontWeight: "bold" }}
+        description={<Text>{type}</Text>}
+        titleStyle={{ color: "#000", fontWeight: "bold", fontSize: 14 }}
         descriptionStyle={{ color: "#6E7AA3" }}
         left={(props) => (
           <View
-            onPress={onPress}
             style={{
               backgroundColor: "#004C82",
               borderRadius: 24,
-              width: 40,
-              height: 40,
+              width: 38,
+              height: 38,
               justifyContent: "center",
               alignItems: "center",
             }}
           >
-            <IconButton
-              icon="calendar"
-              size={25}
-              iconColor="#FFF"
+            <FontAwesome6
+              name="user-doctor"
+              size={20}
+              color="#FFF"
               style={{ margin: 0 }}
             />
           </View>
