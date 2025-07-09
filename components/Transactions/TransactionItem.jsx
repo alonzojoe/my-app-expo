@@ -4,7 +4,7 @@ import { Card, IconButton } from "react-native-paper";
 import { FontAwesome5 } from "@expo/vector-icons";
 const TransactionItem = ({ transaction, transactionDate, onView }) => {
   return (
-    <Card onPress={() => console.log("s")}>
+    <Card onPress={onView}>
       <Card.Title
         title={transaction}
         subtitle={transactionDate}

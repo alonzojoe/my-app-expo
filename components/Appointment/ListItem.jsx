@@ -2,16 +2,18 @@ import { StyleSheet, View, Text } from "react-native";
 import { List, Divider, IconButton, Badge } from "react-native-paper";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 
-const ListItem = ({ service, appointment, onCancel }) => {
+const ListItem = ({ service, appointment, onPress, onCancel }) => {
   return (
     <>
       <List.Item
+        onPress={onPress}
         title={service}
         description={<Text>{appointment}</Text>}
         titleStyle={{ color: "#001C63", fontWeight: "bold" }}
         descriptionStyle={{ color: "#6E7AA3" }}
         left={(props) => (
           <View
+            onPress={onPress}
             style={{
               backgroundColor: "#004C82",
               borderRadius: 24,
@@ -22,6 +24,7 @@ const ListItem = ({ service, appointment, onCancel }) => {
             }}
           >
             <IconButton
+              onPress={onPress}
               icon="calendar"
               size={25}
               iconColor="#FFF"
