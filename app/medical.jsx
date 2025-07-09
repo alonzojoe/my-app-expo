@@ -13,6 +13,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MEDICAL_RECORDS } from "../constants/global";
 import useDebounce from "./../hooks/useDebounce";
 import useToggle from "../hooks/useToggle";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import ContentTitle from "../components/Transactions/ContentTitle";
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
   const [searchQuery, setSearchQuery] = useState("");
@@ -69,44 +71,63 @@ const Medical = () => {
             <View
               style={{
                 display: "flex",
+                flexDirection: "row",
                 alignItems: "center",
-                justifyContent: "center",
+                justifyContent: "space-between",
                 marginBottom: 10,
               }}
             >
-              <PaperText variant="titleSmall">FAQ Title</PaperText>
+              <PaperText
+                variant="titleMedium"
+                style={{
+                  color: "#004C82",
+                  textDecorationLine: "underline",
+                  fontWeight: "bold",
+                }}
+              >
+                IN-72025-428087
+              </PaperText>
+              <FontAwesome5 name="times" size={20} color="#DD3254" />
             </View>
             <ScrollView>
-              <PaperText>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Blanditiis, ducimus quo animi sunt enim aperiam! Totam fugit
-                illum voluptatem ullam, iusto culpa sit necessitatibus earum
-                ipsum nulla cum ipsam velit. Lorem ipsum dolor sit amet,
-                consectetur adipisicing elit. Blanditiis, ducimus quo animi sunt
-                enim aperiam! Totam fugit illum voluptatem ullam, iusto culpa
-                sit necessitatibus earum ipsum nulla cum ipsam velit. Lorem
-                ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis,
-                ducimus quo animi sunt enim aperiam! Totam fugit illum
-                voluptatem ullam, iusto culpa sit necessitatibus earum ipsum
-                nulla cum ipsam velit.
+              <ContentTitle title="Diagnosis" />
+
+              <PaperText
+                style={{
+                  color: "#004C82",
+                  fontWeight: "bold",
+                  textDecorationLine: "underline",
+                  marginBottom: 5,
+                }}
+              >
+                Initial Diagnosis
               </PaperText>
+              <View>
+                <PaperText>
+                  GRAVIDA 2 PARA 2 (2002) ABNORMAL UTERINE BLEEDING- ENDOMETRIAL
+                  POLYP, S/P HYSTEROSCOPIC GUIDED POLYPECTOMY, SEVERE ANEMIA
+                  SECONDARY TO ACUTE BLOOD LOSS
+                </PaperText>
+              </View>
+              <PaperText>Final Diagnosis</PaperText>
+              <View>
+                <PaperText>
+                  GRAVIDA 2 PARA 2 (2002) ABNORMAL UTERINE BLEEDING -
+                  ENDOMETRIAL POLYP STATUS POST HYSTEROSCOPIC GUIDED POLYPECTOMY
+                  SEVERE ANEMIA SECONDARY TO AUTE BLOOD LOSS -CORRECTED
+                </PaperText>
+              </View>
+              <PaperText>Procedure Done</PaperText>
+              <PaperText>Main Operation</PaperText>
+              <View>
+                <PaperText>BLOOD TRANSFUSION</PaperText>
+              </View>
+              <PaperText>Other Operation</PaperText>
+              <View>
+                <PaperText></PaperText>
+              </View>
             </ScrollView>
             <View style={{ marginVertical: 10 }} />
-            <View
-              style={{
-                flexDirection: "row",
-                display: "flex",
-                alignContent: "center",
-                justifyContent: "flex-end",
-              }}
-            >
-              <PaperText
-                style={{ color: "#DD3254", fontWeight: "bold" }}
-                onPress={() => toggleShow(false)}
-              >
-                Close
-              </PaperText>
-            </View>
           </>
         </Modal>
       </Portal>
