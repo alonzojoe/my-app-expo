@@ -95,6 +95,9 @@ const Medical = () => {
             <ScrollView>
               <View>
                 <>
+                  <ContentTitle title="Physicians" />
+                </>
+                <>
                   <ContentTitle title="Diagnosis" />
                   <ContanteData
                     title={`Initial Diagnosis`}
