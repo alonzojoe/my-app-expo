@@ -88,7 +88,9 @@ const Medical = () => {
               >
                 IN-72025-428087
               </PaperText>
-              <FontAwesome5 name="times" size={20} color="#DD3254" />
+              <PaperText onPress={() => toggleShow(false)}>
+                <FontAwesome5 name="times" size={20} color="#DD3254" />
+              </PaperText>
             </View>
             <ScrollView>
               <View>
@@ -111,6 +113,21 @@ const Medical = () => {
                   />
                   <ContanteData title={`Other Operation`} content={`-`} />
                 </>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  display: "flex",
+                  alignContent: "center",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <PaperText
+                  style={{ color: "#DD3254", fontWeight: "bold" }}
+                  onPress={() => toggleShow(false)}
+                >
+                  Close
+                </PaperText>
               </View>
             </ScrollView>
             <View style={{ marginVertical: 10 }} />
