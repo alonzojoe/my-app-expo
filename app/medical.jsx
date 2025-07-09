@@ -15,6 +15,7 @@ import useDebounce from "./../hooks/useDebounce";
 import useToggle from "../hooks/useToggle";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import ContentTitle from "../components/Transactions/ContentTitle";
+import ContanteData from "../components/Transactions/ContentData";
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
   const [searchQuery, setSearchQuery] = useState("");
@@ -90,41 +91,26 @@ const Medical = () => {
               <FontAwesome5 name="times" size={20} color="#DD3254" />
             </View>
             <ScrollView>
-              <ContentTitle title="Diagnosis" />
-
-              <PaperText
-                style={{
-                  color: "#004C82",
-                  fontWeight: "bold",
-                  textDecorationLine: "underline",
-                  marginBottom: 5,
-                }}
-              >
-                Initial Diagnosis
-              </PaperText>
               <View>
-                <PaperText>
-                  GRAVIDA 2 PARA 2 (2002) ABNORMAL UTERINE BLEEDING- ENDOMETRIAL
-                  POLYP, S/P HYSTEROSCOPIC GUIDED POLYPECTOMY, SEVERE ANEMIA
-                  SECONDARY TO ACUTE BLOOD LOSS
-                </PaperText>
-              </View>
-              <PaperText>Final Diagnosis</PaperText>
-              <View>
-                <PaperText>
-                  GRAVIDA 2 PARA 2 (2002) ABNORMAL UTERINE BLEEDING -
-                  ENDOMETRIAL POLYP STATUS POST HYSTEROSCOPIC GUIDED POLYPECTOMY
-                  SEVERE ANEMIA SECONDARY TO AUTE BLOOD LOSS -CORRECTED
-                </PaperText>
-              </View>
-              <PaperText>Procedure Done</PaperText>
-              <PaperText>Main Operation</PaperText>
-              <View>
-                <PaperText>BLOOD TRANSFUSION</PaperText>
-              </View>
-              <PaperText>Other Operation</PaperText>
-              <View>
-                <PaperText></PaperText>
+                <>
+                  <ContentTitle title="Diagnosis" />
+                  <ContanteData
+                    title={`Initial Diagnosis`}
+                    content={`GRAVIDA 2 PARA 2 (2002) ABNORMAL UTERINE BLEEDING- ENDOMETRIALPOLYP, S/P HYSTEROSCOPIC GUIDED POLYPECTOMY, SEVERE ANEMIA SECONDARY TO ACUTE BLOOD LOSS`}
+                  />
+                  <ContanteData
+                    title={`Final Diagnosis`}
+                    content={`GRAVIDA 2 PARA 2 (2002) ABNORMAL UTERINE BLEEDING - ENDOMETRIAL POLYP STATUS POST HYSTEROSCOPIC GUIDED POLYPECTOMY SEVERE ANEMIA SECONDARY TO AUTE BLOOD LOSS -CORRECTED`}
+                  />
+                </>
+                <>
+                  <ContentTitle title="Procedure Done" />
+                  <ContanteData
+                    title={`Main Operation`}
+                    content={`BLOOD TRANSFUSION`}
+                  />
+                  <ContanteData title={`Other Operation`} content={`-`} />
+                </>
               </View>
             </ScrollView>
             <View style={{ marginVertical: 10 }} />

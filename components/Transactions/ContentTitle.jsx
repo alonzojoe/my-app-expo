@@ -4,7 +4,9 @@ const ContentTitle = ({ title, mb = 10 }) => {
   return (
     <PaperText
       style={{
-        color: "#004C82",
+        backgroundColor: "#004C82",
+        padding: 5,
+        color: "#FFF",
         fontWeight: "bold",
         marginBottom: mb,
       }}
