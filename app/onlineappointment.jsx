@@ -18,6 +18,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { Colors } from "../constants/Colors";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
+import dayjs from "dayjs";
 const OnlineAppointment = () => {
   const { bottom } = useSafeAreaInsets();
   const [items, setItems] = useState([{ label: "TELEHEALTH", value: 212 }]);
@@ -87,6 +88,7 @@ const OnlineAppointment = () => {
                 selected: { backgroundColor: "#001C63" },
                 selected_label: { color: "white" },
               }}
+              disabledDates={(date) => [0, 6].includes(dayjs(date).day())}
             />
           </>
           <>
