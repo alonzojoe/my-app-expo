@@ -15,6 +15,7 @@ import {
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "../constants/Colors";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
@@ -93,7 +94,7 @@ const OnlineAppointment = () => {
           </>
           <>
             <View style={styles.headerItem}>
-              <FontAwesome5 name="calendar-day" size={24} color="#001C63" />
+              <AntDesign name="clockcircle" size={24} color="#001C63" />
               <PaperText
                 variant="titleMedium"
                 style={{ color: "#001C63", fontWeight: "bold" }}
@@ -108,6 +109,17 @@ const OnlineAppointment = () => {
               setItems={setItems}
               disabled={true}
             />
+            <View style={styles.textGroup}>
+              <Button
+                mode="contained"
+                onPress={() => {
+                  console.log("test");
+                }}
+                style={styles.btn}
+              >
+                Create Appointment
+              </Button>
+            </View>
           </>
         </View>
       </ScrollView>
@@ -120,7 +132,7 @@ export default OnlineAppointment;
 const styles = StyleSheet.create({
   container: {
     marginTop: 20,
-    paddingHorizontal: 16,
+    paddingHorizontal: 18,
   },
   headerItem: {
     marginTop: 15,
@@ -128,5 +140,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
+  },
+  textGroup: {
+    alignItems: "center",
+  },
+  btn: {
+    width: "100%",
+    marginVertical: 12,
   },
 });

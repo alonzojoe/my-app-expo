@@ -158,7 +158,7 @@ export default Medical;
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 18,
   },
   modalContainer: {
     borderRadius: 5,
