@@ -12,39 +12,101 @@ import {
   Modal,
   Text as PaperText,
 } from "react-native-paper";
-import { FAQS } from "../constants/global";
-import FaqItem from "../components/Faq/FaqItem";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import useDebounce from "../hooks/useDebounce";
-import useToggle from "../hooks/useToggle";
-
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import { Colors } from "../constants/Colors";
+import DropDownPicker from "react-native-dropdown-picker";
+import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
 const OnlineAppointment = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const debounceValue = useDebounce(searchQuery);
-  const [show, toggleShow] = useToggle(false);
-
-  const filteredFaqs = useMemo(() => {
-    const safeQuery = (debounceValue || "").toLowerCase();
-
-    return FAQS.filter((f) =>
-      (f.question || "").toLowerCase().includes(safeQuery)
-    );
-  }, [debounceValue]);
-
   const { bottom } = useSafeAreaInsets();
-
-  const viewItem = () => toggleShow(true);
+  const [items, setItems] = useState([{ label: "TELEHEALTH", value: 212 }]);
+  const defaultStyles = useDefaultStyles();
+  const [selected, setSelected] = useState();
+  const color = Colors["light"];
 
   return (
     <SafeView>
-      <ScrollView style={{ paddingBottom: bottom }}>
+      <ScrollView style={{ marginBottom: bottom }}>
         <View style={styles.container}>
-          <Text>Content</Text>
-        </View>
-        <View style={{ paddingHorizontal: 15, marginTop: 15, gap: 10 }}>
-          <Text>Content</Text>
+          <Card style={{ backgroundColor: "#E6F0FF" }}>
+            <Card.Content>
+              <PaperText variant="bodyMedium">
+                ONLINE KONSULTA: (ENT, FAMILY MEDICINE, GERIATRICS, IM
+                NEPHROLOGY-DIALYSIS, INTERNAL MEDICINE, OBGYNE, OPHTHALMOLOGY,
+                ORTHOPEDICS, PEDIATRICS, SURGERY)
+              </PaperText>
+            </Card.Content>
+          </Card>
+          <>
+            <View style={styles.headerItem}>
+              <FontAwesome5
+                name="briefcase-medical"
+                size={24}
+                color="#001C63"
+              />
+              <PaperText
+                variant="titleMedium"
+                style={{ color: "#001C63", fontWeight: "bold" }}
+              >
+                Type of Service
+              </PaperText>
+            </View>
+            <DropDownPicker
+              style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
+              value={212}
+              items={items}
+              setItems={setItems}
+              disabled={true}
+            />
+          </>
+          <>
+            <View style={styles.headerItem}>
+              <FontAwesome5 name="calendar-day" size={24} color="#001C63" />
+              <PaperText
+                variant="titleMedium"
+                style={{ color: "#001C63", fontWeight: "bold" }}
+              >
+                Date of Schedule
+              </PaperText>
+            </View>
+            <DateTimePicker
+              style={{
+                marginTop: 10,
+                backgroundColor: "#FFF",
+                borderRadius: 10,
+                borderColor: "#001C63",
+                border: 1,
+              }}
+              mode="single"
+              date={selected}
+              onChange={({ date }) => setSelected(date)}
+              styles={{
+                ...defaultStyles,
+                today: { borderColor: "#001C63", borderWidth: 1 },
+                selected: { backgroundColor: "#001C63" },
+                selected_label: { color: "white" },
+              }}
+            />
+          </>
+          <>
+            <View style={styles.headerItem}>
+              <FontAwesome5 name="calendar-day" size={24} color="#001C63" />
+              <PaperText
+                variant="titleMedium"
+                style={{ color: "#001C63", fontWeight: "bold" }}
+              >
+                Time of Schedule
+              </PaperText>
+            </View>
+            <DropDownPicker
+              style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
+              value={212}
+              items={items}
+              setItems={setItems}
+              disabled={true}
+            />
+          </>
         </View>
       </ScrollView>
     </SafeView>
@@ -55,13 +117,14 @@ export default OnlineAppointment;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: 20,
     paddingHorizontal: 16,
   },
-  modalContainer: {
-    borderRadius: 5,
-    marginHorizontal: 20,
-    backgroundColor: "white",
-    padding: 20,
+  headerItem: {
+    marginTop: 15,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
   },
 });
