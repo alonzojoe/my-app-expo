@@ -30,6 +30,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import BlueF from "../../assets/image/bluef.jpg";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 const ITEMS = Array.from({ length: 2 }).map((_, index) => index + 1);
 
 const Home = () => {
@@ -39,6 +40,8 @@ const Home = () => {
   };
 
   const { bottom } = useSafeAreaInsets();
+
+  const router = useRouter();
 
   return (
     <SafeView safe={true}>
@@ -101,7 +104,7 @@ const Home = () => {
             <View style={{ marginVertical: 10 }} />
             <View>
               <Card
-                onPress={() => console.log("online")}
+                onPress={() => router.replace("/onlineappointment")}
                 style={{ backgroundColor: "#0066ED" }}
               >
                 <Card.Title

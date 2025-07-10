@@ -105,6 +105,19 @@ const RootLayout = () => {
               ),
             }}
           />
+          <Stack.Screen
+            name="onlineappointment"
+            options={{
+              title: "Appointment Details",
+              headerShown: true,
+              headerLeft: () => (
+                <IconButton
+                  icon="arrow-left"
+                  onPress={() => router.replace("/home")}
+                />
+              ),
+            }}
+          />
         </Stack>
       </PaperProvider>
     </Provider>
