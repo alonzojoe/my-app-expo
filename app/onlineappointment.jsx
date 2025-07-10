@@ -72,25 +72,29 @@ const OnlineAppointment = () => {
                 Date of Schedule
               </PaperText>
             </View>
-            <DateTimePicker
-              style={{
-                marginTop: 10,
-                backgroundColor: "#FFF",
-                borderRadius: 10,
-                borderColor: "#001C63",
-                border: 1,
-              }}
-              mode="single"
-              date={selected}
-              onChange={({ date }) => setSelected(date)}
-              styles={{
-                ...defaultStyles,
-                today: { borderColor: "#001C63", borderWidth: 1 },
-                selected: { backgroundColor: "#001C63" },
-                selected_label: { color: "white" },
-              }}
-              disabledDates={(date) => [0, 6].includes(dayjs(date).day())}
-            />
+            <Card
+              style={{ marginTop: 10, backgroundColor: "#001C63", padding: 1 }}
+            >
+              <DateTimePicker
+                style={{
+                  marginTop: 0,
+                  backgroundColor: "#FFF",
+                  borderRadius: 10,
+                  borderColor: "#001C63",
+                  border: 1,
+                }}
+                mode="single"
+                date={selected}
+                onChange={({ date }) => setSelected(date)}
+                styles={{
+                  ...defaultStyles,
+                  today: { borderColor: "#001C63", borderWidth: 1 },
+                  selected: { backgroundColor: "#001C63" },
+                  selected_label: { color: "white" },
+                }}
+                disabledDates={(date) => [0, 6].includes(dayjs(date).day())}
+              />
+            </Card>
           </>
           <>
             <View style={styles.headerItem}>
