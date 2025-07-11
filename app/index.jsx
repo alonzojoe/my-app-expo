@@ -79,7 +79,7 @@ const Auth = () => {
         </Button>
       </View>
       <View style={styles.textCreate}>
-        <Link href="/" style={styles.create}>
+        <Link href="/registration" style={styles.create}>
           Create an account
         </Link>
       </View>
