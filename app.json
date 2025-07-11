@@ -5,11 +5,11 @@
     "slug": "LingadCare",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/lingadcare.png",
+    "icon": "./assets/lcare.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/lingadcare.png",
+      "image": "./assets/lcare.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -24,7 +24,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/lingadcare.png",
+        "foregroundImage": "./assets/lcare.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
