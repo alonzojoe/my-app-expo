@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import SafeView from "../components/SafeView";
-import { Card, Text as PaperText } from "react-native-paper";
+import { Card, Text as PaperText, Button, TextInput } from "react-native-paper";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colors } from "../constants/Colors";
+import AntDesign from "@expo/vector-icons/AntDesign";
 const OnlineAppointment = () => {
   const { bottom } = useSafeAreaInsets();
   const color = Colors["light"];
@@ -13,11 +14,43 @@ const OnlineAppointment = () => {
     <SafeView>
       <ScrollView style={{ marginBottom: bottom }}>
         <View style={styles.container}>
-          <Card style={{ backgroundColor: "#E6F0FF" }}>
-            <Card.Content>
-              <PaperText variant="bodyMedium">Rate</PaperText>
-            </Card.Content>
-          </Card>
+          <PaperText
+            variant="titleMedium"
+            style={{ fontWeight: "400", fontSize: 20, textAlign: "center" }}
+          >
+            Share us your experience!
+          </PaperText>
+
+          <View
+            style={{
+              marginTop: 15,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexDirection: "row",
+              gap: 5,
+            }}
+          >
+            <AntDesign name="star" size={30} color="#FFCC00" />
+            <AntDesign name="star" size={30} color="#FFCC00" />
+            <AntDesign name="star" size={30} color="#FFCC00" />
+            <AntDesign name="star" size={30} color="#C0C0C0" />
+            <AntDesign name="star" size={30} color="#C0C0C0" />
+          </View>
+          <View style={{ paddingHorizontal: 15, marginTop: 15 }} mult>
+            <TextInput multiline={true} label="Feedback" />
+          </View>
+          <View style={styles.textGroup}>
+            <Button
+              mode="contained"
+              onPress={() => {
+                console.log("test");
+              }}
+              style={styles.btn}
+            >
+              Submit
+            </Button>
+          </View>
         </View>
       </ScrollView>
     </SafeView>
@@ -39,6 +72,8 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   textGroup: {
+    paddingHorizontal: 15,
+    marginTop: 15,
     alignItems: "center",
   },
   btn: {
