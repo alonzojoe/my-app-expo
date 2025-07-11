@@ -118,6 +118,19 @@ const RootLayout = () => {
               ),
             }}
           />
+          <Stack.Screen
+            name="rate"
+            options={{
+              title: "Rate",
+              headerShown: true,
+              headerLeft: () => (
+                <IconButton
+                  icon="arrow-left"
+                  onPress={() => router.replace("/profile")}
+                />
+              ),
+            }}
+          />
         </Stack>
       </PaperProvider>
     </Provider>

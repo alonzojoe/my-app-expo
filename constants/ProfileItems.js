@@ -40,6 +40,7 @@ export const PROFILEITEMS = [
     color: "#004C82",
     onPress: () => {
       console.log("Rate this app clicked");
+      router.replace("/rate");
     },
     Icon: "FontAwesome",
     iconName: "star",
