@@ -20,7 +20,7 @@
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         },
-        "NSCameraUsageDescription": "We need access to your camera to take photos.",
+        "NSCameraUsageDescription": "We need access to your camera to take photos."
       }
     },
     "android": {
