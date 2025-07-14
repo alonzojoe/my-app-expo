@@ -8,7 +8,7 @@ import { Colors } from "../constants/Colors";
 import QRScanner from "../components/QR/QRScanner";
 const Registration = () => {
   const { bottom } = useSafeAreaInsets();
-
+  const [hospitalNo, setHospitalNo] = useState("")
   const color = Colors["light"];
 
   return (
@@ -36,6 +36,8 @@ const Registration = () => {
               </PaperText>
             </View>
             <TextInput
+              value={hospitalNo}
+              onChangeText={text => setHospitalNo(text)}
               keyboardType="numeric"
               type="number"
               label=""
@@ -43,7 +45,7 @@ const Registration = () => {
               style={styles.input}
             />
           </>
-          <QRScanner />
+          <QRScanner onScan={setHospitalNo} />
           <View style={styles.textGroup}>
             <Button
               mode="contained"
