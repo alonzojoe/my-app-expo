@@ -1,117 +1,153 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
-import * as Camera from "expo-camera";
-import { Ionicons } from "@expo/vector-icons";
-
-const QRScanner = () => {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
-  const [scannedData, setScannedData] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  }, []);
-
-  const handleBarCodeScanned = ({ data }) => {
-    setScanned(true);
-    setScannedData(data);
-    Alert.alert("QR Code Scanned", data);
-  };
-
-  if (hasPermission === null) {
-    return (
-      <View style={styles.container}>
-        <Text>Requesting camera permission...</Text>
-      </View>
-    );
-  }
-
-  if (hasPermission === false) {
-    return (
-      <View style={styles.container}>
-        <Text>No access to camera</Text>
-      </View>
-    );
-  }
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import SafeView from "../components/SafeView";
+import { Card, Text as PaperText, Button, TextInput } from "react-native-paper";
+import { ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Colors } from "../constants/Colors";
+import QRScanner from "../components/QR/QRScanner";
+import Spacer from "../components/Spacer";
+import useToggle from "./../hooks/useToggle";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+const Registration = () => {
+  const { bottom } = useSafeAreaInsets();
+  const [hospitalNo, setHospitalNo] = useState("");
+  const [showQr, toggleShowQr] = useToggle(false);
+  const color = Colors["light"];
 
   return (
-    <View style={styles.container}>
-      {scanned ? (
-        <View style={styles.resultContainer}>
-          <Text style={styles.resultText}>Scanned: {scannedData}</Text>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setScanned(false)}
-          >
-            <Text style={styles.buttonText}>Scan Again</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <Camera.Camera
-          style={styles.camera}
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        >
-          <View style={styles.overlay}>
-            <View style={styles.scanFrame} />
-            <Text style={styles.scanText}>Align QR code within frame</Text>
+    <SafeView>
+      <ScrollView style={{ marginBottom: bottom }}>
+        <View style={styles.container}>
+          <>
+            <View style={[styles.topHeaderItem, { marginBottom: 10 }]}>
+              <PaperText
+                variant="titleMedium"
+                style={{
+                  color: "#001C63",
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                }}
+              >
+                Information Verification
+              </PaperText>
+              <MaterialIcons name="verified" size={24} color="#017BFF" />
+            </View>
+          </>
+
+          <>
+            <View style={[styles.headerItem, { marginTop: 20 }]}>
+              <PaperText
+                variant="titleMedium"
+                style={{ color: "#001C63", fontWeight: "bold" }}
+              >
+                Hospital Number
+              </PaperText>
+            </View>
+            <TextInput
+              value={hospitalNo}
+              onChangeText={(text) => setHospitalNo(text)}
+              keyboardType="numeric"
+              type="number"
+              label=""
+              mode="outlined"
+              style={styles.input}
+              right={
+                <TextInput.Icon
+                  icon={"qrcode"}
+                  onPress={() =>
+                    showQr ? toggleShowQr(false) : toggleShowQr(true)
+                  }
+                />
+              }
+            />
+          </>
+          {showQr && <QRScanner onScan={setHospitalNo} />}
+          <>
+            <View style={[styles.headerItem, { marginTop: 20 }]}>
+              <PaperText
+                variant="titleMedium"
+                style={{ color: "#001C63", fontWeight: "bold" }}
+              >
+                Last Name
+              </PaperText>
+            </View>
+            <TextInput
+              type="number"
+              label=""
+              mode="outlined"
+              style={styles.input}
+            />
+          </>
+          <>
+            <View style={[styles.headerItem, { marginTop: 20 }]}>
+              <PaperText
+                variant="titleMedium"
+                style={{ color: "#001C63", fontWeight: "bold" }}
+              >
+                Birthdate
+              </PaperText>
+            </View>
+            <TextInput
+              keyboardType="numeric"
+              type="number"
+              label="(DD/MM/YY)"
+              mode="outlined"
+              mask="[00]/[00]/[00]"
+              style={styles.input}
+            />
+          </>
+          <View style={styles.textGroup}>
+            <Button
+              mode="contained"
+              onPress={() => {
+                console.log("test");
+              }}
+              style={styles.btn}
+            >
+              Verify
+            </Button>
           </View>
-        </Camera.Camera>
-      )}
-    </View>
+          <Spacer />
+          <Spacer />
+        </View>
+      </ScrollView>
+    </SafeView>
   );
 };
 
+export default Registration;
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  camera: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  scanFrame: {
-    width: 250,
-    height: 250,
-    borderWidth: 2,
-    borderColor: "white",
-    backgroundColor: "transparent",
-  },
-  scanText: {
-    color: "white",
     marginTop: 20,
-    fontSize: 16,
+    paddingHorizontal: 20,
   },
-  resultContainer: {
-    flex: 1,
-    justifyContent: "center",
+  topHeaderItem: {
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
-    padding: 20,
+    justifyContent: "center",
+    gap: 5,
   },
-  resultText: {
-    fontSize: 18,
-    marginBottom: 20,
+  headerItem: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
   },
-  button: {
-    backgroundColor: "#007AFF",
-    padding: 15,
-    borderRadius: 5,
+  textGroup: {
+    marginBottom: 15,
+    marginTop: 15,
+    alignItems: "center",
   },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
+  btn: {
+    width: "100%",
+    marginVertical: 12,
+  },
+  input: {
+    width: "100%",
+    marginVertical: 5,
   },
 });
-
-export default QRScanner;
