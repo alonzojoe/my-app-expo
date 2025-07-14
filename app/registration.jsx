@@ -55,7 +55,9 @@ const Registration = () => {
               right={
                 <TextInput.Icon
                   icon={"qrcode"}
-                  onPress={() => toggleShowQr(true)}
+                  onPress={() =>
+                    showQr ? toggleShowQr(false) : toggleShowQr(true)
+                  }
                 />
               }
             />

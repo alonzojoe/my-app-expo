@@ -70,7 +70,8 @@ const QRScanner = ({ onScan }) => {
     <View style={styles.container}>
       {scanned ? (
         <View style={styles.content}>
-          <Text style={styles.title}>Or Scan QR Instead</Text>
+          <Text style={styles.title}></Text>
+          {/* <Text style={styles.title}>Or Scan QR Instead</Text> */}
           {/* <View style={styles.resultBox}>
             <Text style={styles.resultText}>{scannedData}</Text>
           </View> */}
@@ -85,7 +86,7 @@ const QRScanner = ({ onScan }) => {
       ) : (
         <>
           <CameraView
-            style={styles.camera}
+            style={[styles.camera, { borderRadius: 5 }]}
             facing={facing}
             barcodeScannerSettings={{
               barcodeTypes: ["qr"],
@@ -174,6 +175,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontSize: 16,
+    textAlign: "center",
   },
   scanButton: {
     flexDirection: "row",
@@ -204,6 +206,7 @@ const styles = StyleSheet.create({
   errorText: {
     textAlign: "center",
     color: "red",
+    marginTop: 10,
     marginBottom: 20,
     fontSize: 16,
   },
