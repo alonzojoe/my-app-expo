@@ -1,117 +1,91 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
-import * as Camera from "expo-camera";
-import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import SafeView from "../components/SafeView";
+import { Card, Text as PaperText, Button, TextInput } from "react-native-paper";
+import { ScrollView } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Colors } from "../constants/Colors";
+import QRScanner from "../components/QR/QRScanner";
+const Registration = () => {
+  const { bottom } = useSafeAreaInsets();
 
-const QRScanner = () => {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
-  const [scannedData, setScannedData] = useState(null);
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
-      setHasPermission(status === "granted");
-    })();
-  }, []);
-
-  const handleBarCodeScanned = ({ data }) => {
-    setScanned(true);
-    setScannedData(data);
-    Alert.alert("QR Code Scanned", data);
-  };
-
-  if (hasPermission === null) {
-    return (
-      <View style={styles.container}>
-        <Text>Requesting camera permission...</Text>
-      </View>
-    );
-  }
-
-  if (hasPermission === false) {
-    return (
-      <View style={styles.container}>
-        <Text>No access to camera</Text>
-      </View>
-    );
-  }
+  const color = Colors["light"];
 
   return (
-    <View style={styles.container}>
-      {scanned ? (
-        <View style={styles.resultContainer}>
-          <Text style={styles.resultText}>Scanned: {scannedData}</Text>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setScanned(false)}
-          >
-            <Text style={styles.buttonText}>Scan Again</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <Camera.Camera
-          style={styles.camera}
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        >
-          <View style={styles.overlay}>
-            <View style={styles.scanFrame} />
-            <Text style={styles.scanText}>Align QR code within frame</Text>
+    <SafeView>
+      <ScrollView style={{ marginBottom: bottom }}>
+        <View style={styles.container}>
+          <>
+            <View style={styles.headerItem}>
+              <PaperText
+                variant="titleMedium"
+                style={{ color: "#001C63", fontSize: 20, fontWeight: "bold" }}
+              >
+                Information Verification
+              </PaperText>
+            </View>
+          </>
+
+          <>
+            <View style={[styles.headerItem, { marginTop: 20 }]}>
+              <PaperText
+                variant="titleMedium"
+                style={{ color: "#001C63", fontWeight: "bold" }}
+              >
+                Hospital Number
+              </PaperText>
+            </View>
+            <TextInput
+              keyboardType="numeric"
+              type="number"
+              label=""
+              mode="outlined"
+              style={styles.input}
+            />
+          </>
+          <QRScanner />
+          <View style={styles.textGroup}>
+            <Button
+              mode="contained"
+              onPress={() => {
+                console.log("test");
+              }}
+              style={styles.btn}
+            >
+              Verify
+            </Button>
           </View>
-        </Camera.Camera>
-      )}
-    </View>
+        </View>
+      </ScrollView>
+    </SafeView>
   );
 };
 
+export default Registration;
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  camera: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  scanFrame: {
-    width: 250,
-    height: 250,
-    borderWidth: 2,
-    borderColor: "white",
-    backgroundColor: "transparent",
-  },
-  scanText: {
-    color: "white",
     marginTop: 20,
-    fontSize: 16,
+    paddingHorizontal: 20,
   },
-  resultContainer: {
-    flex: 1,
-    justifyContent: "center",
+  headerItem: {
+    display: "flex",
+    flexDirection: "row",
     alignItems: "center",
-    padding: 20,
+    gap: 5,
   },
-  resultText: {
-    fontSize: 18,
-    marginBottom: 20,
+  textGroup: {
+    marginBottom: 15,
+
+    marginTop: 15,
+    alignItems: "center",
   },
-  button: {
-    backgroundColor: "#007AFF",
-    padding: 15,
-    borderRadius: 5,
+  btn: {
+    width: "100%",
+    marginVertical: 12,
   },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
+  input: {
+    width: "100%",
+    marginVertical: 8,
   },
 });
-
-export default QRScanner;
