@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, Platform } from 'react-native';
-import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import * as Linking from 'expo-linking';
-import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Platform,
+} from "react-native";
+import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
+import * as Linking from "expo-linking";
+import { Ionicons } from "@expo/vector-icons";
 
-const QRScanner = ({onScan}) => {
-  const [scanned, setScanned] = useState(false);
+const QRScanner = ({ onScan }) => {
+  const [scanned, setScanned] = useState(true);
   const [scannedData, setScannedData] = useState(null);
   const [facing, setFacing] = useState(CameraType?.back);
   const [permission, requestPermission] = useCameraPermissions();
@@ -13,18 +20,22 @@ const QRScanner = ({onScan}) => {
   const handleBarCodeScanned = ({ data }) => {
     setScanned(true);
     setScannedData(data);
-    onScan(data)
-    Alert.alert('QR Code Scanned', data, [
-      { text: 'OK', onPress: () => {
-        setScanned(true)
-        onScan(data)
-      } },
-   
+    onScan(data);
+    Alert.alert("QR Code Scanned", data, [
+      {
+        text: "OK",
+        onPress: () => {
+          setScanned(true);
+          onScan(data);
+        },
+      },
     ]);
   };
 
   const toggleCameraFacing = () => {
-    setFacing(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+    setFacing((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
   };
 
   if (!permission) {
@@ -39,16 +50,13 @@ const QRScanner = ({onScan}) => {
     return (
       <View style={styles.container}>
         <Text style={styles.errorText}>Camera access is required</Text>
-        <TouchableOpacity 
-          style={styles.button}
-          onPress={requestPermission}
-        >
+        <TouchableOpacity style={styles.button} onPress={requestPermission}>
           <Text style={styles.buttonText}>Allow Camera Access</Text>
         </TouchableOpacity>
-        
-        {Platform.OS === 'ios' && (
-          <TouchableOpacity 
-            style={[styles.button, { marginTop: 10, backgroundColor: '#555' }]}
+
+        {Platform.OS === "ios" && (
+          <TouchableOpacity
+            style={[styles.button, { marginTop: 10, backgroundColor: "#555" }]}
             onPress={() => Linking.openSettings()}
           >
             <Text style={styles.buttonText}>Open Settings</Text>
@@ -62,45 +70,47 @@ const QRScanner = ({onScan}) => {
     <View style={styles.container}>
       {scanned ? (
         <View style={styles.content}>
-          <Text style={styles.title}>Scan Result</Text>
-          <View style={styles.resultBox}>
+          <Text style={styles.title}>Or Scan QR Instead</Text>
+          {/* <View style={styles.resultBox}>
             <Text style={styles.resultText}>{scannedData}</Text>
-          </View>
+          </View> */}
           <TouchableOpacity
             style={styles.scanButton}
             onPress={() => setScanned(false)}
           >
             <Ionicons name="qr-code" size={24} color="white" />
-            <Text style={styles.scanButtonText}>Scan Again</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.scanButton, { marginTop: 10, backgroundColor: '#555' }]}
-            onPress={toggleCameraFacing}
-          >
-            <Ionicons name="camera-reverse" size={24} color="white" />
-            <Text style={styles.scanButtonText}>Flip Camera</Text>
+            <Text style={styles.scanButtonText}>Scan QR</Text>
           </TouchableOpacity>
         </View>
       ) : (
-        <CameraView
-          style={styles.camera}
-          facing={facing}
-          barcodeScannerSettings={{
-            barcodeTypes: ['qr'],
-          }}
-          onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-        >
-          <View style={styles.overlay}>
-            <View style={styles.scanFrame} />
-            <Text style={styles.scanText}>Align QR code within frame</Text>
-            <TouchableOpacity
-              style={styles.flipButton}
-              onPress={toggleCameraFacing}
-            >
-              <Ionicons name="camera-reverse" size={28} color="white" />
-            </TouchableOpacity>
-          </View>
-        </CameraView>
+        <>
+          <CameraView
+            style={styles.camera}
+            facing={facing}
+            barcodeScannerSettings={{
+              barcodeTypes: ["qr"],
+            }}
+            onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
+          >
+            <View style={styles.overlay}>
+              <View style={styles.scanFrame} />
+              <Text style={styles.scanText}>Align QR code within frame</Text>
+              <TouchableOpacity
+                style={styles.flipButton}
+                onPress={toggleCameraFacing}
+              >
+                <Ionicons name="camera-reverse" size={28} color="white" />
+              </TouchableOpacity>
+            </View>
+          </CameraView>
+          <TouchableOpacity
+            style={styles.cancelButton}
+            onPress={() => setScanned(true)}
+          >
+            <Ionicons name="close" size={24} color="white" />
+            <Text style={styles.cancelButtonText}>Cancel</Text>
+          </TouchableOpacity>
+        </>
       )}
     </View>
   );
@@ -109,84 +119,98 @@ const QRScanner = ({onScan}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: "#f8f8f8",
   },
   content: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 30,
   },
   camera: {
     flex: 1,
-    width: '100%',
+    width: "100%",
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
+    backgroundColor: "rgba(0,0,0,0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
   },
   scanFrame: {
     width: 250,
     height: 250,
     borderWidth: 2,
-    borderColor: 'white',
-    backgroundColor: 'transparent',
+    borderColor: "white",
+    backgroundColor: "transparent",
   },
   scanText: {
-    color: 'white',
+    color: "white",
     marginTop: 20,
     fontSize: 16,
   },
   resultBox: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
     marginBottom: 30,
-    width: '90%',
+    width: "90%",
   },
   resultText: {
     fontSize: 16,
-    textAlign: 'center',
+    textAlign: "center",
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
     padding: 15,
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
   },
   scanButton: {
-    flexDirection: 'row',
-    backgroundColor: '#007AFF',
+    flexDirection: "row",
+    backgroundColor: "#007AFF",
     padding: 15,
     borderRadius: 5,
-    alignItems: 'center',
+    alignItems: "center",
   },
   scanButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
     marginLeft: 10,
   },
+  cancelButton: {
+    flexDirection: "row",
+    justifyContent: "center",
+    backgroundColor: "#FF2245",
+    padding: 15,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  cancelButtonText: {
+    color: "white",
+    fontSize: 16,
+    marginLeft: 10,
+    textAlign: "center",
+  },
   errorText: {
-    color: 'red',
+    color: "red",
     marginBottom: 20,
     fontSize: 16,
   },
   flipButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 30,
     right: 30,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: "rgba(0,0,0,0.5)",
     padding: 10,
     borderRadius: 50,
   },
