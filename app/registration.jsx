@@ -6,9 +6,12 @@ import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colors } from "../constants/Colors";
 import QRScanner from "../components/QR/QRScanner";
+import Spacer from "../components/Spacer";
+import useToggle from "./../hooks/useToggle";
 const Registration = () => {
   const { bottom } = useSafeAreaInsets();
   const [hospitalNo, setHospitalNo] = useState("");
+  const [showQr, toggleShowQr] = useToggle(false);
   const color = Colors["light"];
 
   return (
@@ -16,10 +19,16 @@ const Registration = () => {
       <ScrollView style={{ marginBottom: bottom }}>
         <View style={styles.container}>
           <>
-            <View style={styles.headerItem}>
+            <View style={styles.topHeaderItem}>
               <PaperText
                 variant="titleMedium"
-                style={{ color: "#001C63", fontSize: 20, fontWeight: "bold" }}
+                style={{
+                  color: "#001C63",
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  marginBottom: 10,
+                }}
               >
                 Information Verification
               </PaperText>
@@ -43,9 +52,15 @@ const Registration = () => {
               label=""
               mode="outlined"
               style={styles.input}
+              right={
+                <TextInput.Icon
+                  icon={"qrcode"}
+                  onPress={() => toggleShowQr(true)}
+                />
+              }
             />
           </>
-          <QRScanner onScan={setHospitalNo} />
+          {showQr && <QRScanner onScan={setHospitalNo} />}
           <>
             <View style={[styles.headerItem, { marginTop: 20 }]}>
               <PaperText
@@ -74,7 +89,7 @@ const Registration = () => {
             <TextInput
               keyboardType="numeric"
               type="number"
-              label=""
+              label="(DD/MM/YY)"
               mode="outlined"
               mask="[00]/[00]/[00]"
               style={styles.input}
@@ -91,6 +106,8 @@ const Registration = () => {
               Verify
             </Button>
           </View>
+          <Spacer />
+          <Spacer />
         </View>
       </ScrollView>
     </SafeView>
@@ -104,6 +121,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     paddingHorizontal: 20,
   },
+  topHeaderItem: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 5,
+  },
   headerItem: {
     display: "flex",
     flexDirection: "row",
@@ -112,7 +136,6 @@ const styles = StyleSheet.create({
   },
   textGroup: {
     marginBottom: 15,
-
     marginTop: 15,
     alignItems: "center",
   },
@@ -122,6 +145,6 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    marginVertical: 8,
+    marginVertical: 5,
   },
 });

@@ -202,6 +202,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   errorText: {
+    textAlign: "center",
     color: "red",
     marginBottom: 20,
     fontSize: 16,
