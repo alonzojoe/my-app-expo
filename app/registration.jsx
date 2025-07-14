@@ -8,7 +8,7 @@ import { Colors } from "../constants/Colors";
 import QRScanner from "../components/QR/QRScanner";
 const Registration = () => {
   const { bottom } = useSafeAreaInsets();
-  const [hospitalNo, setHospitalNo] = useState("")
+  const [hospitalNo, setHospitalNo] = useState("");
   const color = Colors["light"];
 
   return (
@@ -37,7 +37,7 @@ const Registration = () => {
             </View>
             <TextInput
               value={hospitalNo}
-              onChangeText={text => setHospitalNo(text)}
+              onChangeText={(text) => setHospitalNo(text)}
               keyboardType="numeric"
               type="number"
               label=""
@@ -46,6 +46,40 @@ const Registration = () => {
             />
           </>
           <QRScanner onScan={setHospitalNo} />
+          <>
+            <View style={[styles.headerItem, { marginTop: 20 }]}>
+              <PaperText
+                variant="titleMedium"
+                style={{ color: "#001C63", fontWeight: "bold" }}
+              >
+                Last Name
+              </PaperText>
+            </View>
+            <TextInput
+              type="number"
+              label=""
+              mode="outlined"
+              style={styles.input}
+            />
+          </>
+          <>
+            <View style={[styles.headerItem, { marginTop: 20 }]}>
+              <PaperText
+                variant="titleMedium"
+                style={{ color: "#001C63", fontWeight: "bold" }}
+              >
+                Birthdate
+              </PaperText>
+            </View>
+            <TextInput
+              keyboardType="numeric"
+              type="number"
+              label=""
+              mode="outlined"
+              mask="[00]/[00]/[00]"
+              style={styles.input}
+            />
+          </>
           <View style={styles.textGroup}>
             <Button
               mode="contained"
