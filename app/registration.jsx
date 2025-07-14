@@ -8,6 +8,7 @@ import { Colors } from "../constants/Colors";
 import QRScanner from "../components/QR/QRScanner";
 import Spacer from "../components/Spacer";
 import useToggle from "./../hooks/useToggle";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 const Registration = () => {
   const { bottom } = useSafeAreaInsets();
   const [hospitalNo, setHospitalNo] = useState("");
@@ -19,7 +20,7 @@ const Registration = () => {
       <ScrollView style={{ marginBottom: bottom }}>
         <View style={styles.container}>
           <>
-            <View style={styles.topHeaderItem}>
+            <View style={[styles.topHeaderItem, { marginBottom: 10 }]}>
               <PaperText
                 variant="titleMedium"
                 style={{
@@ -27,11 +28,11 @@ const Registration = () => {
                   fontSize: 20,
                   fontWeight: "bold",
                   textAlign: "center",
-                  marginBottom: 10,
                 }}
               >
                 Information Verification
               </PaperText>
+              <MaterialIcons name="verified" size={24} color="#017BFF" />
             </View>
           </>
 
