@@ -46,7 +46,15 @@ const OnlineAppointment = () => {
               ))}
             </View>
             <View style={{ paddingHorizontal: 15, marginTop: 20 }} mult>
-              <TextInput multiline={true} label="Feedback" />
+              <TextInput
+                multiline={true}
+                mode="outlined"
+                style={{
+                  height: 100,
+                  textAlignVertical: "top",
+                  backgroundColor: "#fff",
+                }}
+              />
             </View>
             <View style={styles.textGroup}>
               <Button

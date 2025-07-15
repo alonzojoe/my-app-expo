@@ -9,9 +9,12 @@ import QRScanner from "../components/QR/QRScanner";
 import Spacer from "../components/Spacer";
 import useToggle from "./../hooks/useToggle";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import MaskInput, { Masks } from "react-native-mask-input";
 const Registration = () => {
   const { bottom } = useSafeAreaInsets();
   const [hospitalNo, setHospitalNo] = useState("");
+  const [phone, setPhone] = React.useState("");
+  const [focused, setFocused] = useState(false);
   const [showQr, toggleShowQr] = useToggle(false);
   const color = Colors["light"];
 
@@ -35,7 +38,6 @@ const Registration = () => {
               <MaterialIcons name="verified" size={24} color="#017BFF" />
             </View>
           </>
-
           <>
             <View style={[styles.headerItem, { marginTop: 20 }]}>
               <PaperText
@@ -55,7 +57,8 @@ const Registration = () => {
               style={styles.input}
               right={
                 <TextInput.Icon
-                  icon={"qrcode"}
+                  color={showQr ? `#DD3353` : `#095185`}
+                  icon={showQr ? "close" : "qrcode"}
                   onPress={() =>
                     showQr ? toggleShowQr(false) : toggleShowQr(true)
                   }
@@ -63,7 +66,12 @@ const Registration = () => {
               }
             />
           </>
-          {showQr && <QRScanner onScan={setHospitalNo} />}
+          {showQr && (
+            <QRScanner
+              onScan={setHospitalNo}
+              onClose={() => toggleShowQr(false)}
+            />
+          )}
           <>
             <View style={[styles.headerItem, { marginTop: 20 }]}>
               <PaperText
@@ -86,16 +94,32 @@ const Registration = () => {
                 variant="titleMedium"
                 style={{ color: "#001C63", fontWeight: "bold" }}
               >
-                Birthdate
+                Birthdate (MM/DD/YYYY)
               </PaperText>
             </View>
-            <TextInput
-              keyboardType="numeric"
-              type="number"
-              label="(DD/MM/YY)"
-              mode="outlined"
-              mask="[00]/[00]/[00]"
-              style={styles.input}
+            <MaskInput
+              value={phone}
+              onChangeText={(masked, unmasked) => {
+                setPhone(masked);
+                console.log(masked);
+                console.log(unmasked);
+              }}
+              mask={Masks.DATE_MMDDYYYY}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              maxLength={10}
+              style={[
+                styles.input,
+                {
+                  keyboardType: "numeric",
+                  backgroundColor: "#FFF",
+                  borderColor: focused ? "#001C63" : "#C1BDC3",
+                  borderWidth: 2,
+                  borderRadius: 5,
+                  padding: 15,
+                  fontSize: 16,
+                },
+              ]}
             />
           </>
           <View style={styles.textGroup}>
