@@ -63,7 +63,12 @@ const Registration = () => {
               }
             />
           </>
-          {showQr && <QRScanner onScan={setHospitalNo} />}
+          {showQr && (
+            <QRScanner
+              onScan={setHospitalNo}
+              onClose={() => toggleShowQr(false)}
+            />
+          )}
           <>
             <View style={[styles.headerItem, { marginTop: 20 }]}>
               <PaperText

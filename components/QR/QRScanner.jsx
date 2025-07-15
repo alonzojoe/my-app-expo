@@ -11,8 +11,8 @@ import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import * as Linking from "expo-linking";
 import { Ionicons } from "@expo/vector-icons";
 
-const QRScanner = ({ onScan }) => {
-  const [scanned, setScanned] = useState(true);
+const QRScanner = ({ onScan, onClose }) => {
+  const [scanned, setScanned] = useState(false);
   const [scannedData, setScannedData] = useState(null);
   const [facing, setFacing] = useState(CameraType?.back);
   const [permission, requestPermission] = useCameraPermissions();
@@ -25,8 +25,9 @@ const QRScanner = ({ onScan }) => {
       {
         text: "OK",
         onPress: () => {
-          setScanned(true);
+          setScanned(false);
           onScan(data);
+          onClose();
         },
       },
     ]);
@@ -106,7 +107,10 @@ const QRScanner = ({ onScan }) => {
           </CameraView>
           <TouchableOpacity
             style={styles.cancelButton}
-            onPress={() => setScanned(true)}
+            onPress={() => {
+              setScanned(true);
+              onClose();
+            }}
           >
             <Ionicons name="close" size={24} color="white" />
             <Text style={styles.cancelButtonText}>Cancel</Text>
