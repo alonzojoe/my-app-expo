@@ -50,11 +50,12 @@ const Registration = () => {
               onChangeText={(text) => setHospitalNo(text)}
               keyboardType="numeric"
               type="number"
-              label=""
+              label=" "
               mode="outlined"
               style={styles.input}
               right={
                 <TextInput.Icon
+                  color={`#095185`}
                   icon={"qrcode"}
                   onPress={() =>
                     showQr ? toggleShowQr(false) : toggleShowQr(true)
@@ -80,7 +81,7 @@ const Registration = () => {
             </View>
             <TextInput
               type="number"
-              label=""
+              label=" "
               mode="outlined"
               style={styles.input}
             />
