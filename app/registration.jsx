@@ -55,8 +55,8 @@ const Registration = () => {
               style={styles.input}
               right={
                 <TextInput.Icon
-                  color={`#095185`}
-                  icon={"qrcode"}
+                  color={showQr ? `#DD3353` : `#095185`}
+                  icon={showQr ? "close" : "qrcode"}
                   onPress={() =>
                     showQr ? toggleShowQr(false) : toggleShowQr(true)
                   }

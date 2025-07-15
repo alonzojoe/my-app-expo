@@ -105,7 +105,7 @@ const QRScanner = ({ onScan, onClose }) => {
               </TouchableOpacity>
             </View>
           </CameraView>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.cancelButton}
             onPress={() => {
               setScanned(true);
@@ -114,7 +114,7 @@ const QRScanner = ({ onScan, onClose }) => {
           >
             <Ionicons name="close" size={24} color="white" />
             <Text style={styles.cancelButtonText}>Cancel</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </>
       )}
     </View>
