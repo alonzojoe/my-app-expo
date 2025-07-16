@@ -97,12 +97,12 @@ const QRScanner = ({ onScan, onClose }) => {
             <View style={styles.overlay}>
               <View style={styles.scanFrame} />
               <Text style={styles.scanText}>Align QR code within frame</Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.flipButton}
                 onPress={toggleCameraFacing}
               >
                 <Ionicons name="camera-reverse" size={28} color="white" />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </CameraView>
           {/* <TouchableOpacity

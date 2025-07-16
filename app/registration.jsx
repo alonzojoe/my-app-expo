@@ -10,6 +10,7 @@ import Spacer from "../components/Spacer";
 import useToggle from "./../hooks/useToggle";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaskInput, { Masks } from "react-native-mask-input";
+import api from "../services";
 const Registration = () => {
   const { bottom } = useSafeAreaInsets();
   const [hospitalNo, setHospitalNo] = useState("");
@@ -17,6 +18,21 @@ const Registration = () => {
   const [focused, setFocused] = useState(false);
   const [showQr, toggleShowQr] = useToggle(false);
   const color = Colors["light"];
+
+  const testAPI = async () => {
+    try {
+      const res = await api.get("/verify", {
+        params: {
+          patientno: "01352296",
+          lastname: "DEANG",
+          birthdate: "03-14-1938",
+        },
+      });
+      console.log("API RES:", res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <SafeView>
@@ -127,6 +143,7 @@ const Registration = () => {
               mode="contained"
               onPress={() => {
                 console.log("test");
+                testAPI();
               }}
               style={styles.btn}
             >
