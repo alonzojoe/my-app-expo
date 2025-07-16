@@ -21,7 +21,13 @@ const Registration = () => {
 
   const testAPI = async () => {
     try {
-      const res = await api.get("/test");
+      const res = await api.get("/verify", {
+        params: {
+          patientno: "01352296",
+          lastname: "DEANG",
+          birthdate: "03-14-1938",
+        },
+      });
       console.log("API RES:", res.data);
     } catch (error) {
       console.log(error);
