@@ -11,7 +11,7 @@ import useToggle from "./../hooks/useToggle";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaskInput, { Masks } from "react-native-mask-input";
 import api from "../services";
-import Verification from "../components/Forms/Verification";
+import VerificationForm from "../components/Forms/VerificationForm";
 const Registration = () => {
   const { bottom } = useSafeAreaInsets();
   const [hospitalNo, setHospitalNo] = useState("");
@@ -39,21 +39,7 @@ const Registration = () => {
     <SafeView>
       <ScrollView style={{ marginBottom: bottom }}>
         <View style={styles.container}>
-          <Verification />
-          <View style={styles.textGroup}>
-            <Button
-              mode="contained"
-              onPress={() => {
-                console.log("test");
-                testAPI();
-              }}
-              style={styles.btn}
-            >
-              Verify
-            </Button>
-          </View>
-          <Spacer />
-          <Spacer />
+          <VerificationForm />
         </View>
       </ScrollView>
     </SafeView>

@@ -6,7 +6,7 @@ export const verifySchema = z.object({
     .min(5)
     .nonempty({ message: "Hospital No. is required!" }),
   lastname: z.string().trim().nonempty({ message: "Last Name is required" }),
-  lastname: z
+  birthdate: z
     .string()
     .trim()
     .min(10)

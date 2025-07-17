@@ -1,16 +1,45 @@
 import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
-import { Text as PaperText, TextInput } from "react-native-paper";
-import QRScanner from "../../components/QR/QRScanner";
+import {
+  Text as PaperText,
+  TextInput,
+  HelperText,
+  Button,
+} from "react-native-paper";
+import QRScanner from "../QR/QRScanner";
 import useToggle from "../../hooks/useToggle";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import MaskInput, { Masks } from "react-native-mask-input";
+import Spacer from "../Spacer";
+import ErrorMessage from "../Global/ErrorMessage";
+import { verifySchema } from "../../schema/schema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-const Verification = () => {
+const defaultValues = {
+  patientno: "",
+  lastname: "",
+  birthdate: "",
+};
+
+const VerificationForm = () => {
   const [hospitalNo, setHospitalNo] = useState("");
   const [phone, setPhone] = React.useState("");
   const [focused, setFocused] = useState(false);
   const [showQr, toggleShowQr] = useToggle(false);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues,
+    resolver: zodResolver(verifySchema),
+  });
+
+  const onSubmit = async (formValues) => {
+    console.log("Form submitted");
+  };
 
   return (
     <View>
@@ -46,6 +75,7 @@ const Verification = () => {
           type="number"
           label=""
           mode="outlined"
+          error={true}
           style={styles.input}
           right={
             <TextInput.Icon
@@ -57,6 +87,7 @@ const Verification = () => {
             />
           }
         />
+        <ErrorMessage>Hospital Number is required!</ErrorMessage>
       </>
       {showQr && (
         <QRScanner onScan={setHospitalNo} onClose={() => toggleShowQr(false)} />
@@ -111,11 +142,24 @@ const Verification = () => {
           ]}
         />
       </>
+      <View style={styles.textGroup}>
+        <Button
+          mode="contained"
+          onPress={() => {
+            console.log("test");
+          }}
+          style={styles.btn}
+        >
+          Verify
+        </Button>
+      </View>
+      <Spacer />
+      <Spacer />
     </View>
   );
 };
 
-export default Verification;
+export default VerificationForm;
 
 const styles = StyleSheet.create({
   container: {
