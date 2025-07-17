@@ -11,6 +11,8 @@ import { verifySchema } from "../../schema/schema";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useVerification from "./hooks/useVerification";
+import { ActivityIndicator } from "react-native-paper";
+
 const defaultValues = {
   patientno: "",
   lastname: "",
@@ -25,7 +27,7 @@ const VerificationForm = () => {
     control,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     defaultValues,
     resolver: zodResolver(verifySchema),
@@ -157,8 +159,9 @@ const VerificationForm = () => {
           onPress={handleSubmit(onSubmit)}
           style={styles.btn}
           labelStyle={styles.btnLabel}
+          disabled={isSubmitting}
         >
-          Verify
+          {isSubmitting ? <ActivityIndicator size={20} /> : "Verify"}
         </Button>
       </View>
 

@@ -4,17 +4,21 @@ import SafeView from "../components/SafeView";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import VerificationForm from "../components/Forms/VerificationForm";
+import { AlertNotificationRoot } from "react-native-alert-notification";
+
 const Registration = () => {
   const { bottom } = useSafeAreaInsets();
 
   return (
-    <SafeView>
-      <ScrollView style={{ marginBottom: bottom }}>
-        <View style={styles.container}>
-          <VerificationForm />
-        </View>
-      </ScrollView>
-    </SafeView>
+    <AlertNotificationRoot theme="dark">
+      <SafeView>
+        <ScrollView style={{ marginBottom: bottom }}>
+          <View style={styles.container}>
+            <VerificationForm />
+          </View>
+        </ScrollView>
+      </SafeView>
+    </AlertNotificationRoot>
   );
 };
 
