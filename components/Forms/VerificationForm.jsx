@@ -10,7 +10,7 @@ import ErrorMessage from "../Global/ErrorMessage";
 import { verifySchema } from "../../schema/schema";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import useVerification from "./hooks/useVerification";
 const defaultValues = {
   patientno: "",
   lastname: "",
@@ -20,7 +20,7 @@ const defaultValues = {
 const VerificationForm = () => {
   const [focused, setFocused] = useState(false);
   const [showQr, toggleShowQr] = useToggle(false);
-
+  const { handleVerify } = useVerification();
   const {
     control,
     handleSubmit,
@@ -33,6 +33,7 @@ const VerificationForm = () => {
 
   const onSubmit = async (formValues) => {
     console.log("Form submitted", formValues);
+    await handleVerify(formValues);
   };
 
   const handleQRScan = (value) => {
@@ -189,7 +190,6 @@ const styles = StyleSheet.create({
   btn: {
     width: "100%",
     marginVertical: 12,
-    backgroundColor: "#017BFF",
   },
   btnLabel: {
     color: "white",
