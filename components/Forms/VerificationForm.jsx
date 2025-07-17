@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { Text as PaperText, TextInput, Button } from "react-native-paper";
 import QRScanner from "../QR/QRScanner";
@@ -24,6 +24,7 @@ const VerificationForm = () => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues,
@@ -34,18 +35,15 @@ const VerificationForm = () => {
     console.log("Form submitted", formValues);
   };
 
+  const handleQRScan = (value) => {
+    setValue("patientno", value);
+    toggleShowQr(false);
+  };
+
   return (
     <View>
       <View style={[styles.topHeaderItem, { marginBottom: 10 }]}>
-        <PaperText
-          variant="titleMedium"
-          style={{
-            color: "#001C63",
-            fontSize: 20,
-            fontWeight: "bold",
-            textAlign: "center",
-          }}
-        >
+        <PaperText variant="titleMedium" style={styles.titleText}>
           Information Verification
         </PaperText>
         <MaterialIcons name="verified" size={24} color="#017BFF" />
@@ -55,10 +53,7 @@ const VerificationForm = () => {
       <View style={[styles.headerItem, { marginTop: 20 }]}>
         <PaperText
           variant="titleMedium"
-          style={{
-            color: errors.patientno ? "#B3271C" : "#001C63",
-            fontWeight: "bold",
-          }}
+          style={[styles.labelText, errors.patientno && styles.errorLabel]}
         >
           Hospital Number
         </PaperText>
@@ -66,9 +61,11 @@ const VerificationForm = () => {
       <Controller
         control={control}
         name="patientno"
-        render={({ field }) => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            {...field}
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
             keyboardType="numeric"
             label=""
             mode="outlined"
@@ -76,7 +73,7 @@ const VerificationForm = () => {
             style={styles.input}
             right={
               <TextInput.Icon
-                color={showQr ? `#DD3353` : `#095185`}
+                color={showQr ? "#DD3353" : "#095185"}
                 icon={showQr ? "close" : "qrcode"}
                 onPress={() => toggleShowQr(!showQr)}
               />
@@ -88,20 +85,14 @@ const VerificationForm = () => {
         <ErrorMessage>{errors.patientno.message}</ErrorMessage>
       )}
       {showQr && (
-        <QRScanner
-          onScan={(value) => field.onChange(value)}
-          onClose={() => toggleShowQr(false)}
-        />
+        <QRScanner onScan={handleQRScan} onClose={() => toggleShowQr(false)} />
       )}
 
       {/* Last Name */}
       <View style={[styles.headerItem, { marginTop: 20 }]}>
         <PaperText
           variant="titleMedium"
-          style={{
-            color: errors.lastname ? "#B3271C" : "#001C63",
-            fontWeight: "bold",
-          }}
+          style={[styles.labelText, errors.lastname && styles.errorLabel]}
         >
           Last Name
         </PaperText>
@@ -109,9 +100,11 @@ const VerificationForm = () => {
       <Controller
         control={control}
         name="lastname"
-        render={({ field }) => (
+        render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            {...field}
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
             label=""
             mode="outlined"
             error={!!errors.lastname}
@@ -127,10 +120,7 @@ const VerificationForm = () => {
       <View style={[styles.headerItem, { marginTop: 20 }]}>
         <PaperText
           variant="titleMedium"
-          style={{
-            color: errors.birthdate ? "#B3271C" : "#001C63",
-            fontWeight: "bold",
-          }}
+          style={[styles.labelText, errors.birthdate && styles.errorLabel]}
         >
           Birthdate (MM/DD/YYYY)
         </PaperText>
@@ -138,30 +128,20 @@ const VerificationForm = () => {
       <Controller
         control={control}
         name="birthdate"
-        render={({ field }) => (
+        render={({ field: { onChange, value } }) => (
           <MaskInput
-            keyboardType="numeric"
-            value={field.value}
-            onChangeText={(masked, unmasked) => field.onChange(masked)}
+            value={value}
+            onChangeText={(masked) => onChange(masked)}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
+            keyboardType="numeric"
             mask={Masks.DATE_MMDDYYYY}
             maxLength={10}
             style={[
               styles.input,
-              {
-                keyboardType: "numeric",
-                backgroundColor: "#FFF",
-                borderColor: errors.birthdate
-                  ? "#B3271C"
-                  : focused
-                  ? "#001C63"
-                  : "#C1BDC3",
-                borderWidth: 2,
-                borderRadius: 5,
-                padding: 15,
-                fontSize: 16,
-              },
+              styles.maskInput,
+              errors.birthdate && styles.errorInput,
+              focused && styles.focusedInput,
             ]}
           />
         )}
@@ -175,6 +155,7 @@ const VerificationForm = () => {
           mode="contained"
           onPress={handleSubmit(onSubmit)}
           style={styles.btn}
+          labelStyle={styles.btnLabel}
         >
           Verify
         </Button>
@@ -208,9 +189,41 @@ const styles = StyleSheet.create({
   btn: {
     width: "100%",
     marginVertical: 12,
+    backgroundColor: "#017BFF",
+  },
+  btnLabel: {
+    color: "white",
+    fontWeight: "bold",
   },
   input: {
     width: "100%",
     marginVertical: 5,
+    backgroundColor: "#FFF",
+  },
+  maskInput: {
+    borderColor: "#C1BDC3",
+    borderWidth: 2,
+    borderRadius: 5,
+    padding: 15,
+    fontSize: 16,
+  },
+  focusedInput: {
+    borderColor: "#001C63",
+  },
+  errorInput: {
+    borderColor: "#B3271C",
+  },
+  titleText: {
+    color: "#001C63",
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  labelText: {
+    color: "#001C63",
+    fontWeight: "bold",
+  },
+  errorLabel: {
+    color: "#B3271C",
   },
 });
