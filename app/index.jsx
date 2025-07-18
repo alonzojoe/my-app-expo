@@ -17,6 +17,7 @@ import { setUser } from "../store/slices/auth-slice";
 import VerificationForm from "../components/Forms/VerificationForm";
 import Registration from "./registration";
 import { AlertNotificationRoot } from "react-native-alert-notification";
+import QRPopup from "../components/QR/QRPopup";
 const Auth = () => {
   const [visible, setVisible] = useState(true);
   const [show, setShow] = useState(false);
@@ -44,6 +45,7 @@ const Auth = () => {
         </View>
         <View style={{ marginHorizontal: 40 }}>
           <VerificationForm />
+          <QRPopup show={true} />
         </View>
         {/* <View style={styles.textGroup}>
         <TextInput
