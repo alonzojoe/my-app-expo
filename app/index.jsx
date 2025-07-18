@@ -86,8 +86,18 @@ const Auth = () => {
       </View> */}
         <View style={styles.textCreate}>
           <Link href="/registration" style={styles.create}>
-            Create an account
+            OR
           </Link>
+        </View>
+        <View style={styles.textGroup}>
+          <Button
+            icon="qrcode"
+            mode="contained"
+            onPress={() => console.log("test")}
+            style={[styles.btn, { backgroundColor: "#3A71FA", marginTop: 18 }]}
+          >
+            Login using QR
+          </Button>
         </View>
       </AlertNotificationRoot>
     </SafeView>
@@ -140,7 +150,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     alignSelf: "center",
-    marginTop: 4,
+    marginTop: 0,
   },
   create: {
     // color: "white",

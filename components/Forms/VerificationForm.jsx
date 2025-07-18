@@ -44,7 +44,7 @@ const VerificationForm = () => {
   };
 
   return (
-    <View style={{ backgroundColor: "#FFFFF" }}>
+    <View>
       {/* <View style={[styles.topHeaderItem, { marginBottom: 10 }]}>
         <PaperText variant="titleMedium" style={styles.titleText}>
           Information Verification
@@ -187,13 +187,14 @@ const VerificationForm = () => {
 
       <View style={styles.textGroup}>
         <Button
+          icon="login"
           mode="contained"
           onPress={handleSubmit(onSubmit)}
           style={styles.btn}
           labelStyle={styles.btnLabel}
           disabled={isSubmitting}
         >
-          {isSubmitting ? <ActivityIndicator size={20} /> : "Verify"}
+          {isSubmitting ? <ActivityIndicator size={20} /> : "Login"}
         </Button>
       </View>
 
@@ -218,7 +219,6 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   textGroup: {
-    marginBottom: 15,
     marginTop: 15,
     alignItems: "center",
   },
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   },
   btnLabel: {
     color: "white",
-    fontWeight: "bold",
+    fontWeight: "normal",
   },
   input: {
     width: "100%",
