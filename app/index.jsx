@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../store/slices/auth-slice";
 import VerificationForm from "../components/Forms/VerificationForm";
 import Registration from "./registration";
+import { AlertNotificationRoot } from "react-native-alert-notification";
 const Auth = () => {
   const [visible, setVisible] = useState(true);
   const [show, setShow] = useState(false);
@@ -25,25 +26,26 @@ const Auth = () => {
 
   return (
     <SafeView safe={true} style={styles.container}>
-      <Spacer />
-      <View style={styles.textGroup}>
-        <Image source={AppLogo} style={[styles.img, styles.textGroup]} />
-      </View>
-      <View style={styles.textGroup}>
-        <PaperText variant="headlineMedium" style={{ color: "#001C63" }}>
-          Welcome back!
-        </PaperText>
-        <PaperText
-          variant="titleMedium"
-          style={{ color: "#48444E", marginBottom: 10 }}
-        >
-          Login your account
-        </PaperText>
-      </View>
-      <View style={{ marginHorizontal: 30 }}>
-        <VerificationForm />
-      </View>
-      {/* <View style={styles.textGroup}>
+      <AlertNotificationRoot theme="dark" style={{ marginVertical: 20 }}>
+        <Spacer />
+        <View style={styles.textGroup}>
+          <Image source={AppLogo} style={[styles.img, styles.textGroup]} />
+        </View>
+        <View style={styles.textGroup}>
+          <PaperText variant="headlineMedium" style={{ color: "#001C63" }}>
+            Welcome back!
+          </PaperText>
+          <PaperText
+            variant="titleMedium"
+            style={{ color: "#48444E", marginBottom: 10 }}
+          >
+            Login your account
+          </PaperText>
+        </View>
+        <View style={{ marginHorizontal: 40 }}>
+          <VerificationForm />
+        </View>
+        {/* <View style={styles.textGroup}>
         <TextInput
           keyboardType="numeric"
           type="number"
@@ -82,11 +84,12 @@ const Auth = () => {
           Login
         </Button>
       </View> */}
-      <View style={styles.textCreate}>
-        <Link href="/registration" style={styles.create}>
-          Create an account
-        </Link>
-      </View>
+        <View style={styles.textCreate}>
+          <Link href="/registration" style={styles.create}>
+            Create an account
+          </Link>
+        </View>
+      </AlertNotificationRoot>
     </SafeView>
   );
 };
