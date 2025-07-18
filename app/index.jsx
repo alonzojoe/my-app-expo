@@ -47,7 +47,7 @@ const Auth = () => {
           >
             Login using QR
           </Button>
-        </View>
+      </View>
       </AlertNotificationRoot>
     </SafeView>
   );
