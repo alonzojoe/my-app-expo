@@ -10,6 +10,8 @@ const Header = () => {
 
   const { authUser } = useSelector((state) => state.auth);
 
+  console.log(authUser);
+
   return (
     <View style={styles.container}>
       <View>
@@ -23,7 +25,7 @@ const Header = () => {
           variant="headlineSmall"
           style={{ fontWeight: "bold", color: "#001C63" }}
         >
-          {authUser?.name}
+          {authUser?.FirstName} {authUser?.LastName}
         </PaperText>
       </View>
 

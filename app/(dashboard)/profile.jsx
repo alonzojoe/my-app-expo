@@ -14,16 +14,17 @@ import {
 import { PROFILEITEMS } from "./../../constants/ProfileItems";
 import ProfileItem from "./../../components/Profile/ProfileItem";
 import ProfileImg from "../../assets/image/Default_pfp.jpg";
-import { FontAwesome } from "@expo/vector-icons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import useToggle from "../../hooks/useToggle";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
+import moment from "moment";
 const Profile = () => {
   const [confirm, setConfirm] = useToggle(false);
   const router = useRouter();
 
   const { authUser } = useSelector((state) => state.auth);
+  const birthDay = moment(authUser?.BirthDate).format("MMMM DD, YYYY") ?? "";
 
   return (
     <>
@@ -43,7 +44,7 @@ const Profile = () => {
                 variant="headlineSmall"
                 style={{ fontWeight: "bold", color: "#091D63" }}
               >
-                {authUser?.name}
+                {authUser?.FirstName} {authUser?.LastName}
               </PaperText>
               <PaperText
                 variant="bodyMedium"
@@ -55,7 +56,7 @@ const Profile = () => {
           </View>
           <View style={{ paddingHorizontal: 10, marginTop: 5 }}>
             <List.Item
-              title={authUser?.hospitalNo}
+              title={authUser?.PatientNo}
               titleStyle={{ color: "#6E7AA3" }}
               left={(props) => (
                 <FontAwesome5
@@ -66,10 +67,10 @@ const Profile = () => {
               )}
             />
             <List.Item
-              title={authUser?.phone}
+              title={birthDay}
               titleStyle={{ color: "#6E7AA3" }}
               left={(props) => (
-                <FontAwesome name="phone" size={24} color="#6E7AA3" />
+                <FontAwesome5 name="calendar-day" size={24} color="#6E7AA3" />
               )}
             />
           </View>
