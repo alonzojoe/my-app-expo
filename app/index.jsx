@@ -1,30 +1,14 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { Link } from "expo-router";
-import ReactLogo from "../assets/image/react.png";
 import AppLogo from "../assets/lingadcare.png";
-import { useState, Fragment } from "react";
 import SafeView from "../components/SafeView";
-import { Badge } from "react-native-paper";
 import { Text as PaperText } from "react-native-paper";
-import { TextInput } from "react-native-paper";
 import Spacer from "../components/Spacer";
 import { Button } from "react-native-paper";
-import { useRouter } from "expo-router";
-import { Provider } from "react-native-paper";
-import { AUTH_USER } from "../constants/global";
-import { useDispatch } from "react-redux";
-import { setUser } from "../store/slices/auth-slice";
 import VerificationForm from "../components/Forms/VerificationForm";
-import Registration from "./registration";
 import { AlertNotificationRoot } from "react-native-alert-notification";
 import QRPopup from "../components/QR/QRPopup";
 const Auth = () => {
-  const [visible, setVisible] = useState(true);
-  const [show, setShow] = useState(false);
-  const router = useRouter();
-
-  const dispatch = useDispatch();
-
   return (
     <SafeView safe={true} style={styles.container}>
       <AlertNotificationRoot theme="dark" style={{ marginVertical: 20 }}>
@@ -47,45 +31,6 @@ const Auth = () => {
           <VerificationForm />
           <QRPopup show={true} />
         </View>
-        {/* <View style={styles.textGroup}>
-        <TextInput
-          keyboardType="numeric"
-          type="number"
-          label="Hospital No"
-          mode="outlined"
-          style={styles.input}
-        />
-        <TextInput
-          secureTextEntry={!show}
-          label="Password"
-          mode="outlined"
-          style={styles.input}
-          right={
-            <TextInput.Icon
-              icon={!show ? "eye" : "eye-off"}
-              onPress={() => setShow((prev) => !prev)}
-            />
-          }
-        />
-      </View>
-      <View style={styles.textForgot}>
-        <Link href="/" style={styles.forgot}>
-          Forgot Password
-        </Link>
-      </View>
-      <View style={styles.textGroup}>
-        <Button
-          icon="login"
-          mode="contained"
-          onPress={() => {
-            dispatch(setUser({ user: AUTH_USER }));
-            router.replace("/home");
-          }}
-          style={styles.btn}
-        >
-          Login
-        </Button>
-      </View> */}
         <View style={styles.textCreate}>
           <Link href="/registration" style={styles.create}>
             OR
