@@ -45,163 +45,160 @@ const VerificationForm = () => {
 
   return (
     <View style={{ backgroundColor: "#FFFFF" }}>
-      <View style={[styles.topHeaderItem, { marginBottom: 10 }]}>
+      {/* <View style={[styles.topHeaderItem, { marginBottom: 10 }]}>
         <PaperText variant="titleMedium" style={styles.titleText}>
           Information Verification
         </PaperText>
         <MaterialIcons name="verified" size={24} color="#017BFF" />
-      </View>
-      <View style={styles.formGroup}>
-        {/* Hospital Number */}
-        <View style={[styles.headerItem, { marginTop: 20 }]}>
-          <PaperText
-            variant="titleMedium"
-            style={[styles.labelText, errors.patientno && styles.errorLabel]}
-          >
-            Hospital Number{" "}
-            {errors.patientno && (
-              <ErrorMessage>{errors.patientno.message}</ErrorMessage>
-            )}
-          </PaperText>
-        </View>
+      </View> */}
 
-        <Controller
-          control={control}
-          name="patientno"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              keyboardType="numeric"
-              type="numeric"
-              placeholder="Hospital No"
-              mode="outlined"
-              style={styles.input}
-              error={!!errors.patientno}
-              right={
-                <TextInput.Icon
-                  color={showQr ? "#DD3353" : "#095185"}
-                  icon={showQr ? "close" : "qrcode"}
-                  onPress={() => toggleShowQr(!showQr)}
-                />
-              }
-            />
-            // <TextInput
-            //   value={value}
-            //   onChangeText={onChange}
-            //   onBlur={onBlur}
-            //   keyboardType="numeric"
-            //   label=""
-            //   mode="outlined"
-            //   error={!!errors.patientno}
-            //   style={styles.input}
-            //   right={
-            //     <TextInput.Icon
-            //       color={showQr ? "#DD3353" : "#095185"}
-            //       icon={showQr ? "close" : "qrcode"}
-            //       onPress={() => toggleShowQr(!showQr)}
-            //     />
-            //   }
-            // />
+      {/* Hospital Number */}
+      <View style={[styles.headerItem, { marginTop: 5 }]}>
+        <PaperText
+          variant="titleMedium"
+          style={[styles.labelText, errors.patientno && styles.errorLabel]}
+        >
+          Hospital Number{" "}
+          {errors.patientno && (
+            <ErrorMessage>{errors.patientno.message}</ErrorMessage>
           )}
-        />
-        {showQr && (
-          <QRScanner
-            onScan={handleQRScan}
-            onClose={() => toggleShowQr(false)}
+        </PaperText>
+      </View>
+
+      <Controller
+        control={control}
+        name="patientno"
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            value={value}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            keyboardType="numeric"
+            type="numeric"
+            placeholder="Hospital No"
+            mode="outlined"
+            style={styles.input}
+            error={!!errors.patientno}
+            right={
+              <TextInput.Icon
+                color={showQr ? "#DD3353" : "#095185"}
+                icon={showQr ? "close" : "qrcode"}
+                onPress={() => toggleShowQr(!showQr)}
+              />
+            }
+          />
+          // <TextInput
+          //   value={value}
+          //   onChangeText={onChange}
+          //   onBlur={onBlur}
+          //   keyboardType="numeric"
+          //   label=""
+          //   mode="outlined"
+          //   error={!!errors.patientno}
+          //   style={styles.input}
+          //   right={
+          //     <TextInput.Icon
+          //       color={showQr ? "#DD3353" : "#095185"}
+          //       icon={showQr ? "close" : "qrcode"}
+          //       onPress={() => toggleShowQr(!showQr)}
+          //     />
+          //   }
+          // />
+        )}
+      />
+      {showQr && (
+        <QRScanner onScan={handleQRScan} onClose={() => toggleShowQr(false)} />
+      )}
+
+      {/* Last Name */}
+      <View style={[styles.headerItem, { marginTop: 5 }]}>
+        <PaperText
+          variant="titleMedium"
+          style={[styles.labelText, errors.lastname && styles.errorLabel]}
+        >
+          Last Name
+          {errors.lastname && (
+            <ErrorMessage>{errors.lastname.message}</ErrorMessage>
+          )}
+        </PaperText>
+      </View>
+      <Controller
+        control={control}
+        name="lastname"
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            value={value.toUpperCase()}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            // label="Last Name"
+            mode="outlined"
+            style={styles.input}
+            error={!!errors.lastname}
+            placeholder="Last Name"
+          />
+          // <TextInput
+          //   value={value}
+          //   onChangeText={onChange}
+          //   onBlur={onBlur}
+          //   label=""
+          //   mode="outlined"
+          //   error={!!errors.lastname}
+          //   style={styles.input}
+          // />
+        )}
+      />
+
+      {/* Birthdate */}
+      <View style={[styles.headerItem, { marginTop: 5 }]}>
+        <PaperText
+          variant="titleMedium"
+          style={[styles.labelText, errors.birthdate && styles.errorLabel]}
+        >
+          Birthdate (MM/DD/YYYY)
+          {errors.birthdate && (
+            <ErrorMessage> {errors.birthdate.message}</ErrorMessage>
+          )}
+        </PaperText>
+      </View>
+      <Controller
+        control={control}
+        name="birthdate"
+        render={({ field: { onChange, value } }) => (
+          <MaskInput
+            mode="outline"
+            label="test"
+            value={value}
+            onChangeText={(masked) => onChange(masked)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            keyboardType="numeric"
+            placeholder="Birthdate"
+            mask={Masks.DATE_MMDDYYYY}
+            maxLength={10}
+            style={[
+              styles.input,
+              styles.maskInput,
+              errors.birthdate && styles.errorInput,
+              focused && styles.focusedInput,
+            ]}
           />
         )}
+      />
 
-        {/* Last Name */}
-        <View style={[styles.headerItem, { marginTop: 20 }]}>
-          <PaperText
-            variant="titleMedium"
-            style={[styles.labelText, errors.lastname && styles.errorLabel]}
-          >
-            Last Name
-            {errors.lastname && (
-              <ErrorMessage>{errors.lastname.message}</ErrorMessage>
-            )}
-          </PaperText>
-        </View>
-        <Controller
-          control={control}
-          name="lastname"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              value={value.toUpperCase()}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              // label="Last Name"
-              mode="outlined"
-              style={styles.input}
-              error={!!errors.lastname}
-              placeholder="Last Name"
-            />
-            // <TextInput
-            //   value={value}
-            //   onChangeText={onChange}
-            //   onBlur={onBlur}
-            //   label=""
-            //   mode="outlined"
-            //   error={!!errors.lastname}
-            //   style={styles.input}
-            // />
-          )}
-        />
-
-        {/* Birthdate */}
-        <View style={[styles.headerItem, { marginTop: 20 }]}>
-          <PaperText
-            variant="titleMedium"
-            style={[styles.labelText, errors.birthdate && styles.errorLabel]}
-          >
-            Birthdate (MM/DD/YYYY)
-            {errors.birthdate && (
-              <ErrorMessage> {errors.birthdate.message}</ErrorMessage>
-            )}
-          </PaperText>
-        </View>
-        <Controller
-          control={control}
-          name="birthdate"
-          render={({ field: { onChange, value } }) => (
-            <MaskInput
-              mode="outline"
-              label="test"
-              value={value}
-              onChangeText={(masked) => onChange(masked)}
-              onFocus={() => setFocused(true)}
-              onBlur={() => setFocused(false)}
-              keyboardType="numeric"
-              mask={Masks.DATE_MMDDYYYY}
-              maxLength={10}
-              style={[
-                styles.input,
-                styles.maskInput,
-                errors.birthdate && styles.errorInput,
-                focused && styles.focusedInput,
-              ]}
-            />
-          )}
-        />
-
-        <View style={styles.textGroup}>
-          <Button
-            mode="contained"
-            onPress={handleSubmit(onSubmit)}
-            style={styles.btn}
-            labelStyle={styles.btnLabel}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? <ActivityIndicator size={20} /> : "Verify"}
-          </Button>
-        </View>
-
-        <Spacer />
-        <Spacer />
+      <View style={styles.textGroup}>
+        <Button
+          mode="contained"
+          onPress={handleSubmit(onSubmit)}
+          style={styles.btn}
+          labelStyle={styles.btnLabel}
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? <ActivityIndicator size={20} /> : "Verify"}
+        </Button>
       </View>
+
+      {/* <Spacer />
+        <Spacer /> */}
     </View>
   );
 };
@@ -259,7 +256,7 @@ const styles = StyleSheet.create({
   },
   labelText: {
     color: "#001C63",
-    fontWeight: "bold",
+    fontWeight: "normal",
   },
   errorLabel: {
     color: "#B3271C",

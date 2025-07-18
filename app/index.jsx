@@ -14,6 +14,8 @@ import { Provider } from "react-native-paper";
 import { AUTH_USER } from "../constants/global";
 import { useDispatch } from "react-redux";
 import { setUser } from "../store/slices/auth-slice";
+import VerificationForm from "../components/Forms/VerificationForm";
+import Registration from "./registration";
 const Auth = () => {
   const [visible, setVisible] = useState(true);
   const [show, setShow] = useState(false);
@@ -23,7 +25,6 @@ const Auth = () => {
 
   return (
     <SafeView safe={true} style={styles.container}>
-      <Spacer />
       <Spacer />
       <View style={styles.textGroup}>
         <Image source={AppLogo} style={[styles.img, styles.textGroup]} />
@@ -39,7 +40,10 @@ const Auth = () => {
           Login your account
         </PaperText>
       </View>
-      <View style={styles.textGroup}>
+      <View style={{ marginHorizontal: 30 }}>
+        <VerificationForm />
+      </View>
+      {/* <View style={styles.textGroup}>
         <TextInput
           keyboardType="numeric"
           type="number"
@@ -77,7 +81,7 @@ const Auth = () => {
         >
           Login
         </Button>
-      </View>
+      </View> */}
       <View style={styles.textCreate}>
         <Link href="/registration" style={styles.create}>
           Create an account
