@@ -19,7 +19,7 @@ const defaultValues = {
   birthdate: "",
 };
 
-const VerificationForm = () => {
+const SetupPasswordForm = () => {
   const [focused, setFocused] = useState(false);
   const [showQr, toggleShowQr] = useToggle(false);
   const { handleVerify } = useVerification();
@@ -45,26 +45,22 @@ const VerificationForm = () => {
 
   return (
     <View>
-      {/* <View style={[styles.topHeaderItem, { marginBottom: 10 }]}>
+      <View style={[styles.topHeaderItem, { marginBottom: 10 }]}>
         <PaperText variant="titleMedium" style={styles.titleText}>
           Information Verification
         </PaperText>
         <MaterialIcons name="verified" size={24} color="#017BFF" />
-      </View> */}
+      </View>
 
       {/* Hospital Number */}
-      <View style={[styles.headerItem, { marginTop: 5 }]}>
+      <View style={[styles.headerItem, { marginTop: 20 }]}>
         <PaperText
           variant="titleMedium"
           style={[styles.labelText, errors.patientno && styles.errorLabel]}
         >
-          Hospital Number{" "}
-          {errors.patientno && (
-            <ErrorMessage>{errors.patientno.message}</ErrorMessage>
-          )}
+          Hospital Number
         </PaperText>
       </View>
-
       <Controller
         control={control}
         name="patientno"
@@ -74,11 +70,10 @@ const VerificationForm = () => {
             onChangeText={onChange}
             onBlur={onBlur}
             keyboardType="numeric"
-            type="numeric"
-            placeholder="Hospital No"
+            label=""
             mode="outlined"
-            style={styles.input}
             error={!!errors.patientno}
+            style={styles.input}
             right={
               <TextInput.Icon
                 color={showQr ? "#DD3353" : "#095185"}
@@ -87,39 +82,22 @@ const VerificationForm = () => {
               />
             }
           />
-          // <TextInput
-          //   value={value}
-          //   onChangeText={onChange}
-          //   onBlur={onBlur}
-          //   keyboardType="numeric"
-          //   label=""
-          //   mode="outlined"
-          //   error={!!errors.patientno}
-          //   style={styles.input}
-          //   right={
-          //     <TextInput.Icon
-          //       color={showQr ? "#DD3353" : "#095185"}
-          //       icon={showQr ? "close" : "qrcode"}
-          //       onPress={() => toggleShowQr(!showQr)}
-          //     />
-          //   }
-          // />
         )}
       />
+      {errors.patientno && (
+        <ErrorMessage>{errors.patientno.message}</ErrorMessage>
+      )}
       {showQr && (
         <QRScanner onScan={handleQRScan} onClose={() => toggleShowQr(false)} />
       )}
 
       {/* Last Name */}
-      <View style={[styles.headerItem, { marginTop: 5 }]}>
+      <View style={[styles.headerItem, { marginTop: 20 }]}>
         <PaperText
           variant="titleMedium"
           style={[styles.labelText, errors.lastname && styles.errorLabel]}
         >
           Last Name
-          {errors.lastname && (
-            <ErrorMessage>{errors.lastname.message}</ErrorMessage>
-          )}
         </PaperText>
       </View>
       <Controller
@@ -127,37 +105,27 @@ const VerificationForm = () => {
         name="lastname"
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            value={value.toUpperCase()}
+            value={value}
             onChangeText={onChange}
             onBlur={onBlur}
-            // label="Last Name"
+            label=""
             mode="outlined"
-            style={styles.input}
             error={!!errors.lastname}
-            placeholder="Last Name"
+            style={styles.input}
           />
-          // <TextInput
-          //   value={value}
-          //   onChangeText={onChange}
-          //   onBlur={onBlur}
-          //   label=""
-          //   mode="outlined"
-          //   error={!!errors.lastname}
-          //   style={styles.input}
-          // />
         )}
       />
+      {errors.lastname && (
+        <ErrorMessage>{errors.lastname.message}</ErrorMessage>
+      )}
 
       {/* Birthdate */}
-      <View style={[styles.headerItem, { marginTop: 5 }]}>
+      <View style={[styles.headerItem, { marginTop: 20 }]}>
         <PaperText
           variant="titleMedium"
           style={[styles.labelText, errors.birthdate && styles.errorLabel]}
         >
           Birthdate (MM/DD/YYYY)
-          {errors.birthdate && (
-            <ErrorMessage> {errors.birthdate.message}</ErrorMessage>
-          )}
         </PaperText>
       </View>
       <Controller
@@ -165,14 +133,11 @@ const VerificationForm = () => {
         name="birthdate"
         render={({ field: { onChange, value } }) => (
           <MaskInput
-            mode="outline"
-            label="test"
             value={value}
             onChangeText={(masked) => onChange(masked)}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             keyboardType="numeric"
-            placeholder="Birthdate"
             mask={Masks.DATE_MMDDYYYY}
             maxLength={10}
             style={[
@@ -184,27 +149,29 @@ const VerificationForm = () => {
           />
         )}
       />
+      {errors.birthdate && (
+        <ErrorMessage>{errors.birthdate.message}</ErrorMessage>
+      )}
 
       <View style={styles.textGroup}>
         <Button
-          icon="login"
           mode="contained"
           onPress={handleSubmit(onSubmit)}
           style={styles.btn}
           labelStyle={styles.btnLabel}
           disabled={isSubmitting}
         >
-          {isSubmitting ? <ActivityIndicator size={20} /> : "Login"}
+          {isSubmitting ? <ActivityIndicator size={20} /> : "Verify"}
         </Button>
       </View>
 
-      {/* <Spacer />
-        <Spacer /> */}
+      <Spacer />
+      <Spacer />
     </View>
   );
 };
 
-export default VerificationForm;
+export default SetupPasswordForm;
 
 const styles = StyleSheet.create({
   topHeaderItem: {
@@ -219,6 +186,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   textGroup: {
+    marginBottom: 15,
     marginTop: 15,
     alignItems: "center",
   },
@@ -228,7 +196,7 @@ const styles = StyleSheet.create({
   },
   btnLabel: {
     color: "white",
-    fontWeight: "normal",
+    fontWeight: "bold",
   },
   input: {
     width: "100%",
@@ -256,7 +224,7 @@ const styles = StyleSheet.create({
   },
   labelText: {
     color: "#001C63",
-    fontWeight: "normal",
+    fontWeight: "bold",
   },
   errorLabel: {
     color: "#B3271C",
