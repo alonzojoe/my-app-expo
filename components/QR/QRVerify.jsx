@@ -1,8 +1,31 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import React from "react";
+import { useState } from "react";
 import { Portal, Modal, Text as PaperText, Button } from "react-native-paper";
-import QRScanner from "./QRScanner";
+import ErrorMessage from "../Global/ErrorMessage";
+import MaskInput, { Masks } from "react-native-mask-input";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { qrVerifySchema } from "../../schema/schema";
+const defaultValues = {
+  birthdate: "",
+};
+
 const QRVerify = ({ show, toggleQR }) => {
+  const [focused, setFocused] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues,
+    resolver: zodResolver(qrVerifySchema),
+  });
+
+  const onSubmit = async (formValues) => {
+    console.log("Form submitted", formValues);
+  };
+
   return (
     <Portal>
       <Modal
@@ -27,7 +50,45 @@ const QRVerify = ({ show, toggleQR }) => {
             </PaperText>
           </View>
           <ScrollView>
-            <View>Content Here</View>
+            <View style={{ marginHorizontal: 15 }}>
+              <View style={[styles.headerItem, { marginTop: 5 }]}>
+                <PaperText
+                  variant="titleMedium"
+                  style={[
+                    styles.labelText,
+                    errors.birthdate && styles.errorLabel,
+                  ]}
+                >
+                  Birthdate (MM/DD/YYYY)
+                  {errors.birthdate && (
+                    <ErrorMessage> {errors.birthdate.message}</ErrorMessage>
+                  )}
+                </PaperText>
+              </View>
+              <Controller
+                control={control}
+                name="birthdate"
+                render={({ field: { onChange, value } }) => (
+                  <MaskInput
+                    mode="outline"
+                    label="test"
+                    value={value}
+                    onChangeText={(masked) => onChange(masked)}
+                    onFocus={() => setFocused(true)}
+                    onBlur={() => setFocused(false)}
+                    keyboardType="numeric"
+                    mask={Masks.DATE_MMDDYYYY}
+                    maxLength={10}
+                    style={[
+                      styles.input,
+                      styles.maskInput,
+                      errors.birthdate && styles.errorInput,
+                      focused && styles.focusedInput,
+                    ]}
+                  />
+                )}
+              />
+            </View>
           </ScrollView>
           <View style={{ marginVertical: 10 }} />
           <View
@@ -43,7 +104,7 @@ const QRVerify = ({ show, toggleQR }) => {
               width={120}
               icon="close"
               mode="contained"
-              onPress={() => toggleQR(false)}
+              onPress={handleSubmit(onSubmit)}
               style={{
                 color: "#fff",
                 backgroundColor: "#001C63",
@@ -82,5 +143,59 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     backgroundColor: "white",
     padding: 20,
+  },
+  topHeaderItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 5,
+  },
+  headerItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+  textGroup: {
+    marginTop: 15,
+    alignItems: "center",
+  },
+  btn: {
+    width: "100%",
+    marginVertical: 12,
+  },
+  btnLabel: {
+    color: "white",
+    fontWeight: "normal",
+  },
+  input: {
+    width: "100%",
+    marginVertical: 5,
+    backgroundColor: "#FFF",
+  },
+  maskInput: {
+    borderColor: "#C1BDC3",
+    borderWidth: 2,
+    borderRadius: 5,
+    padding: 15,
+    fontSize: 16,
+  },
+  focusedInput: {
+    borderColor: "#001C63",
+  },
+  errorInput: {
+    borderColor: "#B3271C",
+  },
+  titleText: {
+    color: "#001C63",
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  labelText: {
+    color: "#001C63",
+    fontWeight: "normal",
+  },
+  errorLabel: {
+    color: "#B3271C",
   },
 });
