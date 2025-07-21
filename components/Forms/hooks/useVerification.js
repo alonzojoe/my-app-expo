@@ -4,7 +4,9 @@ import { Toast, ALERT_TYPE } from "react-native-alert-notification";
 import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../store/slices/auth-slice";
+import { useState } from "react";
 const useVerification = () => {
+  const [patientNo, setPatientNo] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -54,7 +56,14 @@ const useVerification = () => {
     }
   };
 
-  return { handleVerify };
+  const scanQR = (data) => {
+    console.log(data);
+    const sanitizedData = data.split("-")[1];
+
+    setPatientNo(sanitizedData);
+  };
+
+  return { patientNo, handleVerify, scanQR };
 };
 
 export default useVerification;
