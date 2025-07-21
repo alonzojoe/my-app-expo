@@ -26,3 +26,14 @@ export const verifySchema = z.object({
     .nonempty({ message: "is required" })
     .min(10, { message: "invalid format*" }),
 });
+
+export const qrVerifySchema = z.object({
+  birthdate: z
+    .string({
+      invalid_type_error: "is required*",
+      required_error: "is required*",
+    })
+    .trim()
+    .nonempty({ message: "is required" })
+    .min(10, { message: "invalid format*" }),
+});

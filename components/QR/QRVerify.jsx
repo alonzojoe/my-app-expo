@@ -19,8 +19,11 @@ const QRVerify = ({ show, toggleQR }) => {
               marginBottom: 10,
             }}
           >
-            <PaperText variant="titleMedium" style={{ color: "#001C63" }}>
-              VERIFY YOUR DATE OF BIRTH (MM/DD/YYYY)
+            <PaperText
+              variant="titleMedium"
+              style={{ color: "#001C63", textAlign: "center" }}
+            >
+              VERIFY YOUR DATE OF BIRTH
             </PaperText>
           </View>
           <ScrollView>
@@ -33,8 +36,21 @@ const QRVerify = ({ show, toggleQR }) => {
               display: "flex",
               alignContent: "center",
               justifyContent: "center",
+              gap: 5,
             }}
           >
+            <Button
+              width={120}
+              icon="close"
+              mode="contained"
+              onPress={() => toggleQR(false)}
+              style={{
+                color: "#fff",
+                backgroundColor: "#001C63",
+              }}
+            >
+              Verify
+            </Button>
             <Button
               width={120}
               icon="close"

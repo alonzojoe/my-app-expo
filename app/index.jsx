@@ -8,6 +8,7 @@ import { Button } from "react-native-paper";
 import VerificationForm from "../components/Forms/VerificationForm";
 import { AlertNotificationRoot } from "react-native-alert-notification";
 import QRPopup from "../components/QR/QRPopup";
+import QRVerify from "../components/QR/QRVerify";
 import useToggle from "../hooks/useToggle";
 const Auth = () => {
   const [showQr, toggleShowQr] = useToggle(false);
@@ -31,7 +32,8 @@ const Auth = () => {
         </View>
         <View style={{ marginHorizontal: 40 }}>
           <VerificationForm />
-          {showQr && <QRPopup show={true} toggleQR={toggleShowQr} />}
+          <QRPopup show={showQr} toggleQR={toggleShowQr} />
+          <QRVerify show={true} />
         </View>
         <View style={styles.textCreate}>
           <Link href="/registration" style={styles.create}>
@@ -47,7 +49,7 @@ const Auth = () => {
           >
             Login using QR
           </Button>
-      </View>
+        </View>
       </AlertNotificationRoot>
     </SafeView>
   );
