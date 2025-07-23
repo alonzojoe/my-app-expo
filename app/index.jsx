@@ -12,6 +12,7 @@ import QRVerify from "../components/QR/QRVerify";
 import useToggle from "../hooks/useToggle";
 const Auth = () => {
   const [showQr, toggleShowQr] = useToggle(false);
+
   return (
     <SafeView safe={true} style={styles.container}>
       <AlertNotificationRoot theme="dark" style={{ marginVertical: 20 }}>

@@ -1,0 +1,36 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUser } from "../store/slices/auth-slice";
+import { useRouter } from "expo-router";
+const useAuthentication = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    setIsLoading(true);
+    const checkUser = async () => {
+      try {
+        const storedUser = await AsyncStorage.getItem("auth-user");
+        if (storedUser) {
+          const userData = JSON.parse(storedUser);
+          dispatch(setUser({ user: userData }));
+          console.log("Redirecting, user found:", userData);
+          router.replace("/home");
+        } else {
+          console.log("No user found, staying on login screen");
+        }
+      } catch (error) {
+        console.log("Error checking user authentication:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkUser();
+  }, []);
+
+  return { isLoading };
+};
+
+export default useAuthentication;
