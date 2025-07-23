@@ -172,7 +172,7 @@ const VerificationForm = () => {
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             keyboardType="numeric"
-            placeholder="Birthdate"
+            // placeholder="Birthdate"
             mask={Masks.DATE_MMDDYYYY}
             maxLength={10}
             style={[
