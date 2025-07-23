@@ -18,6 +18,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import useToggle from "../../hooks/useToggle";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
+import { logoutUser } from "../../libs/utils";
 import moment from "moment";
 const Profile = () => {
   const [confirm, setConfirm] = useToggle(false);
@@ -107,7 +108,7 @@ const Profile = () => {
               <Button onPress={() => setConfirm(false)} textColor="#DD3353">
                 Cancel
               </Button>
-              <Button onPress={() => router.replace("/")}>Yes</Button>
+              <Button onPress={async () => await logoutUser()}>Yes</Button>
             </Dialog.Actions>
           </Dialog>
         </Portal>

@@ -1,10 +1,13 @@
 import api from "../../../services";
 import moment from "moment";
-import { Toast, ALERT_TYPE } from "react-native-alert-notification";
 import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../store/slices/auth-slice";
 import { useState } from "react";
+import { ToastMessage } from "../../../libs/utils";
+import { storeUser } from "../../../libs/utils";
+const tm = new ToastMessage();
+
 const useVerification = () => {
   const [patientNo, setPatientNo] = useState("");
   const router = useRouter();
@@ -24,35 +27,27 @@ const useVerification = () => {
       });
       console.log("api res :", res.data);
       if (res.data.data.length === 0) {
-        Toast.show({
-          type: ALERT_TYPE.DANGER,
-          title: "Verification Failed",
-          textBody:
-            "We couldn't verify your record. Please double-check your information.",
-          button: "Close",
-        });
+        tm.toast(
+          "DANGER",
+          "Verification Failed",
+          "We couldn't verify your record. Please double-check your information."
+        );
 
         return;
       }
+      storeUser(res.data.data[0]);
       dispatch(setUser({ user: res.data.data[0] }));
       console.log("user", res.data.data[0]);
-      Toast.show({
-        type: ALERT_TYPE.SUCCESS,
-        title: "Verification Successful",
-        textBody:
-          "Your information has been verified successfully. You may now proceed to the next step.",
-        button: "Continue",
-      });
+      tm.toast(
+        "SUCCESS",
+        "Verification Successful",
+        "Your information has been verified successfully. You may now proceed to the next step."
+      );
       await new Promise((resolve) => setTimeout(resolve, 1000));
       router.replace("/home");
     } catch (error) {
       console.log(error);
-      Toast.show({
-        type: ALERT_TYPE.DANGER,
-        title: "Something went wrong",
-        textBody: "Please try again later.",
-        button: "Close",
-      });
+      tm.toast("DANGER", "Something went wrong", "Please try again later.");
     }
   };
 

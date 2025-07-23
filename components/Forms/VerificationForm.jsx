@@ -79,13 +79,13 @@ const VerificationForm = () => {
             mode="outlined"
             style={styles.input}
             error={!!errors.patientno}
-            right={
-              <TextInput.Icon
-                color={showQr ? "#DD3353" : "#095185"}
-                icon={showQr ? "close" : "qrcode"}
-                onPress={() => toggleShowQr(!showQr)}
-              />
-            }
+            // right={
+            //   <TextInput.Icon
+            //     color={showQr ? "#DD3353" : "#095185"}
+            //     icon={showQr ? "close" : "qrcode"}
+            //     onPress={() => toggleShowQr(!showQr)}
+            //   />
+            // }
           />
           // <TextInput
           //   value={value}
@@ -172,7 +172,7 @@ const VerificationForm = () => {
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
             keyboardType="numeric"
-            placeholder="Birthdate"
+            // placeholder="Birthdate"
             mask={Masks.DATE_MMDDYYYY}
             maxLength={10}
             style={[

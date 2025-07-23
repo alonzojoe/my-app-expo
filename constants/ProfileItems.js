@@ -49,9 +49,8 @@ export const PROFILEITEMS = [
     id: 5,
     label: "Logout",
     color: "#FF2245",
-    onPress: () => {
+    onPress: async () => {
       console.log("Logout clicked");
-      router.replace("/");
     },
     Icon: "FontAwesome",
     iconName: "power-off",
