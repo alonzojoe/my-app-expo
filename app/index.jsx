@@ -33,7 +33,7 @@ const Auth = () => {
         <View style={{ marginHorizontal: 40 }}>
           <VerificationForm />
           <QRPopup show={showQr} toggleQR={toggleShowQr} />
-          <QRVerify show={true} />
+          <QRVerify show={false} />
         </View>
         <View style={styles.textCreate}>
           <Link href="/registration" style={styles.create}>
