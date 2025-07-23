@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../../store/slices/auth-slice";
 import { useState } from "react";
 import { ToastMessage } from "../../../libs/utils";
-
+import { storeUser } from "../../../libs/utils";
 const tm = new ToastMessage();
 
 const useVerification = () => {
@@ -35,6 +35,7 @@ const useVerification = () => {
 
         return;
       }
+      storeUser(res.data.data[0]);
       dispatch(setUser({ user: res.data.data[0] }));
       console.log("user", res.data.data[0]);
       tm.toast(

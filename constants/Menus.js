@@ -5,6 +5,7 @@ import Profile from "../assets/image/user.png";
 import MapImg from "../assets/image/map.png";
 import Faq from "../assets/image/faq.png";
 import { useRouter } from "expo-router";
+import { logoutUser } from "../libs/utils";
 
 const router = useRouter();
 
@@ -53,7 +54,8 @@ export const MENUS = [
     id: 6,
     name: "Profile",
     Icon: Profile,
-    fn: () => {
+    fn: async () => {
+      await logoutUser();
       router.replace("/profile");
     },
   },
