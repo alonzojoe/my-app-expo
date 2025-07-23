@@ -1,5 +1,8 @@
 import { Toast, ALERT_TYPE } from "react-native-alert-notification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
+
+const router = useRouter();
 export class ToastMessage {
   toast(type, title, body) {
     Toast.show({
@@ -28,4 +31,6 @@ export const storeUser = async (userData) => {
 
 export const logoutUser = async () => {
   await AsyncStorage.removeItem("auth-user");
+  // alert("logged out");
+  router.replace("/");
 };

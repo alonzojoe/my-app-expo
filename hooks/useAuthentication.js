@@ -11,6 +11,7 @@ const useAuthentication = () => {
   useEffect(() => {
     setIsLoading(true);
     const checkUser = async () => {
+      console.clear();
       try {
         const storedUser = await AsyncStorage.getItem("auth-user");
         if (storedUser) {
@@ -25,7 +26,7 @@ const useAuthentication = () => {
         console.log("Error checking user authentication:", error);
       } finally {
         setIsLoading(false);
-      }
+    }
     };
 
     checkUser();
