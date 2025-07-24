@@ -25,7 +25,9 @@ const useAuthentication = () => {
       } catch (error) {
         console.log("Error checking user authentication:", error);
       } finally {
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       }
     };
 
