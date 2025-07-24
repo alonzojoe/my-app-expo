@@ -6,6 +6,7 @@ import MaskInput, { Masks } from "react-native-mask-input";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { qrVerifySchema } from "../../schema/schema";
+import useVerification from "../Forms/hooks/useVerification";
 const defaultValues = {
   birthdate: "",
 };
@@ -22,8 +23,12 @@ const QRVerify = ({ show, toggleQR }) => {
     resolver: zodResolver(qrVerifySchema),
   });
 
+  const { verifyQRData } = useVerification();
+
   const onSubmit = async (formValues) => {
     console.log("Form submitted", formValues);
+    const { birthdate } = formValues;
+    await verifyQRData(birthdate);
   };
 
   return (
@@ -102,7 +107,7 @@ const QRVerify = ({ show, toggleQR }) => {
           >
             <Button
               width={120}
-              icon="close"
+              icon="check"
               mode="contained"
               onPress={handleSubmit(onSubmit)}
               style={{

@@ -21,13 +21,13 @@ const QRScanner = ({ onScan, onClose }) => {
     setScanned(true);
     setScannedData(data);
     onScan(data);
-    Alert.alert("QR Code Scanned", data, [
+    Alert.alert("QR Code Scanned: ", data, [
       {
         text: "OK",
-        onPress: () => {
+        onPress: async () => {
           setScanned(false);
-          onScan(data);
-          onClose();
+          await onScan(data);
+          // onClose();
         },
       },
     ]);
