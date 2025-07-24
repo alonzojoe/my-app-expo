@@ -26,7 +26,7 @@ const useAuthentication = () => {
         console.log("Error checking user authentication:", error);
       } finally {
         setIsLoading(false);
-    }
+      }
     };
 
     checkUser();
