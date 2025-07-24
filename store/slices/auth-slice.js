@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  scannedQR: null,
   authUser: null,
 };
 
@@ -11,8 +12,11 @@ const authSlice = createSlice({
     setUser(state, action) {
       state.authUser = action.payload.user;
     },
+    setScanQR(state, action) {
+      state.scannedQR = action.payload.qr;
+    },
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, setScanQR } = authSlice.actions;
 export default authSlice.reducer;
