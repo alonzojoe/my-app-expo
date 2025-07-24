@@ -11,10 +11,12 @@ import QRPopup from "../components/QR/QRPopup";
 import QRVerify from "../components/QR/QRVerify";
 import useToggle from "../hooks/useToggle";
 import useAuthentication from "../hooks/useAuthentication";
-
+import FSLoader from "../components/Global/FSLoader";
 const Auth = () => {
   const [showQr, toggleShowQr] = useToggle(false);
   const { isLoading } = useAuthentication();
+
+  if (isLoading) return <FSLoader />;
 
   return (
     <SafeView safe={true} style={styles.container}>
