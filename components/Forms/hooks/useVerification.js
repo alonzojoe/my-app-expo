@@ -51,11 +51,42 @@ const useVerification = () => {
     }
   };
 
-  const scanQR = (data) => {
+  const handleSearch = async (patientNo) => {
+    try {
+      const res = await api.get("/search", {
+        params: {
+          patientno: patientNo,
+        },
+      });
+      console.log("api res :", res.data);
+      if (res.data.data.length === 0) {
+        tm.toast(
+          "DANGER",
+          "Verification Failed",
+          "We couldn't verify your QR Code."
+        );
+        return;
+      }
+      console.log("qred", res.data.data[0]);
+      tm.toast(
+        "SUCCESS",
+        "Verification Successful",
+        "QR Code has been verified successfully. You may now proceed to verification."
+      );
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      router.replace("/home");
+    } catch (error) {
+      console.log(error);
+      tm.toast("DANGER", "Something went wrong", "Please try again later.");
+    }
+  };
+
+  const scanQR = async (data) => {
     console.log(data);
     const sanitizedData = data.split("-")[1];
 
     setPatientNo(sanitizedData);
+    await handleSearch(sanitizedData);
   };
 
   return { patientNo, handleVerify, scanQR };
