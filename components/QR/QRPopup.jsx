@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 import React from "react";
 import { Portal, Modal, Text as PaperText, Button } from "react-native-paper";
 import QRScanner from "./QRScanner";
-const QRPopup = ({ show, toggleQR }) => {
+const QRPopup = ({ show, toggleQR, onScan }) => {
   return (
     <Portal>
       <Modal
@@ -24,7 +24,7 @@ const QRPopup = ({ show, toggleQR }) => {
             </PaperText>
           </View>
           <ScrollView>
-            <QRScanner />
+            <QRScanner onScan={onScan} />
           </ScrollView>
           <View style={{ marginVertical: 10 }} />
           <View

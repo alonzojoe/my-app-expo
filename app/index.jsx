@@ -12,10 +12,12 @@ import QRVerify from "../components/QR/QRVerify";
 import useToggle from "../hooks/useToggle";
 import useAuthentication from "../hooks/useAuthentication";
 import FSLoader from "../components/Global/FSLoader";
+import useVerification from "../components/Forms/hooks/useVerification";
 const Auth = () => {
   const [showQr, toggleShowQr] = useToggle(false);
   const [showVerify, toggleShowVerify] = useToggle(false);
   const { isLoading } = useAuthentication();
+  const { scanQR } = useVerification();
 
   if (isLoading) return <FSLoader />;
 
@@ -39,7 +41,7 @@ const Auth = () => {
         </View>
         <View style={{ marginHorizontal: 40 }}>
           <VerificationForm />
-          <QRPopup show={showQr} toggleQR={toggleShowQr} />
+          <QRPopup onScan={scanQR} show={showQr} toggleQR={toggleShowQr} />
           <QRVerify show={showVerify} />
         </View>
         <View style={styles.textCreate}>

@@ -52,6 +52,7 @@ const useVerification = () => {
   };
 
   const handleSearch = async (patientNo) => {
+    console.log("patt", patientNo);
     try {
       const res = await api.get("/search", {
         params: {
@@ -82,11 +83,14 @@ const useVerification = () => {
   };
 
   const scanQR = async (data) => {
-    console.log(data);
-    const sanitizedData = data.split("-")[1];
+    console.log("unsanitized", data);
+    const sanitizedData = data.toString().includes("-")
+      ? data.toString().split("-")[1]
+      : data.toString();
+    console.log("sanitized", sanitizedData);
 
-    setPatientNo(sanitizedData);
     await handleSearch(sanitizedData);
+    setPatientNo(sanitizedData);
   };
 
   return { patientNo, handleVerify, scanQR };
