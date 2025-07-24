@@ -17,7 +17,7 @@ const Auth = () => {
   const [showQr, toggleShowQr] = useToggle(false);
   const [showVerify, toggleShowVerify] = useToggle(false);
   const { isLoading } = useAuthentication();
-  const { scanQR } = useVerification();
+  const { scanQR } = useVerification(toggleShowVerify, toggleShowQr);
 
   if (isLoading) return <FSLoader />;
 

@@ -8,7 +8,7 @@ import { ToastMessage } from "../../../libs/utils";
 import { storeUser } from "../../../libs/utils";
 const tm = new ToastMessage();
 
-const useVerification = () => {
+const useVerification = (toggleShowVerify, toggleShowQr) => {
   const [patientNo, setPatientNo] = useState("");
   const router = useRouter();
   const dispatch = useDispatch();
@@ -75,7 +75,8 @@ const useVerification = () => {
         "QR Code has been verified successfully. You may now proceed to verification."
       );
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      router.replace("/home");
+      toggleShowQr(false);
+      toggleShowVerify(true);
     } catch (error) {
       console.log(error);
       tm.toast("DANGER", "Something went wrong", "Please try again later.");
