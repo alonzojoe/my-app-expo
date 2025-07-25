@@ -1,28 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useState, useMemo } from "react";
 import SafeView from "../components/SafeView";
-import {
-  Searchbar,
-  Portal,
-  Modal,
-  Text as PaperText,
-} from "react-native-paper";
+import { Searchbar, Portal, Modal } from "react-native-paper";
 import TransactionItem from "../components/Transactions/TransactionItem";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MEDICAL_RECORDS } from "../constants/global";
 import useDebounce from "./../hooks/useDebounce";
 import useToggle from "../hooks/useToggle";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import ContentTitle from "../components/Transactions/ContentTitle";
-import ContanteData from "../components/Transactions/ContentData";
 import { PHYSICIANS, DIAGNOSIS } from "../constants/global";
-import PhysicianItem from "./../components/Transactions/PhysicianItem";
 import AdmittedForm from "../components/Transactions/AdmittedForm";
+
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
   const [searchQuery, setSearchQuery] = useState("");
-  const debounceValue = useDebounce(searchQuery);
   const [show, toggleShow] = useToggle(false);
 
   const searchDebounce = useDebounce(searchQuery);
