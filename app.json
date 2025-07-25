@@ -1,17 +1,17 @@
 {
   "expo": {
     "scheme": "myapp",
-    "name": "LingadCare",
+    "name": "",
     "slug": "LingadCare",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/lcare.png",
+    "icon": "./assets/logo-final.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/lcare.png",
+      "image": "./assets/logo-final.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#001C63"
     },
     "ios": {
       "bundleIdentifier": "com.myapp",
@@ -25,8 +25,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/lcare.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/logo-final.png",
+        "backgroundColor": "#001C63"
       },
       "edgeToEdgeEnabled": true,
       "permissions": [
