@@ -8,9 +8,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MEDICAL_RECORDS } from "../constants/global";
 import useDebounce from "./../hooks/useDebounce";
 import useToggle from "../hooks/useToggle";
-import { PHYSICIANS, DIAGNOSIS } from "../constants/global";
+import { PHYSICIANS, DIAGNOSIS, SOAP } from "../constants/global";
 import AdmittedForm from "../components/Transactions/AdmittedForm";
-
+import OutPatientForm from "../components/Transactions/OutPatientForm";
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
   const [searchQuery, setSearchQuery] = useState("");
@@ -62,9 +62,14 @@ const Medical = () => {
           onDismiss={() => toggleShow(false)}
           contentContainerStyle={styles.modalContainer}
         >
-          <AdmittedForm
+          {/* <AdmittedForm
             physicians={PHYSICIANS}
             diagnosis={DIAGNOSIS}
+            onToggle={toggleShow}
+          /> */}
+          <OutPatientForm
+            physicians={PHYSICIANS}
+            soap={SOAP}
             onToggle={toggleShow}
           />
         </Modal>
