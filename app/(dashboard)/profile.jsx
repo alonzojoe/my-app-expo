@@ -18,7 +18,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import useToggle from "../../hooks/useToggle";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import { logoutUser } from "../../libs/utils";
+import { logoutUser, formatName } from "../../libs/utils";
 import moment from "moment";
 const Profile = () => {
   const [confirm, setConfirm] = useToggle(false);
@@ -26,6 +26,10 @@ const Profile = () => {
 
   const { authUser } = useSelector((state) => state.auth);
   const birthDay = moment(authUser?.BirthDate).format("MMMM DD, YYYY") ?? "";
+
+  const fullName = `${formatName(authUser?.FirstName)} ${formatName(
+    authUser?.LastName
+  )}`;
 
   return (
     <>
@@ -45,7 +49,7 @@ const Profile = () => {
                 variant="headlineSmall"
                 style={{ fontWeight: "bold", color: "#091D63" }}
               >
-                {authUser?.FirstName} {authUser?.LastName}
+                {fullName}
               </PaperText>
               <PaperText
                 variant="bodyMedium"
