@@ -16,8 +16,9 @@ import useToggle from "../hooks/useToggle";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import ContentTitle from "../components/Transactions/ContentTitle";
 import ContanteData from "../components/Transactions/ContentData";
-import { PHYSICIANS } from "../constants/global";
+import { PHYSICIANS, DIAGNOSIS } from "../constants/global";
 import PhysicianItem from "./../components/Transactions/PhysicianItem";
+import AdmittedForm from "../components/Transactions/AdmittedForm";
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
   const [searchQuery, setSearchQuery] = useState("");
@@ -70,83 +71,11 @@ const Medical = () => {
           onDismiss={() => toggleShow(false)}
           contentContainerStyle={styles.modalContainer}
         >
-          <>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 10,
-              }}
-            >
-              <PaperText
-                variant="titleMedium"
-                style={{
-                  color: "#004C82",
-                  textDecorationLine: "underline",
-                  fontWeight: "bold",
-                }}
-              >
-                IN-72025-428087
-              </PaperText>
-              <PaperText onPress={() => toggleShow(false)}>
-                <FontAwesome5 name="times" size={20} color="#DD3254" />
-              </PaperText>
-            </View>
-            <ScrollView>
-              <View>
-                <>
-                  <ContentTitle title="Physicians" mb={5} />
-                  <View style={{ marginBottom: 5 }}>
-                    {PHYSICIANS.map((p) => (
-                      <PhysicianItem
-                        key={p.id}
-                        physician={p.name}
-                        type={p.type}
-                        isMain={p.isMain}
-                      />
-                    ))}
-                  </View>
-                </>
-                <>
-                  <ContentTitle title="Diagnosis" />
-                  <ContanteData
-                    title={`Initial Diagnosis`}
-                    content={`GRAVIDA 2 PARA 2 (2002) ABNORMAL UTERINE BLEEDING- ENDOMETRIALPOLYP, S/P HYSTEROSCOPIC GUIDED POLYPECTOMY, SEVERE ANEMIA SECONDARY TO ACUTE BLOOD LOSS`}
-                  />
-                  <ContanteData
-                    title={`Final Diagnosis`}
-                    content={`GRAVIDA 2 PARA 2 (2002) ABNORMAL UTERINE BLEEDING - ENDOMETRIAL POLYP STATUS POST HYSTEROSCOPIC GUIDED POLYPECTOMY SEVERE ANEMIA SECONDARY TO AUTE BLOOD LOSS -CORRECTED`}
-                  />
-                </>
-                <>
-                  <ContentTitle title="Procedure Done" />
-                  <ContanteData
-                    title={`Main Operation`}
-                    content={`BLOOD TRANSFUSION`}
-                  />
-                  <ContanteData title={`Other Operation`} content={`-`} />
-                </>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  display: "flex",
-                  alignContent: "center",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <PaperText
-                  style={{ color: "#DD3254", fontWeight: "bold" }}
-                  onPress={() => toggleShow(false)}
-                >
-                  Close
-                </PaperText>
-              </View>
-            </ScrollView>
-            <View style={{ marginVertical: 10 }} />
-          </>
+          <AdmittedForm
+            physicians={PHYSICIANS}
+            diagnosis={DIAGNOSIS}
+            onToggle={toggleShow}
+          />
         </Modal>
       </Portal>
     </SafeView>

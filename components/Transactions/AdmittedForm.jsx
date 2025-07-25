@@ -2,9 +2,10 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import { Text as PaperText } from "react-native-paper";
 import { FontAwesome5 } from "@expo/vector-icons";
 import ContentTitle from "./ContentTitle";
+import ContentData from "./ContentData";
 import PhysicianItem from "./PhysicianItem";
 
-const AdmittedForm = ({ physicians, diagnosis, toggleShow }) => {
+const AdmittedForm = ({ physicians, diagnosis, onToggle }) => {
   return (
     <>
       <View
@@ -26,7 +27,7 @@ const AdmittedForm = ({ physicians, diagnosis, toggleShow }) => {
         >
           IN-72025-428087
         </PaperText>
-        <PaperText onPress={() => toggleShow(false)}>
+        <PaperText onPress={() => onToggle(false)}>
           <FontAwesome5 name="times" size={20} color="#DD3254" />
         </PaperText>
       </View>
@@ -47,22 +48,25 @@ const AdmittedForm = ({ physicians, diagnosis, toggleShow }) => {
           </>
           <>
             <ContentTitle title="Diagnosis" />
-            <ContanteData
+            <ContentData
               title={`Initial Diagnosis`}
-              content={`GRAVIDA 2 PARA 2 (2002) ABNORMAL UTERINE BLEEDING- ENDOMETRIALPOLYP, S/P HYSTEROSCOPIC GUIDED POLYPECTOMY, SEVERE ANEMIA SECONDARY TO ACUTE BLOOD LOSS`}
+              content={diagnosis.InitialDiagnosis}
             />
-            <ContanteData
+            <ContentData
               title={`Final Diagnosis`}
-              content={`GRAVIDA 2 PARA 2 (2002) ABNORMAL UTERINE BLEEDING - ENDOMETRIAL POLYP STATUS POST HYSTEROSCOPIC GUIDED POLYPECTOMY SEVERE ANEMIA SECONDARY TO AUTE BLOOD LOSS -CORRECTED`}
+              content={diagnosis.FinalDiagnosis}
             />
           </>
           <>
             <ContentTitle title="Procedure Done" />
-            <ContanteData
+            <ContentData
               title={`Main Operation`}
-              content={`BLOOD TRANSFUSION`}
+              content={diagnosis.MainOperation}
             />
-            <ContanteData title={`Other Operation`} content={`-`} />
+            <ContentData
+              title={`Other Operation`}
+              content={diagnosis.OtherOperation}
+            />
           </>
         </View>
         <View
@@ -75,7 +79,7 @@ const AdmittedForm = ({ physicians, diagnosis, toggleShow }) => {
         >
           <PaperText
             style={{ color: "#DD3254", fontWeight: "bold" }}
-            onPress={() => toggleShow(false)}
+            onPress={() => onToggle(false)}
           >
             Close
           </PaperText>
