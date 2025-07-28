@@ -1,6 +1,7 @@
 import { Toast, ALERT_TYPE } from "react-native-alert-notification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import moment from "moment";
 
 const router = useRouter();
 export class ToastMessage {
@@ -38,4 +39,8 @@ export const logoutUser = async () => {
 export const formatName = (name) => {
   if (!name) return "";
   return `${name.charAt(0).toUpperCase()}${name.slice(1).toLowerCase()}`;
+};
+
+export const formatDate = (val) => {
+  return moment(val).format("LL");
 };
