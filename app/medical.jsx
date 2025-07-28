@@ -68,7 +68,32 @@ const Medical = () => {
               alignItems: "center",
               marginVertical: 15,
             }}
-          ></View>
+          >
+            <PaperText
+              variant="bodyLarge"
+              style={{
+                fontWeight: "bold",
+                fontSize: 20,
+                color: "#FF2245",
+                marginTop: 20,
+              }}
+            >
+              Something went wrong
+            </PaperText>
+            <Button
+              width={120}
+              icon="refresh"
+              mode="contained"
+              onPress={() => refetch()}
+              style={{
+                marginTop: 20,
+                color: "#fff",
+                backgroundColor: "#001C63",
+              }}
+            >
+              Refresh
+            </Button>
+          </View>
         ) : (
           <>
             <View style={styles.container}>
@@ -141,7 +166,7 @@ const Medical = () => {
 
 const fetchTransactions = async (PatientID) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  const res = await api.get("/transactions", {
+  const res = await api.get("asd/transactions", {
     params: {
       PatientID,
     },
