@@ -4,6 +4,8 @@ import {
   Modal,
   ActivityIndicator,
   MD2Colors,
+  Text as PaperText,
+  Button,
 } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import React, { useState, useMemo } from "react";
@@ -50,55 +52,69 @@ const Medical = () => {
         (record.transactionNo || "").toLowerCase().includes(query) ||
         (record.transactionDate || "").toLowerCase().includes(query)
     );
-  }, [searchDebounce]);
+  }, [searchDebounce, MEDICAL_RECORDS]);
 
   console.log("filtered", filteredRecords);
 
   return (
     <SafeView>
       <ScrollView style={{ paddingBottom: bottom }}>
-        <View style={styles.container}>
-          <Searchbar
-            placeholder="Search"
-            onChangeText={setSearchQuery}
-            value={searchQuery}
-          />
-        </View>
-        {isFetching ? (
+        {error ? (
           <View
             style={{
               display: "flex",
-              flexDirection: "row",
+              gap: 10,
               justifyContent: "center",
               alignItems: "center",
               marginVertical: 15,
             }}
-          >
-            <ActivityIndicator
-              animating={true}
-              size="large"
-              color={MD2Colors.primary}
-            />
-          </View>
+          ></View>
         ) : (
-          <View
-            style={{
-              paddingHorizontal: 15,
-              marginTop: 15,
-              gap: 10,
-              marginBottom: 5,
-              paddingBottom: 50,
-            }}
-          >
-            {filteredRecords.map((medical) => (
-              <TransactionItem
-                onView={() => toggleShow(true)}
-                key={medical.PatientHistoryID}
-                transaction={medical.TransactionNo}
-                transactionDate={formatDate(medical.AdmissionDateTime)}
+          <>
+            <View style={styles.container}>
+              <Searchbar
+                placeholder="Search"
+                onChangeText={setSearchQuery}
+                value={searchQuery}
               />
-            ))}
-          </View>
+            </View>
+            {isFetching ? (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginVertical: 15,
+                }}
+              >
+                <ActivityIndicator
+                  animating={true}
+                  size="large"
+                  color={MD2Colors.primary}
+                />
+              </View>
+            ) : (
+              <View
+                style={{
+                  paddingHorizontal: 15,
+                  marginTop: 15,
+                  gap: 10,
+                  marginBottom: 5,
+                  paddingBottom: 50,
+                }}
+              >
+                {filteredRecords.map((medical) => (
+                  <TransactionItem
+                    onView={() => toggleShow(true)}
+                    key={medical.PatientHistoryID}
+                    transaction={medical.TransactionNo}
+                    transactionDate={formatDate(medical.AdmissionDateTime)}
+                  />
+                ))}
+              </View>
+            )}
+          </>
         )}
       </ScrollView>
       <Portal>
