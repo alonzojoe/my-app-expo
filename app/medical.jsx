@@ -171,7 +171,7 @@ const fetchTransactions = async (PatientID) => {
   const timeout = setTimeout(() => controller.abort(), 5000);
 
   try {
-    const res = await api.get("asd/transactions", {
+    const res = await api.get("/transactions", {
       params: { PatientID },
       signal: controller.signal,
     });
