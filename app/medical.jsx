@@ -180,7 +180,7 @@ const fetchTransactions = async (PatientID) => {
     return res.data.data;
   } catch (error) {
     clearTimeout(timeout);
-    console.error("Timeout or offline error", error);
+    console.error("Please check your connection.");
     throw new Error(
       "Request failed or timed out—please check your connection."
     );
