@@ -26,6 +26,7 @@ const Medical = () => {
   const { bottom } = useSafeAreaInsets;
   const [searchQuery, setSearchQuery] = useState("");
   const [show, toggleShow] = useToggle(false);
+  const [selected, setSelected] = useState(null);
 
   const { authUser } = useSelector((state) => state.auth);
 
@@ -131,7 +132,10 @@ const Medical = () => {
               >
                 {filteredRecords.map((medical) => (
                   <TransactionItem
-                    onView={() => toggleShow(true)}
+                    onView={() => {
+                      setSelected(medical);
+                      toggleShow(true);
+                    }}
                     key={medical.PatientHistoryID}
                     transaction={medical.TransactionNo}
                     transactionDate={formatDate(medical.AdmissionDateTime)}
@@ -149,11 +153,13 @@ const Medical = () => {
           contentContainerStyle={styles.modalContainer}
         >
           {/* <AdmittedForm
+            selected={selected}
             physicians={PHYSICIANS}
             diagnosis={DIAGNOSIS}
             onToggle={toggleShow}
           /> */}
           <OutPatientForm
+            selected={selected}
             physicians={PHYSICIANS}
             soap={SOAP}
             onToggle={toggleShow}
