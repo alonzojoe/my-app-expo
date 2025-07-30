@@ -20,12 +20,13 @@ import AdmittedForm from "../components/Transactions/AdmittedForm";
 import OutPatientForm from "../components/Transactions/OutPatientForm";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
-import api from "../services";
 import { formatDate } from "../libs/utils";
+import { fetchTransactions } from "../services/Medical/apiCalls";
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
   const [searchQuery, setSearchQuery] = useState("");
   const [show, toggleShow] = useToggle(false);
+  const [selected, setSelected] = useState(null);
 
   const { authUser } = useSelector((state) => state.auth);
 
@@ -131,7 +132,10 @@ const Medical = () => {
               >
                 {filteredRecords.map((medical) => (
                   <TransactionItem
-                    onView={() => toggleShow(true)}
+                    onView={() => {
+                      setSelected(medical);
+                      toggleShow(true);
+                    }}
                     key={medical.PatientHistoryID}
                     transaction={medical.TransactionNo}
                     transactionDate={formatDate(medical.AdmissionDateTime)}
@@ -149,11 +153,13 @@ const Medical = () => {
           contentContainerStyle={styles.modalContainer}
         >
           {/* <AdmittedForm
+            selected={selected}
             physicians={PHYSICIANS}
             diagnosis={DIAGNOSIS}
             onToggle={toggleShow}
           /> */}
           <OutPatientForm
+            selected={selected}
             physicians={PHYSICIANS}
             soap={SOAP}
             onToggle={toggleShow}
@@ -162,29 +168,6 @@ const Medical = () => {
       </Portal>
     </SafeView>
   );
-};
-
-const fetchTransactions = async (PatientID) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 5000);
-
-  try {
-    const res = await api.get("/transactions", {
-      params: { PatientID },
-      signal: controller.signal,
-    });
-    clearTimeout(timeout);
-    console.log("res", res);
-    return res.data.data;
-  } catch (error) {
-    clearTimeout(timeout);
-    console.error("Please check your connection.");
-    throw new Error(
-      "Request failed or timed out—please check your connection."
-    );
-  }
 };
 
 export default Medical;

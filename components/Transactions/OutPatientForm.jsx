@@ -5,7 +5,9 @@ import ContentTitle from "./ContentTitle";
 import ContentData from "./ContentData";
 import PhysicianItem from "./PhysicianItem";
 
-const OutPatientForm = ({ physicians, soap, onToggle }) => {
+const OutPatientForm = ({ selected, physicians, soap, onToggle }) => {
+  const { TransactionNo } = selected;
+
   return (
     <>
       <View
@@ -25,7 +27,7 @@ const OutPatientForm = ({ physicians, soap, onToggle }) => {
             fontWeight: "bold",
           }}
         >
-          OPD-52025-328056
+          {TransactionNo}
         </PaperText>
         <PaperText onPress={() => onToggle(false)}>
           <FontAwesome5 name="times" size={20} color="#DD3254" />
