@@ -4,9 +4,21 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import ContentTitle from "./ContentTitle";
 import ContentData from "./ContentData";
 import PhysicianItem from "./PhysicianItem";
+import { useQueries } from "@tanstack/react-query";
+import {
+  createPhysiciansQueryOptions,
+  createDiagnosisQueryOptions,
+} from "./../../services/QueryOptions/queryOptions";
 
 const OutPatientForm = ({ selected, physicians, soap, onToggle }) => {
-  const { TransactionNo } = selected;
+  const { TransactionNo, PatientHistoryID, ReferID } = selected;
+
+  const [physicianss, diagnostics] = useQueries({
+    queries: [
+      createPhysiciansQueryOptions(PatientHistoryID, ReferID),
+      createDiagnosisQueryOptions(PatientHistoryID, ReferID),
+    ],
+  });
 
   return (
     <>
@@ -27,7 +39,7 @@ const OutPatientForm = ({ selected, physicians, soap, onToggle }) => {
             fontWeight: "bold",
           }}
         >
-          {TransactionNo}
+          {TransactionNo} {PatientHistoryID} {ReferID}
         </PaperText>
         <PaperText onPress={() => onToggle(false)}>
           <FontAwesome5 name="times" size={20} color="#DD3254" />
