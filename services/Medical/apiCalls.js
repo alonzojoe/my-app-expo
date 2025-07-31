@@ -59,7 +59,7 @@ export const fetchDiagnosis = async (PatientHistoryID, ReferID) => {
     });
     clearTimeout(timeout);
     console.log("res", res);
-    return res.data.data;
+    return res.data.data[0];
   } catch (error) {
     clearTimeout(timeout);
     console.error("Please check your connection.");

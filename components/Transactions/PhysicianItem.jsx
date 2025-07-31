@@ -1,12 +1,14 @@
 import { StyleSheet, View, Text } from "react-native";
-import { List, Divider, IconButton } from "react-native-paper";
+import { List, Divider } from "react-native-paper";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-const PhysicianItem = ({ physician, type, isMain }) => {
+const PhysicianItem = ({ physician, isMain }) => {
+  const physicianLabel = isMain == 1 ? "Main" : "Attending";
+
   return (
     <>
       <List.Item
         title={physician}
-        description={<Text>{type}</Text>}
+        description={<Text>{`${physicianLabel} Physician`}</Text>}
         titleStyle={{ color: "#000", fontWeight: "bold", fontSize: 14 }}
         descriptionStyle={{ color: "#6E7AA3" }}
         left={(props) => (

@@ -1,12 +1,34 @@
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Text as PaperText } from "react-native-paper";
 import { FontAwesome5 } from "@expo/vector-icons";
+import LoaderSpinner from "./../Global/LoaderSpinner";
 import ContentTitle from "./ContentTitle";
 import ContentData from "./ContentData";
 import PhysicianItem from "./PhysicianItem";
+import ErrorFetching from "./../Global/ErrorFetching";
+import { useQueries } from "@tanstack/react-query";
+import {
+  createPhysiciansQueryOptions,
+  createDiagnosisQueryOptions,
+} from "./../../services/QueryOptions/queryOptions";
 
-const OutPatientForm = ({ selected, physicians, soap, onToggle }) => {
-  const { TransactionNo } = selected;
+const OutPatientForm = ({ selected, onToggle }) => {
+  const { TransactionNo, PatientHistoryID, ReferID } = selected;
+
+  const [physicians, diagnostics] = useQueries({
+    queries: [
+      createPhysiciansQueryOptions(PatientHistoryID, ReferID),
+      createDiagnosisQueryOptions(PatientHistoryID, ReferID),
+    ],
+  });
+
+  const { data: PHYSICIANS, isFetching, error } = physicians;
+
+  const {
+    data: DIAGNOSIS,
+    isFetching: isLoading,
+    error: errorDiagnosis,
+  } = diagnostics;
 
   return (
     <>
@@ -37,43 +59,78 @@ const OutPatientForm = ({ selected, physicians, soap, onToggle }) => {
         <View>
           <>
             <ContentTitle title="Physicians" mb={5} />
-            <View style={{ marginBottom: 5 }}>
-              {physicians.map((p) => (
-                <PhysicianItem
-                  key={p.id}
-                  physician={p.name}
-                  type={p.type}
-                  isMain={p.isMain}
+            {error ? (
+              <ErrorFetching size={15} mt={10}>
+                Something went wrong
+              </ErrorFetching>
+            ) : (
+              <>
+                {isFetching ? (
+                  <LoaderSpinner />
+                ) : (
+                  <View style={{ marginBottom: 5 }}>
+                    {PHYSICIANS.length === 0 ? (
+                      <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+                    ) : (
+                      PHYSICIANS.map((p, index) => (
+                        <PhysicianItem
+                          key={`${p.FirstName}-${index}`}
+                          physician={`${p.FirstName} ${p.MiddleName} ${p.LastName}`}
+                          isMain={p.MainPhysicianTag}
+                        />
+                      ))
+                    )}
+                  </View>
+                )}
+              </>
+            )}
+          </>
+          <ContentTitle title="SOAP" />
+          <>
+            {errorDiagnosis ? (
+              <ErrorFetching size={15} mt={10}>
+                Something went wrong
+              </ErrorFetching>
+            ) : isLoading ? (
+              <LoaderSpinner />
+            ) : (
+              <>
+                <ContentData
+                  title="Subjective"
+                  content={DIAGNOSIS?.Subjective || "-"}
                 />
-              ))}
-            </View>
+                <ContentData
+                  title="Objective"
+                  content={DIAGNOSIS?.Objective || "-"}
+                />
+                <ContentData
+                  title="Assessment"
+                  content={DIAGNOSIS?.Assessment || "-"}
+                />
+                <ContentData
+                  title="Plan"
+                  content={DIAGNOSIS?.PlanText || "-"}
+                />
+              </>
+            )}
           </>
-          <>
-            <ContentTitle title="SOAP" />
-            <ContentData title={`Subjective`} content={soap.Subjective} />
-            <ContentData title={`Objective`} content={soap.Objective} />
-          </>
-          <>
-            <ContentData title={`Assessment`} content={soap.Assessment} />
-            <ContentData title={`Plan`} content={soap.Plan} />
-          </>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            display: "flex",
-            alignContent: "center",
-            justifyContent: "flex-end",
-          }}
-        >
-          <PaperText
-            style={{ color: "#DD3254", fontWeight: "bold" }}
-            onPress={() => onToggle(false)}
-          >
-            Close
-          </PaperText>
         </View>
       </ScrollView>
+      <View
+        style={{
+          flexDirection: "row",
+          display: "flex",
+          alignContent: "center",
+          justifyContent: "flex-end",
+        }}
+      >
+        <PaperText
+          style={{ color: "#DD3254", fontWeight: "bold" }}
+          onPress={() => onToggle(false)}
+        >
+          Close
+        </PaperText>
+      </View>
       <View style={{ marginVertical: 10 }} />
     </>
   );
