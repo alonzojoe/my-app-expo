@@ -69,13 +69,17 @@ const OutPatientForm = ({ selected, onToggle }) => {
                   <LoaderSpinner />
                 ) : (
                   <View style={{ marginBottom: 5 }}>
-                    {PHYSICIANS.map((p, index) => (
-                      <PhysicianItem
-                        key={`${p.FirstName}-${index}`}
-                        physician={`${p.FirstName} ${p.MiddleName} ${p.LastName}`}
-                        isMain={p.MainPhysicianTag}
-                      />
-                    ))}
+                    {PHYSICIANS.length === 0 ? (
+                      <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+                    ) : (
+                      PHYSICIANS.map((p, index) => (
+                        <PhysicianItem
+                          key={`${p.FirstName}-${index}`}
+                          physician={`${p.FirstName} ${p.MiddleName} ${p.LastName}`}
+                          isMain={p.MainPhysicianTag}
+                        />
+                      ))
+                    )}
                   </View>
                 )}
               </>
@@ -83,24 +87,30 @@ const OutPatientForm = ({ selected, onToggle }) => {
           </>
           <ContentTitle title="SOAP" />
           <>
-            {error ? (
+            {errorDiagnosis ? (
               <ErrorFetching size={15} mt={10}>
                 Something went wrong
               </ErrorFetching>
-            ) : isFetching ? (
+            ) : isLoading ? (
               <LoaderSpinner />
             ) : (
               <>
                 <ContentData
                   title="Subjective"
-                  content={DIAGNOSIS.Subjective}
+                  content={DIAGNOSIS?.Subjective || "-"}
                 />
-                <ContentData title="Objective" content={DIAGNOSIS.Objective} />
+                <ContentData
+                  title="Objective"
+                  content={DIAGNOSIS?.Objective || "-"}
+                />
                 <ContentData
                   title="Assessment"
-                  content={DIAGNOSIS.Assessment}
+                  content={DIAGNOSIS?.Assessment || "-"}
                 />
-                <ContentData title="Plan" content={DIAGNOSIS.PlanText} />
+                <ContentData
+                  title="Plan"
+                  content={DIAGNOSIS?.PlanText || "-"}
+                />
               </>
             )}
           </>
