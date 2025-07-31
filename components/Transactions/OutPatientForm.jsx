@@ -5,6 +5,7 @@ import LoaderSpinner from "./../Global/LoaderSpinner";
 import ContentTitle from "./ContentTitle";
 import ContentData from "./ContentData";
 import PhysicianItem from "./PhysicianItem";
+import ErrorFetching from "./../Global/ErrorFetching";
 import { useQueries } from "@tanstack/react-query";
 import {
   createPhysiciansQueryOptions,
@@ -40,7 +41,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
             fontWeight: "bold",
           }}
         >
-          {TransactionNo} {PatientHistoryID} {ReferID}
+          {TransactionNo}
         </PaperText>
         <PaperText onPress={() => onToggle(false)}>
           <FontAwesome5 name="times" size={20} color="#DD3254" />
@@ -50,6 +51,9 @@ const OutPatientForm = ({ selected, onToggle }) => {
         <View>
           <>
             <ContentTitle title="Physicians" mb={5} />
+            <ErrorFetching size={15} mt={10}>
+              Something went wrong
+            </ErrorFetching>
             <LoaderSpinner />
             <View style={{ marginBottom: 5 }}>
               {/* {physicians.map((p) => (
