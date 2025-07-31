@@ -22,6 +22,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { formatDate } from "../libs/utils";
 import { fetchTransactions } from "../services/Medical/apiCalls";
+import ErrorWithRefetch from "../components/Global/ErrorWithRefetch";
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
   const [searchQuery, setSearchQuery] = useState("");
@@ -61,40 +62,7 @@ const Medical = () => {
     <SafeView>
       <ScrollView style={{ paddingBottom: bottom }}>
         {error ? (
-          <View
-            style={{
-              display: "flex",
-              gap: 10,
-              justifyContent: "center",
-              alignItems: "center",
-              marginVertical: 15,
-            }}
-          >
-            <PaperText
-              variant="bodyLarge"
-              style={{
-                fontWeight: "bold",
-                fontSize: 20,
-                color: "#FF2245",
-                marginTop: 20,
-              }}
-            >
-              Something went wrong
-            </PaperText>
-            <Button
-              width={120}
-              icon="refresh"
-              mode="contained"
-              onPress={() => refetch()}
-              style={{
-                marginTop: 20,
-                color: "#fff",
-                backgroundColor: "#001C63",
-              }}
-            >
-              Refresh
-            </Button>
-          </View>
+          <ErrorWithRefetch refresh={() => refetch()} />
         ) : (
           <>
             <View style={styles.container}>
