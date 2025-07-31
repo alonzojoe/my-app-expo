@@ -50,17 +50,17 @@ const OutPatientForm = ({ selected, physicians, soap, onToggle }) => {
           <>
             <ContentTitle title="Physicians" mb={5} />
             <View style={{ marginBottom: 5 }}>
-              {physicians.map((p) => (
+              {/* {physicians.map((p) => (
                 <PhysicianItem
                   key={p.id}
                   physician={p.name}
                   type={p.type}
                   isMain={p.isMain}
                 />
-              ))}
+              ))} */}
             </View>
           </>
-          <>
+          {/* <>
             <ContentTitle title="SOAP" />
             <ContentData title={`Subjective`} content={soap.Subjective} />
             <ContentData title={`Objective`} content={soap.Objective} />
@@ -68,7 +68,7 @@ const OutPatientForm = ({ selected, physicians, soap, onToggle }) => {
           <>
             <ContentData title={`Assessment`} content={soap.Assessment} />
             <ContentData title={`Plan`} content={soap.Plan} />
-          </>
+          </> */}
         </View>
         <View
           style={{
