@@ -2,7 +2,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { List, Divider } from "react-native-paper";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 const PhysicianItem = ({ physician, isMain }) => {
-  const physicianLabel = (isMain = 1 ? "Main" : "Attending");
+  const physicianLabel = isMain == 1 ? "Main" : "Attending";
 
   return (
     <>

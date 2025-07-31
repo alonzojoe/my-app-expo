@@ -126,12 +126,7 @@ const Medical = () => {
             diagnosis={DIAGNOSIS}
             onToggle={toggleShow}
           /> */}
-          <OutPatientForm
-            selected={selected}
-            physicians={PHYSICIANS}
-            soap={SOAP}
-            onToggle={toggleShow}
-          />
+          <OutPatientForm selected={selected} onToggle={toggleShow} />
         </Modal>
       </Portal>
     </SafeView>

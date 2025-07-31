@@ -67,7 +67,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
                       <PhysicianItem
                         key={`${p.FirstName}-${index}`}
                         physician={`${p.FirstName} ${p.MiddleName} ${p.LastName}`}
-                        isMain={p.isMain}
+                        isMain={p.MainPhysicianTag}
                       />
                     ))}
                   </View>
