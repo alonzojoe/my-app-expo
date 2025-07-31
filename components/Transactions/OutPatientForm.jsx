@@ -24,6 +24,12 @@ const OutPatientForm = ({ selected, onToggle }) => {
 
   const { data: PHYSICIANS, isFetching, error } = physicians;
 
+  const {
+    data: DIAGNOSIS,
+    isFetching: isLoading,
+    error: errorDiagnosis,
+  } = diagnostics;
+
   return (
     <>
       <View
@@ -75,32 +81,46 @@ const OutPatientForm = ({ selected, onToggle }) => {
               </>
             )}
           </>
-          {/* <>
-            <ContentTitle title="SOAP" />
-            <ContentData title={`Subjective`} content={soap.Subjective} />
-            <ContentData title={`Objective`} content={soap.Objective} />
-          </>
+          <ContentTitle title="SOAP" />
           <>
-            <ContentData title={`Assessment`} content={soap.Assessment} />
-            <ContentData title={`Plan`} content={soap.Plan} />
-          </> */}
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            display: "flex",
-            alignContent: "center",
-            justifyContent: "flex-end",
-          }}
-        >
-          <PaperText
-            style={{ color: "#DD3254", fontWeight: "bold" }}
-            onPress={() => onToggle(false)}
-          >
-            Close
-          </PaperText>
+            {error ? (
+              <ErrorFetching size={15} mt={10}>
+                Something went wrong
+              </ErrorFetching>
+            ) : isFetching ? (
+              <LoaderSpinner />
+            ) : (
+              <>
+                <ContentData
+                  title="Subjective"
+                  content={DIAGNOSIS.Subjective}
+                />
+                <ContentData title="Objective" content={DIAGNOSIS.Objective} />
+                <ContentData
+                  title="Assessment"
+                  content={DIAGNOSIS.Assessment}
+                />
+                <ContentData title="Plan" content={DIAGNOSIS.PlanText} />
+              </>
+            )}
+          </>
         </View>
       </ScrollView>
+      <View
+        style={{
+          flexDirection: "row",
+          display: "flex",
+          alignContent: "center",
+          justifyContent: "flex-end",
+        }}
+      >
+        <PaperText
+          style={{ color: "#DD3254", fontWeight: "bold" }}
+          onPress={() => onToggle(false)}
+        >
+          Close
+        </PaperText>
+      </View>
       <View style={{ marginVertical: 10 }} />
     </>
   );
