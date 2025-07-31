@@ -55,8 +55,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
               {/* {physicians.map((p) => (
                 <PhysicianItem
                   key={p.id}
-                  physician={p.name}
-                  type={p.type}
+                  physician={`${p.FirstName} ${p.MiddleName} ${p.LastName}`}
                   isMain={p.isMain}
                 />
               ))} */}
