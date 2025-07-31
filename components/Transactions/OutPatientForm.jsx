@@ -1,6 +1,7 @@
 import { StyleSheet, View, ScrollView } from "react-native";
 import { Text as PaperText } from "react-native-paper";
 import { FontAwesome5 } from "@expo/vector-icons";
+import LoaderSpinner from "./../Global/LoaderSpinner";
 import ContentTitle from "./ContentTitle";
 import ContentData from "./ContentData";
 import PhysicianItem from "./PhysicianItem";
@@ -10,7 +11,7 @@ import {
   createDiagnosisQueryOptions,
 } from "./../../services/QueryOptions/queryOptions";
 
-const OutPatientForm = ({ selected, physicians, soap, onToggle }) => {
+const OutPatientForm = ({ selected, onToggle }) => {
   const { TransactionNo, PatientHistoryID, ReferID } = selected;
 
   const [physicianss, diagnostics] = useQueries({
@@ -49,6 +50,7 @@ const OutPatientForm = ({ selected, physicians, soap, onToggle }) => {
         <View>
           <>
             <ContentTitle title="Physicians" mb={5} />
+            <LoaderSpinner />
             <View style={{ marginBottom: 5 }}>
               {/* {physicians.map((p) => (
                 <PhysicianItem
