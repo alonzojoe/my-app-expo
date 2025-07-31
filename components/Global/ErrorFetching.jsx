@@ -16,7 +16,8 @@ const ErrorFetching = ({
         gap: 10,
         justifyContent: "center",
         alignItems: "center",
-        marginVertical: 15,
+        marginVertical: mt,
+        padding: 15,
       }}
     >
       <PaperText
@@ -25,7 +26,6 @@ const ErrorFetching = ({
           fontWeight: weight,
           fontSize: size,
           color: color,
-          marginTop: mt,
         }}
       >
         {children}

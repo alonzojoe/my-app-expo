@@ -15,12 +15,14 @@ import {
 const OutPatientForm = ({ selected, onToggle }) => {
   const { TransactionNo, PatientHistoryID, ReferID } = selected;
 
-  const [physicianss, diagnostics] = useQueries({
+  const [physicians, diagnostics] = useQueries({
     queries: [
       createPhysiciansQueryOptions(PatientHistoryID, ReferID),
       createDiagnosisQueryOptions(PatientHistoryID, ReferID),
     ],
   });
+
+  const { data: PHYSICIANS, isFetching, error } = physicians;
 
   return (
     <>
@@ -51,19 +53,27 @@ const OutPatientForm = ({ selected, onToggle }) => {
         <View>
           <>
             <ContentTitle title="Physicians" mb={5} />
-            <ErrorFetching size={15} mt={10}>
-              Something went wrong
-            </ErrorFetching>
-            <LoaderSpinner />
-            <View style={{ marginBottom: 5 }}>
-              {/* {physicians.map((p) => (
-                <PhysicianItem
-                  key={p.id}
-                  physician={`${p.FirstName} ${p.MiddleName} ${p.LastName}`}
-                  isMain={p.isMain}
-                />
-              ))} */}
-            </View>
+            {error ? (
+              <ErrorFetching size={15} mt={10}>
+                Something went wrong
+              </ErrorFetching>
+            ) : (
+              <>
+                {isFetching ? (
+                  <LoaderSpinner />
+                ) : (
+                  <View style={{ marginBottom: 5 }}>
+                    {PHYSICIANS.map((p, index) => (
+                      <PhysicianItem
+                        key={`${p.FirstName}-${index}`}
+                        physician={`${p.FirstName} ${p.MiddleName} ${p.LastName}`}
+                        isMain={p.isMain}
+                      />
+                    ))}
+                  </View>
+                )}
+              </>
+            )}
           </>
           {/* <>
             <ContentTitle title="SOAP" />
