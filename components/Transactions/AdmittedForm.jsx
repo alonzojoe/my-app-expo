@@ -24,6 +24,12 @@ const AdmittedForm = ({ selected, onToggle }) => {
 
   const { data: PHYSICIANS, isFetching, error } = physicians;
 
+  const {
+    data: DIAGNOSIS,
+    isFetching: isLoading,
+    error: errorDiagnosis,
+  } = diagnosis;
+
   return (
     <>
       <View
@@ -79,17 +85,26 @@ const AdmittedForm = ({ selected, onToggle }) => {
               </>
             )}
           </>
-          <>
-            <ContentTitle title="Diagnosis" />
-            {/* <ContentData
-              title={`Initial Diagnosis`}
-              content={diagnosis.InitialDiagnosis}
-            />
-            <ContentData
-              title={`Final Diagnosis`}
-              content={diagnosis.FinalDiagnosis}
-            /> */}
-          </>
+
+          <ContentTitle title="Diagnosis" />
+          {errorDiagnosis ? (
+            <ErrorFetching size={15} mt={10}>
+              Something went wrong
+            </ErrorFetching>
+          ) : isLoading ? (
+            <LoaderSpinner />
+          ) : (
+            <>
+              <ContentData
+                title={`Initial Diagnosis`}
+                content={DIAGNOSIS.initial || "-"}
+              />
+              <ContentData
+                title={`Final Diagnosis`}
+                content={DIAGNOSIS.final || "-"}
+              />
+            </>
+          )}
           <>
             <ContentTitle title="Procedure Done" />
             {/* <ContentData
