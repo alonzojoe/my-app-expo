@@ -118,7 +118,6 @@ const AdmittedForm = ({ selected, onToggle }) => {
           </PaperText>
         </View>
       </ScrollView>
-      <View style={{ marginVertical: 10 }} />
     </>
   );
 };
