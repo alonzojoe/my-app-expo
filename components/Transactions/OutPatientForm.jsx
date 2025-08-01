@@ -131,7 +131,6 @@ const OutPatientForm = ({ selected, onToggle }) => {
           Close
         </PaperText>
       </View>
-      <View style={{ marginVertical: 10 }} />
     </>
   );
 };
