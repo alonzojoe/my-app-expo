@@ -4,9 +4,25 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import ContentTitle from "./ContentTitle";
 import ContentData from "./ContentData";
 import PhysicianItem from "./PhysicianItem";
+import LoaderSpinner from "../Global/LoaderSpinner";
+import ErrorFetching from "./../Global/ErrorFetching";
+import { useQueries } from "@tanstack/react-query";
+import {
+  createPhysiciansQueryOptions,
+  createDiagnosisQueryOptions,
+} from "./../../services/QueryOptions/queryOptions";
 
 const AdmittedForm = ({ selected, onToggle }) => {
-  const { TransactionNo } = selected;
+  const { TransactionNo, PatientHistoryID, ReferID } = selected;
+
+  const [physicians, diagnosis] = useQueries({
+    queries: [
+      createPhysiciansQueryOptions(PatientHistoryID, ReferID),
+      createDiagnosisQueryOptions(PatientHistoryID, ReferID),
+    ],
+  });
+
+  const { data: PHYSICIANS, isFetching, error } = physicians;
 
   return (
     <>
@@ -37,16 +53,31 @@ const AdmittedForm = ({ selected, onToggle }) => {
         <View>
           <>
             <ContentTitle title="Physicians" mb={5} />
-            <View style={{ marginBottom: 5 }}>
-              {/* {physicians.map((p) => (
-                <PhysicianItem
-                  key={p.id}
-                  physician={p.name}
-                  type={p.type}
-                  isMain={p.isMain}
-                />
-              ))} */}
-            </View>
+            {error ? (
+              <ErrorFetching size={15} mt={10}>
+                Something went wrong
+              </ErrorFetching>
+            ) : (
+              <>
+                {isFetching ? (
+                  <LoaderSpinner />
+                ) : (
+                  <View style={{ marginBottom: 5 }}>
+                    {PHYSICIANS.length === 0 ? (
+                      <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+                    ) : (
+                      PHYSICIANS.map((p, index) => (
+                        <PhysicianItem
+                          key={`${p.FirstName}-${index}`}
+                          physician={`${p.FirstName} ${p.MiddleName} ${p.LastName}`}
+                          isMain={p.MainPhysicianTag}
+                        />
+                      ))
+                    )}
+                  </View>
+                )}
+              </>
+            )}
           </>
           <>
             <ContentTitle title="Diagnosis" />
