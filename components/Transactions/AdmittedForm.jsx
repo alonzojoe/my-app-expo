@@ -105,17 +105,25 @@ const AdmittedForm = ({ selected, onToggle }) => {
               />
             </>
           )}
-          <>
-            <ContentTitle title="Procedure Done" />
-            {/* <ContentData
-              title={`Main Operation`}
-              content={diagnosis.MainOperation}
-            />
-            <ContentData
-              title={`Other Operation`}
-              content={diagnosis.OtherOperation}
-            /> */}
-          </>
+          <ContentTitle title="Procedure Done" />
+          {errorDiagnosis ? (
+            <ErrorFetching size={15} mt={10}>
+              Something went wrong
+            </ErrorFetching>
+          ) : isLoading ? (
+            <LoaderSpinner />
+          ) : (
+            <>
+              <ContentData
+                title={`Main Operation`}
+                content={DIAGNOSIS.MainOperation || "-"}
+              />
+              <ContentData
+                title={`Other Operation`}
+                content={DIAGNOSIS.OtherOperation || "-"}
+              />
+            </>
+          )}
         </View>
       </ScrollView>
       <View
