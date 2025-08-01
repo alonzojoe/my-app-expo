@@ -120,13 +120,16 @@ const Medical = () => {
           onDismiss={() => toggleShow(false)}
           contentContainerStyle={styles.modalContainer}
         >
-          {/* <AdmittedForm
-            selected={selected}
-            physicians={PHYSICIANS}
-            diagnosis={DIAGNOSIS}
-            onToggle={toggleShow}
-          /> */}
-          <OutPatientForm selected={selected} onToggle={toggleShow} />
+          {selected && selected.TransactionNo.toLowerCase().includes("opd") ? (
+            <OutPatientForm selected={selected} onToggle={toggleShow} />
+          ) : (
+            <AdmittedForm
+              selected={selected}
+              physicians={PHYSICIANS}
+              diagnosis={DIAGNOSIS}
+              onToggle={toggleShow}
+            />
+          )}
         </Modal>
       </Portal>
     </SafeView>
