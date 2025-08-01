@@ -102,22 +102,22 @@ const AdmittedForm = ({ selected, onToggle }) => {
             /> */}
           </>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            display: "flex",
-            alignContent: "center",
-            justifyContent: "flex-end",
-          }}
-        >
-          <PaperText
-            style={{ color: "#DD3254", fontWeight: "bold" }}
-            onPress={() => onToggle(false)}
-          >
-            Close
-          </PaperText>
-        </View>
       </ScrollView>
+      <View
+        style={{
+          flexDirection: "row",
+          display: "flex",
+          alignContent: "center",
+          justifyContent: "flex-end",
+        }}
+      >
+        <PaperText
+          style={{ color: "#DD3254", fontWeight: "bold" }}
+          onPress={() => onToggle(false)}
+        >
+          Close
+        </PaperText>
+      </View>
     </>
   );
 };
