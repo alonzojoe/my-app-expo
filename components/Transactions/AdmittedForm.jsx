@@ -5,7 +5,7 @@ import ContentTitle from "./ContentTitle";
 import ContentData from "./ContentData";
 import PhysicianItem from "./PhysicianItem";
 
-const AdmittedForm = ({ selected, physicians, diagnosis, onToggle }) => {
+const AdmittedForm = ({ selected, onToggle }) => {
   const { TransactionNo } = selected;
 
   return (
@@ -38,37 +38,37 @@ const AdmittedForm = ({ selected, physicians, diagnosis, onToggle }) => {
           <>
             <ContentTitle title="Physicians" mb={5} />
             <View style={{ marginBottom: 5 }}>
-              {physicians.map((p) => (
+              {/* {physicians.map((p) => (
                 <PhysicianItem
                   key={p.id}
                   physician={p.name}
                   type={p.type}
                   isMain={p.isMain}
                 />
-              ))}
+              ))} */}
             </View>
           </>
           <>
             <ContentTitle title="Diagnosis" />
-            <ContentData
+            {/* <ContentData
               title={`Initial Diagnosis`}
               content={diagnosis.InitialDiagnosis}
             />
             <ContentData
               title={`Final Diagnosis`}
               content={diagnosis.FinalDiagnosis}
-            />
+            /> */}
           </>
           <>
             <ContentTitle title="Procedure Done" />
-            <ContentData
+            {/* <ContentData
               title={`Main Operation`}
               content={diagnosis.MainOperation}
             />
             <ContentData
               title={`Other Operation`}
               content={diagnosis.OtherOperation}
-            />
+            /> */}
           </>
         </View>
         <View
