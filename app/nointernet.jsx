@@ -4,8 +4,18 @@ import { Text as PaperText, Button } from "react-native-paper";
 import SafeView from "../components/SafeView";
 import Spacer from "../components/Spacer";
 import Cloud from "../assets/net.png";
+import { reloadAsync } from "expo-updates";
 
 const nointernet = () => {
+  const handleReload = async () => {
+    console.log("clicked");
+    try {
+      await reloadAsync();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <SafeView safe={true} style={styles.container}>
       <Spacer />
@@ -49,7 +59,7 @@ const nointernet = () => {
         <Button
           icon="refresh"
           mode="contained"
-          onPress={() => {}}
+          onPress={handleReload}
           style={styles.btn}
           labelStyle={styles.btnLabel}
         >
