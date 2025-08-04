@@ -11,6 +11,7 @@ import {
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
 import store from "../store";
+import useNetInfo from "../hooks/useNetInfo";
 
 const appTheme = {
   ...DefaultTheme,
@@ -22,10 +23,13 @@ const appTheme = {
 
 const RootLayout = () => {
   const colorScheme = useColorScheme();
+  const hasNet = useNetInfo();
   const theme = Colors[colorScheme] ?? Colors.light;
   const router = useRouter();
   const queryClient = new QueryClient();
   console.log(theme);
+
+  console.log("hasNet?: ", hasNet);
   return (
     // <View style={{ flex: 1 }}>
     <QueryClientProvider client={queryClient}>
@@ -144,6 +148,13 @@ const RootLayout = () => {
                     onPress={() => router.replace("/")}
                   />
                 ),
+              }}
+            />
+            <Stack.Screen
+              name="nointernet"
+              options={{
+                title: "No Internet",
+                headerShown: false,
               }}
             />
           </Stack>
