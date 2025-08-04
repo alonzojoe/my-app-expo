@@ -13,11 +13,14 @@ import useToggle from "../hooks/useToggle";
 import useAuthentication from "../hooks/useAuthentication";
 import FSLoader from "../components/Global/FSLoader";
 import useVerification from "../components/Forms/hooks/useVerification";
+import { useRouter } from "expo-router";
 const Auth = () => {
   const [showQr, toggleShowQr] = useToggle(false);
   const [showVerify, toggleShowVerify] = useToggle(false);
   const { isLoading } = useAuthentication();
   const { scanQR } = useVerification(toggleShowVerify, toggleShowQr);
+
+  const router = useRouter();
 
   if (isLoading) return <FSLoader />;
 
@@ -45,7 +48,7 @@ const Auth = () => {
           <QRVerify show={showVerify} toggleQR={toggleShowVerify} />
         </View>
         <View style={styles.textCreate}>
-          <Link href="/registration" style={styles.create}>
+          <Link href="/nointernet" style={styles.create}>
             OR
           </Link>
         </View>

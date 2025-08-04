@@ -150,6 +150,13 @@ const RootLayout = () => {
                 ),
               }}
             />
+            <Stack.Screen
+              name="nointernet"
+              options={{
+                title: "No Internet",
+                headerShown: false,
+              }}
+            />
           </Stack>
         </PaperProvider>
       </Provider>
