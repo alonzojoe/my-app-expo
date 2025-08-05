@@ -20,12 +20,14 @@ import { Colors } from "../constants/Colors";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
 import dayjs from "dayjs";
+import useAppointment from "../components/Appointment/hooks/useAppointment";
 const OnlineAppointment = () => {
   const { bottom } = useSafeAreaInsets();
   const [items, setItems] = useState([{ label: "TELEHEALTH", value: 212 }]);
   const defaultStyles = useDefaultStyles();
   const [selected, setSelected] = useState();
   const color = Colors["light"];
+  const { availableDates } = useAppointment(212);
 
   return (
     <SafeView>
