@@ -1,19 +1,28 @@
 import { useState } from "react";
 import { apiopd } from "../../../services";
-const useAppointment = () => {
-  const [availableDates, setAvailableDates] = useState([]);
+import { useQuery } from "@tanstack/react-query";
+const useAppointment = (serviceID) => {
+  const {
+    data: availableDates,
+    isFetching,
+    error,
+  } = useQuery({
+    queryKey: ["slots", serviceID],
+    queryFn: () => getDateSlots(serviceID),
+    staleTime: 5000,
+  });
 
-  const getDateSlots = async () => {
-    try {
-      const res = await apiopd.get("/date?ServiceType=212");
-      console.log("ddddddddd", res.data);
-      setAvailableDates(res.data);
-    } catch (error) {
-      console.log("error");
-    }
-  };
-
-  return { availableDates, getDateSlots };
+  return { availableDates, isFetching, error };
 };
 
 export default useAppointment;
+
+const getDateSlots = async (serviceTypeID) => {
+  try {
+    const res = await apiopd.get(`/date?ServiceType=${serviceTypeID}`);
+    console.log("date slots", res.data);
+    return res.data;
+  } catch (error) {
+    console.log("error");
+  }
+};
