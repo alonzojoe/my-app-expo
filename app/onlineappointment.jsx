@@ -27,9 +27,15 @@ const OnlineAppointment = () => {
   const defaultStyles = useDefaultStyles();
   const [selected, setSelected] = useState();
   const color = Colors["light"];
-  const { isFetching, availableDates, getTimeSlots } = useAppointment(212);
+  const { isFetching, availableDates, getTimeSlots, timeslots } =
+    useAppointment(212);
 
   console.log("avail", availableDates);
+
+  console.log("time slots", timeslots);
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
 
   return (
     <SafeView>
@@ -115,10 +121,12 @@ const OnlineAppointment = () => {
             </View>
             <DropDownPicker
               style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
-              value={212}
-              items={items}
-              setItems={setItems}
-              disabled={true}
+              items={timeslots}
+              open={open}
+              value={value}
+              setOpen={setOpen}
+              setValue={setValue}
+              disabled={false}
             />
             <View style={styles.textGroup}>
               <Button

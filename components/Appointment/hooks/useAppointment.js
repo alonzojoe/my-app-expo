@@ -28,12 +28,15 @@ const useAppointment = (serviceID) => {
         },
       });
       console.log("res timeslots", res.data);
+      const times =
+        res.data.map((d) => ({ label: d.opdtime, value: d.id, ...d })) ?? [];
+      setTimeslots(times);
     } catch (error) {
       console.error(`Error fetching time slots`);
     }
   };
 
-  return { availableDates, isFetching, error, getTimeSlots };
+  return { availableDates, isFetching, error, getTimeSlots, timeslots };
 };
 
 export default useAppointment;
