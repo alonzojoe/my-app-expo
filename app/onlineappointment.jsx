@@ -19,7 +19,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "../constants/Colors";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
-
+import WheelPicker from "@quidone/react-native-wheel-picker";
 import useAppointment from "../components/Appointment/hooks/useAppointment";
 const OnlineAppointment = () => {
   const { bottom } = useSafeAreaInsets();
@@ -36,6 +36,11 @@ const OnlineAppointment = () => {
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
+  const [value2, setValue2] = useState(0);
+  const data = [...Array(100).keys()].map((index) => ({
+    value: index,
+    label: index.toString(),
+  }));
 
   return (
     <SafeView>
@@ -51,6 +56,31 @@ const OnlineAppointment = () => {
             </Card.Content>
           </Card>
           <>
+            <View
+              style={{
+                backgroundColor: "#001C63",
+                borderRadius: 4,
+                padding: 1.5,
+              }}
+            >
+              <WheelPicker
+                data={data}
+                value={value2}
+                onValueChanged={({ item: { value } }) => setValue2(value)}
+                enableScrollByTapOnItem={true}
+                style={{
+                  backgroundColor: "#FFF",
+                  height: 100,
+                  borderRadius: 3,
+                  borderColor: "#001C63",
+                }}
+                overlayItemStyle={{
+                  backgroundColor: "#001C63",
+                }}
+                itemHeight={50}
+                visibleItemCount={3}
+              />
+            </View>
             <View style={styles.headerItem}>
               <FontAwesome5
                 name="briefcase-medical"
