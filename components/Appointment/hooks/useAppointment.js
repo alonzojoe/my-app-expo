@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import api from "../../../services";
 
 const useAppointment = (serviceID) => {
   const {
@@ -20,9 +19,7 @@ export default useAppointment;
 
 const getDateSlots = async (serviceTypeID) => {
   try {
-    const res = await axios.get(
-      `${process.env.EXPO_PUBLIC_API_OPD_URL}/date?ServiceType=${serviceTypeID}`
-    );
+    const res = await api.get(`/date?ServiceType=${serviceTypeID}`);
     console.log("date slots", res.data);
     return res.data.data;
   } catch (error) {
