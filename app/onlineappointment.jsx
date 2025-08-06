@@ -27,7 +27,7 @@ const OnlineAppointment = () => {
   const defaultStyles = useDefaultStyles();
   const [selected, setSelected] = useState();
   const color = Colors["light"];
-  const { isFetching, availableDates } = useAppointment(212);
+  const { isFetching, availableDates, getTimeSlots } = useAppointment(212);
 
   console.log("avail", availableDates);
 
@@ -89,7 +89,10 @@ const OnlineAppointment = () => {
                 }}
                 mode="single"
                 date={selected}
-                onChange={({ date }) => setSelected(date)}
+                onChange={({ date }) => {
+                  setSelected(date);
+                  getTimeSlots(date);
+                }}
                 styles={{
                   ...defaultStyles,
                   today: { borderColor: "#001C63", borderWidth: 1 },
