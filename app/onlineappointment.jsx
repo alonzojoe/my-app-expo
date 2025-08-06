@@ -19,7 +19,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "../constants/Colors";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
-import dayjs from "dayjs";
+import WheelPicker from "@quidone/react-native-wheel-picker";
 import useAppointment from "../components/Appointment/hooks/useAppointment";
 const OnlineAppointment = () => {
   const { bottom } = useSafeAreaInsets();
@@ -27,7 +27,20 @@ const OnlineAppointment = () => {
   const defaultStyles = useDefaultStyles();
   const [selected, setSelected] = useState();
   const color = Colors["light"];
-  const { availableDates } = useAppointment(212);
+  const { isFetching, availableDates, getTimeSlots, timeslots } =
+    useAppointment(212);
+
+  console.log("avail", availableDates);
+
+  console.log("time slots", timeslots);
+
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [value2, setValue2] = useState(0);
+  const data = [...Array(100).keys()].map((index) => ({
+    value: index,
+    label: index.toString(),
+  }));
 
   return (
     <SafeView>
@@ -43,6 +56,31 @@ const OnlineAppointment = () => {
             </Card.Content>
           </Card>
           <>
+            <View
+              style={{
+                backgroundColor: "#001C63",
+                borderRadius: 4,
+                padding: 1.5,
+              }}
+            >
+              <WheelPicker
+                data={timeslots}
+                value={value2}
+                onValueChanged={({ item: { value } }) => setValue2(value)}
+                enableScrollByTapOnItem={true}
+                style={{
+                  backgroundColor: "#FFF",
+                  height: 100,
+                  borderRadius: 3,
+                  borderColor: "#001C63",
+                }}
+                overlayItemStyle={{
+                  backgroundColor: "#001C63",
+                }}
+                itemHeight={50}
+                visibleItemCount={3}
+              />
+            </View>
             <View style={styles.headerItem}>
               <FontAwesome5
                 name="briefcase-medical"
@@ -87,14 +125,17 @@ const OnlineAppointment = () => {
                 }}
                 mode="single"
                 date={selected}
-                onChange={({ date }) => setSelected(date)}
+                onChange={({ date }) => {
+                  setSelected(date);
+                  getTimeSlots(date);
+                }}
                 styles={{
                   ...defaultStyles,
                   today: { borderColor: "#001C63", borderWidth: 1 },
                   selected: { backgroundColor: "#001C63" },
                   selected_label: { color: "white" },
                 }}
-                disabledDates={(date) => [0, 6].includes(dayjs(date).day())}
+                enabledDates={availableDates?.map((d) => d.datesched || [])}
               />
             </Card>
           </>
@@ -110,10 +151,12 @@ const OnlineAppointment = () => {
             </View>
             <DropDownPicker
               style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
-              value={212}
-              items={items}
-              setItems={setItems}
-              disabled={true}
+              items={timeslots}
+              open={open}
+              value={value}
+              setOpen={setOpen}
+              setValue={setValue}
+              disabled={false}
             />
             <View style={styles.textGroup}>
               <Button
@@ -122,6 +165,7 @@ const OnlineAppointment = () => {
                   console.log("test");
                 }}
                 style={styles.btn}
+                disabled={isFetching}
               >
                 Create Appointment
               </Button>
