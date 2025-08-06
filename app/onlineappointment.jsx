@@ -19,7 +19,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { Colors } from "../constants/Colors";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
-import dayjs from "dayjs";
+
 import useAppointment from "../components/Appointment/hooks/useAppointment";
 const OnlineAppointment = () => {
   const { bottom } = useSafeAreaInsets();
@@ -27,7 +27,9 @@ const OnlineAppointment = () => {
   const defaultStyles = useDefaultStyles();
   const [selected, setSelected] = useState();
   const color = Colors["light"];
-  const { availableDates } = useAppointment(212);
+  const { isFetching, availableDates } = useAppointment(212);
+
+  console.log("avail", availableDates);
 
   return (
     <SafeView>
@@ -94,7 +96,7 @@ const OnlineAppointment = () => {
                   selected: { backgroundColor: "#001C63" },
                   selected_label: { color: "white" },
                 }}
-                disabledDates={(date) => [0, 6].includes(dayjs(date).day())}
+                enabledDates={availableDates?.map((d) => d.datesched || [])}
               />
             </Card>
           </>
@@ -122,6 +124,7 @@ const OnlineAppointment = () => {
                   console.log("test");
                 }}
                 style={styles.btn}
+                disabled={isFetching}
               >
                 Create Appointment
               </Button>

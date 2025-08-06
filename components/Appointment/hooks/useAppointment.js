@@ -21,7 +21,7 @@ const getDateSlots = async (serviceTypeID) => {
   try {
     const res = await api.get(`/date?ServiceType=${serviceTypeID}`);
     console.log("date slots", res.data);
-    return res.data.data;
+    return res.data;
   } catch (error) {
     console.error(`Error fetching date slots: ${serviceTypeID}`, error);
     return [];
