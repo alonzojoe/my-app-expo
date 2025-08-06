@@ -64,7 +64,7 @@ const OnlineAppointment = () => {
               }}
             >
               <WheelPicker
-                data={data}
+                data={timeslots}
                 value={value2}
                 onValueChanged={({ item: { value } }) => setValue2(value)}
                 enableScrollByTapOnItem={true}
