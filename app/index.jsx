@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, KeyboardAvoidingView } from "react-native";
 import { Link } from "expo-router";
 import AppLogo from "../assets/lingadcare.png";
 import SafeView from "../components/SafeView";
@@ -26,41 +26,46 @@ const Auth = () => {
   return (
     <SafeView safe={true} style={styles.container}>
       <AlertNotificationRoot theme="dark" style={{ marginVertical: 20 }}>
-        <Spacer />
-        <View style={styles.textGroup}>
-          <Image source={AppLogo} style={[styles.img, styles.textGroup]} />
-        </View>
-        <View style={styles.textGroup}>
-          <PaperText variant="headlineMedium" style={{ color: "#001C63" }}>
-            Welcome back!
-          </PaperText>
-          <PaperText
-            variant="titleMedium"
-            style={{ color: "#48444E", marginBottom: 10 }}
-          >
-            Login your account
-          </PaperText>
-        </View>
-        <View style={{ marginHorizontal: 40 }}>
-          <VerificationForm />
-          <QRPopup onScan={scanQR} show={showQr} toggleQR={toggleShowQr} />
-          <QRVerify show={showVerify} toggleQR={toggleShowVerify} />
-        </View>
-        <View style={styles.textCreate}>
-          <Link href="/nointernet" style={styles.create}>
-            OR
-          </Link>
-        </View>
-        <View style={styles.textGroup}>
-          <Button
-            icon="qrcode"
-            mode="contained"
-            onPress={() => toggleShowQr(true)}
-            style={[styles.btn, { backgroundColor: "#3A71FA", marginTop: 18 }]}
-          >
-            Login using QR
-          </Button>
-        </View>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
+          <Spacer />
+          <View style={styles.textGroup}>
+            <Image source={AppLogo} style={[styles.img, styles.textGroup]} />
+          </View>
+          <View style={styles.textGroup}>
+            <PaperText variant="headlineMedium" style={{ color: "#001C63" }}>
+              Welcome back!
+            </PaperText>
+            <PaperText
+              variant="titleMedium"
+              style={{ color: "#48444E", marginBottom: 10 }}
+            >
+              Login your account
+            </PaperText>
+          </View>
+          <View style={{ marginHorizontal: 40 }}>
+            <VerificationForm />
+            <QRPopup onScan={scanQR} show={showQr} toggleQR={toggleShowQr} />
+            <QRVerify show={showVerify} toggleQR={toggleShowVerify} />
+          </View>
+          <View style={styles.textCreate}>
+            <Link href="/nointernet" style={styles.create}>
+              OR
+            </Link>
+          </View>
+          <View style={styles.textGroup}>
+            <Button
+              icon="qrcode"
+              mode="contained"
+              onPress={() => toggleShowQr(true)}
+              style={[
+                styles.btn,
+                { backgroundColor: "#3A71FA", marginTop: 18 },
+              ]}
+            >
+              Login using QR
+            </Button>
+          </View>
+        </KeyboardAvoidingView>
       </AlertNotificationRoot>
     </SafeView>
   );
