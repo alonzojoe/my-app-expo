@@ -56,31 +56,6 @@ const OnlineAppointment = () => {
             </Card.Content>
           </Card>
           <>
-            <View
-              style={{
-                backgroundColor: "#001C63",
-                borderRadius: 4,
-                padding: 1.5,
-              }}
-            >
-              <WheelPicker
-                data={timeslots}
-                value={value2}
-                onValueChanged={({ item: { value } }) => setValue2(value)}
-                enableScrollByTapOnItem={true}
-                style={{
-                  backgroundColor: "#FFF",
-                  height: 100,
-                  borderRadius: 3,
-                  borderColor: "#001C63",
-                }}
-                overlayItemStyle={{
-                  backgroundColor: "#001C63",
-                }}
-                itemHeight={50}
-                visibleItemCount={3}
-              />
-            </View>
             <View style={styles.headerItem}>
               <FontAwesome5
                 name="briefcase-medical"
@@ -149,6 +124,35 @@ const OnlineAppointment = () => {
                 Time of Schedule
               </PaperText>
             </View>
+            {/* <View
+              style={{
+                marginTop: 10,
+                backgroundColor: "#001C63",
+                borderRadius: 10,
+                padding: 1.5,
+              }}
+            >
+              <WheelPicker
+                data={timeslots}
+                value={value2}
+                onValueChanged={({ item: { value } }) => setValue2(value)}
+                enableScrollByTapOnItem={true}
+                style={{
+                  backgroundColor: "#FFF",
+                  height: 100,
+                  borderRadius: 9,
+                  borderColor: "#001C63",
+                }}
+                overlayItemStyle={{
+                  backgroundColor: "#001C63",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                }}
+                itemHeight={50}
+                visibleItemCount={1}
+              />
+            </View> */}
             <DropDownPicker
               style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
               items={timeslots}

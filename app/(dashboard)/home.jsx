@@ -31,6 +31,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import BlueF from "../../assets/image/bluef.jpg";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import BlueCardDetails from "../../components/Home/BlueCardDetails";
 const ITEMS = Array.from({ length: 2 }).map((_, index) => index + 1);
 
 const Home = () => {
@@ -54,6 +55,7 @@ const Home = () => {
           <Image source={BlueF} style={styles.cardImage} />
         </View>
       </View>
+      {/* <BlueCardDetails /> */}
 
       <Subtitle label={`Services`} style={{ marginVertical: 15 }} />
       <ScrollView

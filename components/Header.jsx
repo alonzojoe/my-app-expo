@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { Text as PaperText } from "react-native-paper";
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -34,12 +34,14 @@ const Header = () => {
       </View>
 
       <View>
-        <FontAwesome
-          onPress={() => router.replace("/profile")}
-          size={35}
-          name={"user-circle"}
-          color={"#001C63"}
-        />
+        <TouchableOpacity>
+          <FontAwesome
+            onPress={() => router.replace("/profile")}
+            size={35}
+            name={"user-circle"}
+            color={"#001C63"}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );

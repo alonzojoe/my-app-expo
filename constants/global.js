@@ -22,7 +22,7 @@ export const FAQS = [
   },
   {
     id: 6,
-    question: "Can I reschedule an appointment? If so, how?",
+    question: "Can I reschedule an appointment?",
   },
   {
     id: 7,
