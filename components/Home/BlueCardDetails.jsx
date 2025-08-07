@@ -7,7 +7,7 @@ const BlueCardDetails = () => {
     <View style={styles.imgcontainer}>
       <View style={styles.cardContainer}>
         <Image source={BlueF} style={styles.cardImage} />
-
+        <Text style={styles.patientno}>01352296</Text>
         <Text style={styles.name}>DEANG, DELIA DIZON</Text>
         <Text style={styles.bday}>March 14, 1938</Text>
         <Text style={styles.address}>
@@ -101,6 +101,14 @@ const styles = StyleSheet.create({
     left: 70,
     color: "black",
     fontSize: 15,
+    fontWeight: "bold",
+  },
+  patientno: {
+    position: "absolute",
+    bottom: 128,
+    left: 67,
+    color: "#FFF",
+    fontSize: 24,
     fontWeight: "bold",
   },
 });
