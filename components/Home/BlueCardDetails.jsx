@@ -1,12 +1,16 @@
 import { StyleSheet, View, Image, Text } from "react-native";
 import React from "react";
 import BlueF from "../../assets/image/bluef.jpg";
+import QRCode from "react-native-qrcode-svg";
 
 const BlueCardDetails = () => {
   return (
     <View style={styles.imgcontainer}>
       <View style={styles.cardContainer}>
         <Image source={BlueF} style={styles.cardImage} />
+        <View style={styles.overlayContainer}>
+          <QRCode value="01352296" size={80} />
+        </View>
         <Text style={styles.patientno}>01352296</Text>
         <Text style={styles.name}>DEANG, DELIA DIZON</Text>
         <Text style={styles.bday}>March 14, 1938</Text>
@@ -45,16 +49,15 @@ const styles = StyleSheet.create({
     height: "100%",
     resizeMode: "cover",
   },
-  // overlayView: {
-  //   position: "absolute",
-  //   bottom: 60,
-  //   left: 65,
-  //   right: 10,
-  //   backgroundColor: "rgba(0, 0, 0, 0.5)",
-  //   // backgroundColor: "transparent",
-  //   padding: 10,
-  //   borderRadius: 8,
-  // },
+  overlayContainer: {
+    position: "absolute",
+    top: 7,
+    right: 7,
+    zIndex: 10,
+    backgroundColor: "white", // optional: add contrast
+    padding: 4,
+    borderRadius: 4,
+  },
   name: {
     position: "absolute",
     bottom: 93,
@@ -110,5 +113,11 @@ const styles = StyleSheet.create({
     color: "#FFF",
     fontSize: 24,
     fontWeight: "bold",
+  },
+  qr: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    zIndex: 99999,
   },
 });
