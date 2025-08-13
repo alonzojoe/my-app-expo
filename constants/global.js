@@ -82,3 +82,13 @@ export const SOAP = {
     "FRACTURE CLOSED COMPLETE DISPLACED INTERTROCHANTERIC FEMUR, RIGHT; CLOSE REDUCTION, INTRAMEDULLARY NAILING, PROXIMAL FEMUR NAILING, RIGHT (9/5/2024)",
   Plan: "ROI (ALL IMPLANT) + APPLICATION OF AB BEADS (STIMULAN)",
 };
+
+export const CIVIL_STATUS = [
+  { id: 1, name: "SINGLE" },
+  { id: 2, name: "MARRIED" },
+  { id: 3, name: "WIDOW" },
+  { id: 4, name: "DIVORCED" },
+  { id: 7, name: "SEPARATED" },
+  { id: 10, name: "UNKNOWN" },
+  { id: 11, name: "WIDOWER" },
+];
