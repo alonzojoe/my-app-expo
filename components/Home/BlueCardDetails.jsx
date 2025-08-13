@@ -2,24 +2,25 @@ import { StyleSheet, View, Image, Text } from "react-native";
 import React from "react";
 import BlueF from "../../assets/image/bluef.jpg";
 import QRCode from "react-native-qrcode-svg";
+import useBluecardInfo from "../../hooks/features/useBluecardInfo";
 
 const BlueCardDetails = () => {
+  const PatientInfo = useBluecardInfo();
+
   return (
     <View style={styles.imgcontainer}>
       <View style={styles.cardContainer}>
         <Image source={BlueF} style={styles.cardImage} />
         <View style={styles.overlayContainer}>
-          <QRCode value="01352296" size={80} />
+          <QRCode value={PatientInfo.qrcontent} size={80} />
         </View>
-        <Text style={styles.patientno}>01352296</Text>
-        <Text style={styles.name}>DEANG, DELIA DIZON</Text>
-        <Text style={styles.bday}>March 14, 1938</Text>
-        <Text style={styles.address}>
-          501 DOLORES, CITY OF SAN FERNANDO PAMPANGA
-        </Text>
-        <Text style={styles.gender}>FEMALE</Text>
-        <Text style={styles.civil}>MARRIED</Text>
-        <Text style={styles.issued}>-</Text>
+        <Text style={styles.patientno}>{PatientInfo.patientno}</Text>
+        <Text style={styles.name}>{PatientInfo.name}</Text>
+        <Text style={styles.bday}>{PatientInfo.birthdate}</Text>
+        <Text style={styles.address}>{PatientInfo.address}</Text>
+        <Text style={styles.gender}>{PatientInfo.gender}</Text>
+        <Text style={styles.civil}>{PatientInfo.civilstatus}</Text>
+        <Text style={styles.issued}>{PatientInfo.dateissued}</Text>
       </View>
     </View>
   );

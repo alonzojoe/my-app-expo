@@ -50,12 +50,12 @@ const Home = () => {
       {/* <View style={styles.container}>
         <Card.Cover source={Banner} />
       </View> */}
-      <View style={styles.imgcontainer}>
+      {/* <View style={styles.imgcontainer}>
         <View style={styles.cardContainer}>
           <Image source={BlueF} style={styles.cardImage} />
         </View>
-      </View>
-      {/* <BlueCardDetails /> */}
+      </View> */}
+      <BlueCardDetails />
 
       <Subtitle label={`Services`} style={{ marginVertical: 15 }} />
       <ScrollView
