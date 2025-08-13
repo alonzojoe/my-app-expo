@@ -12,9 +12,9 @@ const BlueCardDetails = () => {
       <View style={styles.cardContainer}>
         <Image source={BlueF} style={styles.cardImage} />
         <View style={styles.overlayContainer}>
-          <QRCode value="01352296" size={80} />
+          <QRCode value={PatientInfo.qrcontent} size={80} />
         </View>
-        <Text style={styles.patientno}>01352296</Text>
+        <Text style={styles.patientno}>{PatientInfo.patientno}</Text>
         <Text style={styles.name}>{PatientInfo.name}</Text>
         <Text style={styles.bday}>{PatientInfo.birthdate}</Text>
         <Text style={styles.address}>{PatientInfo.address}</Text>
