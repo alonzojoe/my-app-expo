@@ -16,7 +16,7 @@ const useBluecardInfo = () => {
     birthdate: moment(authUser?.BirthDate).format("MMMM DD, YYYY"),
     address: "-",
     gender: authUser?.Gender === "F" ? "FEMALE" : "MALE",
-    civilStatus: label,
+    civilstatus: label?.name,
     dateissued: "-",
   };
 
