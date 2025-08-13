@@ -18,6 +18,8 @@ const useBluecardInfo = () => {
     gender: authUser?.Gender === "F" ? "FEMALE" : "MALE",
     civilstatus: label?.name,
     dateissued: "-",
+    patientno: authUser?.PatientNo,
+    qrcontent: `JBL-${authUser?.PatientNo}`,
   };
 
   return PatientInfo;
