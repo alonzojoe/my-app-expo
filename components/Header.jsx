@@ -35,7 +35,7 @@ const Header = () => {
           variant="headlineSmall"
           style={{ fontWeight: "bold", color: "#001C63" }}
         >
-          {fullName} {authUser?.Gender}
+          {fullName}
         </PaperText>
       </View>
 
