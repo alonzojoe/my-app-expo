@@ -8,7 +8,7 @@ import {
   Button,
 } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import SafeView from "../components/SafeView";
 import TransactionItem from "../components/Transactions/TransactionItem";
 import { ScrollView } from "react-native";
@@ -58,6 +58,13 @@ const Medical = () => {
 
   console.log("filtered", filteredRecords);
 
+  const selectRecord = useCallback(
+    (medical) => {
+      setSelected(medical);
+    },
+    [setSelected]
+  );
+
   return (
     <SafeView>
       <ScrollView style={{ paddingBottom: bottom }}>
@@ -101,7 +108,7 @@ const Medical = () => {
                 {filteredRecords.map((medical) => (
                   <TransactionItem
                     onView={() => {
-                      setSelected(medical);
+                      selectRecord(medical);
                       toggleShow(true);
                     }}
                     key={medical.PatientHistoryID}
