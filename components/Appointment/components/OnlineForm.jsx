@@ -1,6 +1,11 @@
 import { StyleSheet, View, Alert } from "react-native";
 import React, { useState } from "react";
-import { Card, Button, Text as PaperText } from "react-native-paper";
+import {
+  Card,
+  Button,
+  Text as PaperText,
+  ActivityIndicator,
+} from "react-native-paper";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -12,7 +17,7 @@ import FSLoader from "../../../components/Global/FSLoader";
 
 const OnlineForm = ({ onSubmit }) => {
   const defaultStyles = useDefaultStyles();
-  const { isFetching, availableDates, getTimeSlots, timeslots } =
+  const { isFetching, availableDates, getTimeSlots, timeslots, isLoading } =
     useAppointment(212);
   const [selected, setSelected] = useState();
 
@@ -80,14 +85,24 @@ const OnlineForm = ({ onSubmit }) => {
         </Card>
       </>
       <>
-        <View style={styles.headerItem}>
-          <AntDesign name="clockcircle" size={24} color="#001C63" />
-          <PaperText
-            variant="titleMedium"
-            style={{ color: "#001C63", fontWeight: "bold" }}
-          >
-            Time of Schedule
-          </PaperText>
+        <View style={styles.activityContainer}>
+          <View style={styles.headerItem}>
+            <AntDesign name="clockcircle" size={24} color="#001C63" />
+            <PaperText
+              variant="titleMedium"
+              style={{ color: "#001C63", fontWeight: "bold" }}
+            >
+              Time of Schedule
+            </PaperText>
+          </View>
+          {isLoading && (
+            <ActivityIndicator
+              style={{ marginTop: 15 }}
+              animating={true}
+              size={22}
+              color="#001C63"
+            />
+          )}
         </View>
         <DropDownPicker
           style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
@@ -139,6 +154,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 5,
+  },
+  activityContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   textGroup: {
     alignItems: "center",
