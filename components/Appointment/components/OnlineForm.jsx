@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Alert } from "react-native";
 import React, { useState } from "react";
 import { Card, Button, Text as PaperText } from "react-native-paper";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -10,7 +10,6 @@ import WheelPopUp from "./WheelPopUp";
 import useAppointment from "../hooks/useAppointment";
 import useToggle from "../../../hooks/useToggle";
 const OnlineForm = ({ onSubmit }) => {
-  const [items, setItems] = useState([{ label: "TELEHEALTH", value: 212 }]);
   const defaultStyles = useDefaultStyles();
   const [selected, setSelected] = useState();
   const { isFetching, availableDates, getTimeSlots, timeslots } =
@@ -39,8 +38,7 @@ const OnlineForm = ({ onSubmit }) => {
         <DropDownPicker
           style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
           value={212}
-          items={items}
-          setItems={setItems}
+          items={[{ label: "TELEHEALTH", value: 212 }]}
           disabled={true}
         />
       </>
@@ -94,7 +92,13 @@ const OnlineForm = ({ onSubmit }) => {
           items={timeslots}
           open={false}
           value={value}
-          setOpen={() => togglePopUp(true)}
+          setOpen={() => {
+            if (timeslots.length === 0) {
+              console.error("Please select a date first");
+            } else {
+              togglePopUp(true);
+            }
+          }}
           setValue={setValue}
         />
         <View style={styles.textGroup}>
