@@ -22,7 +22,7 @@ const OnlineForm = ({ onSubmit }) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [popUp, togglePopUp] = useToggle(false);
-  const [selectedTime, setSelectedTime] = useState(null);
+
   return (
     <>
       <>
@@ -114,13 +114,7 @@ const OnlineForm = ({ onSubmit }) => {
           </Button>
         </View>
       </>
-      <WheelPopUp
-        timeslots={timeslots}
-        show={popUp}
-        onToggle={togglePopUp}
-        value={selectedTime}
-        setValue={setSelectedTime}
-      />
+      <WheelPopUp timeslots={timeslots} show={popUp} onToggle={togglePopUp} />
     </>
   );
 };

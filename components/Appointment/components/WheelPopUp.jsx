@@ -1,16 +1,11 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Portal, Modal, Text as PaperText, Button } from "react-native-paper";
 import WheelPicker from "@quidone/react-native-wheel-picker";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-const WheelPopUp = ({
-  show,
-  onToggle,
-  onSelect,
-  timeslots,
-  value,
-  setValue,
-}) => {
+const WheelPopUp = ({ show, onToggle, onSelect, timeslots }) => {
+  const [selectedTime, setSelectedTime] = useState(null);
+
   return (
     <Portal>
       <Modal
@@ -57,8 +52,8 @@ const WheelPopUp = ({
               </View>
               <WheelPicker
                 data={timeslots}
-                value={value}
-                onValueChanged={({ item: { value } }) => setValue(value)}
+                value={selectedTime}
+                onValueChanged={({ item: { value } }) => setSelectedTime(value)}
                 enableScrollByTapOnItem={true}
                 style={{
                   backgroundColor: "#FFF",
