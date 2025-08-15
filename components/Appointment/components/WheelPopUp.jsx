@@ -3,8 +3,12 @@ import React, { useState } from "react";
 import { Portal, Modal, Text as PaperText, Button } from "react-native-paper";
 import WheelPicker from "@quidone/react-native-wheel-picker";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-const WheelPopUp = ({ show, onToggle, onSelect, timeslots }) => {
+const WheelPopUp = ({ show, onToggle, timeslots, onSelect }) => {
   const [selectedTime, setSelectedTime] = useState(null);
+
+  const chooseDate = () => {
+    onSelect(selectedTime);
+  };
 
   return (
     <Portal>
@@ -89,9 +93,10 @@ const WheelPopUp = ({ show, onToggle, onSelect, timeslots }) => {
               display: "flex",
               alignContent: "center",
               justifyContent: "center",
+              gap: 5,
             }}
           >
-            <Button
+            {/* <Button
               width={120}
               icon="close"
               mode="contained"
@@ -102,6 +107,18 @@ const WheelPopUp = ({ show, onToggle, onSelect, timeslots }) => {
               }}
             >
               Close
+            </Button> */}
+            <Button
+              width={120}
+              icon="check"
+              mode="contained"
+              onPress={chooseDate}
+              style={{
+                color: "#fff",
+                backgroundColor: "#001C63",
+              }}
+            >
+              Select
             </Button>
           </View>
         </>

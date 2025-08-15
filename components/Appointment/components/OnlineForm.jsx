@@ -11,17 +11,17 @@ import useAppointment from "../hooks/useAppointment";
 import useToggle from "../../../hooks/useToggle";
 const OnlineForm = ({ onSubmit }) => {
   const defaultStyles = useDefaultStyles();
-  const [selected, setSelected] = useState();
   const { isFetching, availableDates, getTimeSlots, timeslots } =
     useAppointment(212);
+  const [selected, setSelected] = useState();
 
-  console.log("avail", availableDates);
-
-  console.log("time slots", timeslots);
-
-  const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
   const [popUp, togglePopUp] = useToggle(false);
+
+  const handleChooseTime = (selectedTime) => {
+    setValue(selectedTime);
+    togglePopUp(false);
+  };
 
   return (
     <>
@@ -114,7 +114,12 @@ const OnlineForm = ({ onSubmit }) => {
           </Button>
         </View>
       </>
-      <WheelPopUp timeslots={timeslots} show={popUp} onToggle={togglePopUp} />
+      <WheelPopUp
+        timeslots={timeslots}
+        show={popUp}
+        onToggle={togglePopUp}
+        onSelect={handleChooseTime}
+      />
     </>
   );
 };
