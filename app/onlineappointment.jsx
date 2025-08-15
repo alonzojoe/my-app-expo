@@ -21,6 +21,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
 import WheelPicker from "@quidone/react-native-wheel-picker";
 import useAppointment from "../components/Appointment/hooks/useAppointment";
+import FormInfo from "../components/Appointment/components/FormInfo";
 const OnlineAppointment = () => {
   const { bottom } = useSafeAreaInsets();
   const [items, setItems] = useState([{ label: "TELEHEALTH", value: 212 }]);
@@ -46,15 +47,9 @@ const OnlineAppointment = () => {
     <SafeView>
       <ScrollView style={{ marginBottom: bottom }}>
         <View style={styles.container}>
-          <Card style={{ backgroundColor: "#E6F0FF" }}>
-            <Card.Content>
-              <PaperText variant="bodyMedium">
-                ONLINE KONSULTA: (ENT, FAMILY MEDICINE, GERIATRICS, IM
-                NEPHROLOGY-DIALYSIS, INTERNAL MEDICINE, OBGYNE, OPHTHALMOLOGY,
-                ORTHOPEDICS, PEDIATRICS, SURGERY)
-              </PaperText>
-            </Card.Content>
-          </Card>
+          <FormInfo
+            content={`ONLINE KONSULTA: (ENT, FAMILY MEDICINE, GERIATRICS, IM NEPHROLOGY-DIALYSIS, INTERNAL MEDICINE, OBGYNE, OPHTHALMOLOGY, ORTHOPEDICS, PEDIATRICS, SURGERY)`}
+          />
           <>
             <View style={styles.headerItem}>
               <FontAwesome5
