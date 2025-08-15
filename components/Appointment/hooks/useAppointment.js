@@ -5,7 +5,7 @@ import moment from "moment";
 
 const useAppointment = (serviceID) => {
   const [timeslots, setTimeslots] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
   const {
     data: availableDates,
     isFetching,
@@ -17,6 +17,7 @@ const useAppointment = (serviceID) => {
   });
 
   const getTimeSlots = async (selectedDate) => {
+    setIsLoading(true);
     const formattedDate = moment(selectedDate).format("YYYY-MM-DD");
     console.log("Formatted date:", formattedDate);
 
@@ -33,10 +34,19 @@ const useAppointment = (serviceID) => {
       setTimeslots(times);
     } catch (error) {
       console.error(`Error fetching time slots`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { availableDates, isFetching, error, getTimeSlots, timeslots };
+  return {
+    availableDates,
+    isFetching,
+    error,
+    getTimeSlots,
+    timeslots,
+    isLoading,
+  };
 };
 
 export default useAppointment;
