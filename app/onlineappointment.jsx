@@ -22,6 +22,7 @@ import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
 import WheelPicker from "@quidone/react-native-wheel-picker";
 import useAppointment from "../components/Appointment/hooks/useAppointment";
 import FormInfo from "../components/Appointment/components/FormInfo";
+import OnlineForm from "../components/Appointment/components/OnlineForm";
 const OnlineAppointment = () => {
   const { bottom } = useSafeAreaInsets();
   const [items, setItems] = useState([{ label: "TELEHEALTH", value: 212 }]);
@@ -50,126 +51,7 @@ const OnlineAppointment = () => {
           <FormInfo
             content={`ONLINE KONSULTA: (ENT, FAMILY MEDICINE, GERIATRICS, IM NEPHROLOGY-DIALYSIS, INTERNAL MEDICINE, OBGYNE, OPHTHALMOLOGY, ORTHOPEDICS, PEDIATRICS, SURGERY)`}
           />
-          <>
-            <View style={styles.headerItem}>
-              <FontAwesome5
-                name="briefcase-medical"
-                size={24}
-                color="#001C63"
-              />
-              <PaperText
-                variant="titleMedium"
-                style={{ color: "#001C63", fontWeight: "bold" }}
-              >
-                Type of Service
-              </PaperText>
-            </View>
-            <DropDownPicker
-              style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
-              value={212}
-              items={items}
-              setItems={setItems}
-              disabled={true}
-            />
-          </>
-          <>
-            <View style={styles.headerItem}>
-              <FontAwesome5 name="calendar-day" size={24} color="#001C63" />
-              <PaperText
-                variant="titleMedium"
-                style={{ color: "#001C63", fontWeight: "bold" }}
-              >
-                Date of Schedule
-              </PaperText>
-            </View>
-            <Card
-              style={{ marginTop: 10, backgroundColor: "#001C63", padding: 1 }}
-            >
-              <DateTimePicker
-                style={{
-                  marginTop: 0,
-                  backgroundColor: "#FFF",
-                  borderRadius: 10,
-                  borderColor: "#001C63",
-                  border: 1,
-                }}
-                mode="single"
-                date={selected}
-                onChange={({ date }) => {
-                  setSelected(date);
-                  getTimeSlots(date);
-                }}
-                styles={{
-                  ...defaultStyles,
-                  today: { borderColor: "#001C63", borderWidth: 1 },
-                  selected: { backgroundColor: "#001C63" },
-                  selected_label: { color: "white" },
-                }}
-                enabledDates={availableDates?.map((d) => d.datesched || [])}
-              />
-            </Card>
-          </>
-          <>
-            <View style={styles.headerItem}>
-              <AntDesign name="clockcircle" size={24} color="#001C63" />
-              <PaperText
-                variant="titleMedium"
-                style={{ color: "#001C63", fontWeight: "bold" }}
-              >
-                Time of Schedule
-              </PaperText>
-            </View>
-            {/* <View
-              style={{
-                marginTop: 10,
-                backgroundColor: "#001C63",
-                borderRadius: 10,
-                padding: 1.5,
-              }}
-            >
-              <WheelPicker
-                data={timeslots}
-                value={value2}
-                onValueChanged={({ item: { value } }) => setValue2(value)}
-                enableScrollByTapOnItem={true}
-                style={{
-                  backgroundColor: "#FFF",
-                  height: 100,
-                  borderRadius: 9,
-                  borderColor: "#001C63",
-                }}
-                overlayItemStyle={{
-                  backgroundColor: "#001C63",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                }}
-                itemHeight={50}
-                visibleItemCount={1}
-              />
-            </View> */}
-            <DropDownPicker
-              style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
-              items={timeslots}
-              open={open}
-              value={value}
-              setOpen={setOpen}
-              setValue={setValue}
-              disabled={false}
-            />
-            <View style={styles.textGroup}>
-              <Button
-                mode="contained"
-                onPress={() => {
-                  console.log("test");
-                }}
-                style={styles.btn}
-                disabled={isFetching}
-              >
-                Create Appointment
-              </Button>
-            </View>
-          </>
+          <OnlineForm />
         </View>
       </ScrollView>
     </SafeView>
