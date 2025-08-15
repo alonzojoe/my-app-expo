@@ -6,8 +6,9 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
 import WheelPicker from "@quidone/react-native-wheel-picker";
+import WheelPopUp from "./WheelPopUp";
 import useAppointment from "../hooks/useAppointment";
-
+import useToggle from "../../../hooks/useToggle";
 const OnlineForm = ({ onSubmit }) => {
   const [items, setItems] = useState([{ label: "TELEHEALTH", value: 212 }]);
   const defaultStyles = useDefaultStyles();
@@ -21,7 +22,8 @@ const OnlineForm = ({ onSubmit }) => {
 
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(null);
-
+  const [popUp, togglePopUp] = useToggle(false);
+  const [selectedTime, setSelectedTime] = useState(null);
   return (
     <>
       <>
@@ -87,43 +89,13 @@ const OnlineForm = ({ onSubmit }) => {
             Time of Schedule
           </PaperText>
         </View>
-        {/* <View
-              style={{
-                marginTop: 10,
-                backgroundColor: "#001C63",
-                borderRadius: 10,
-                padding: 1.5,
-              }}
-            >
-              <WheelPicker
-                data={timeslots}
-                value={value2}
-                onValueChanged={({ item: { value } }) => setValue2(value)}
-                enableScrollByTapOnItem={true}
-                style={{
-                  backgroundColor: "#FFF",
-                  height: 100,
-                  borderRadius: 9,
-                  borderColor: "#001C63",
-                }}
-                overlayItemStyle={{
-                  backgroundColor: "#001C63",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                }}
-                itemHeight={50}
-                visibleItemCount={1}
-              />
-            </View> */}
         <DropDownPicker
           style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
           items={timeslots}
-          open={open}
+          open={false}
           value={value}
-          setOpen={setOpen}
+          setOpen={() => togglePopUp(true)}
           setValue={setValue}
-          disabled={false}
         />
         <View style={styles.textGroup}>
           <Button
@@ -138,6 +110,13 @@ const OnlineForm = ({ onSubmit }) => {
           </Button>
         </View>
       </>
+      <WheelPopUp
+        timeslots={timeslots}
+        show={popUp}
+        onToggle={togglePopUp}
+        value={selectedTime}
+        setValue={setSelectedTime}
+      />
     </>
   );
 };
