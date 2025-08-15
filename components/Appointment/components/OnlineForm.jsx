@@ -8,7 +8,7 @@ import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
 import WheelPicker from "@quidone/react-native-wheel-picker";
 import useAppointment from "../hooks/useAppointment";
 
-const OnlineForm = () => {
+const OnlineForm = ({ onSubmit }) => {
   const [items, setItems] = useState([{ label: "TELEHEALTH", value: 212 }]);
   const defaultStyles = useDefaultStyles();
   const [selected, setSelected] = useState();
