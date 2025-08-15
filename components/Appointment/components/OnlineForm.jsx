@@ -5,10 +5,11 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
-import WheelPicker from "@quidone/react-native-wheel-picker";
 import WheelPopUp from "./WheelPopUp";
 import useAppointment from "../hooks/useAppointment";
 import useToggle from "../../../hooks/useToggle";
+import FSLoader from "../../../components/Global/FSLoader";
+
 const OnlineForm = ({ onSubmit }) => {
   const defaultStyles = useDefaultStyles();
   const { isFetching, availableDates, getTimeSlots, timeslots } =
@@ -26,6 +27,7 @@ const OnlineForm = ({ onSubmit }) => {
   return (
     <>
       <>
+        {isFetching && <FSLoader />}
         <View style={styles.headerItem}>
           <FontAwesome5 name="briefcase-medical" size={24} color="#001C63" />
           <PaperText
