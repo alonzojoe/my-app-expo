@@ -29,6 +29,16 @@ const OnlineForm = ({ onSubmit }) => {
     togglePopUp(false);
   };
 
+  const collateData = () => {
+    const appointmentData = {
+      serviceId: 212,
+      date: selected,
+      time: value,
+    };
+
+    console.log("appointment data", appointmentData);
+  };
+
   return (
     <>
       <>
@@ -121,9 +131,7 @@ const OnlineForm = ({ onSubmit }) => {
         <View style={styles.textGroup}>
           <Button
             mode="contained"
-            onPress={() => {
-              console.log("test");
-            }}
+            onPress={collateData}
             style={styles.btn}
             disabled={isFetching}
           >
