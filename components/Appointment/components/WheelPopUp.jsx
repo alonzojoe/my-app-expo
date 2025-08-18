@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ScrollView } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Portal, Modal, Text as PaperText, Button } from "react-native-paper";
 import WheelPicker from "@quidone/react-native-wheel-picker";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -9,6 +9,14 @@ const WheelPopUp = ({ show, onToggle, timeslots, onSelect }) => {
   const chooseDate = () => {
     onSelect(selectedTime);
   };
+
+  useEffect(() => {
+    if (timeslots.length > 0) {
+      console.log("useEffect runs", timeslots);
+      const { value: defaultSelected } = timeslots[0];
+      setSelectedTime(defaultSelected);
+    }
+  }, [setSelectedTime, timeslots]);
 
   return (
     <Portal>
