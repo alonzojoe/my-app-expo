@@ -14,6 +14,7 @@ import WheelPopUp from "./WheelPopUp";
 import useAppointment from "../hooks/useAppointment";
 import useToggle from "../../../hooks/useToggle";
 import FSLoader from "../../../components/Global/FSLoader";
+import moment from "moment";
 
 const OnlineForm = ({ onSubmit }) => {
   const defaultStyles = useDefaultStyles();
@@ -32,7 +33,7 @@ const OnlineForm = ({ onSubmit }) => {
   const collateData = () => {
     const appointmentData = {
       serviceId: 212,
-      date: selected,
+      date: moment(selected).format("YYYY-MM-DD"),
       time: value,
     };
 
