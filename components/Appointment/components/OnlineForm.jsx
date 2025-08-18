@@ -14,6 +14,7 @@ import WheelPopUp from "./WheelPopUp";
 import useAppointment from "../hooks/useAppointment";
 import useToggle from "../../../hooks/useToggle";
 import FSLoader from "../../../components/Global/FSLoader";
+import moment from "moment";
 
 const OnlineForm = ({ onSubmit }) => {
   const defaultStyles = useDefaultStyles();
@@ -27,6 +28,16 @@ const OnlineForm = ({ onSubmit }) => {
   const handleChooseTime = (selectedTime) => {
     setValue(selectedTime);
     togglePopUp(false);
+  };
+
+  const collateData = () => {
+    const appointmentData = {
+      serviceId: 212,
+      date: moment(selected).format("YYYY-MM-DD"),
+      time: value,
+    };
+
+    console.log("appointment data", appointmentData);
   };
 
   return (
@@ -121,9 +132,7 @@ const OnlineForm = ({ onSubmit }) => {
         <View style={styles.textGroup}>
           <Button
             mode="contained"
-            onPress={() => {
-              console.log("test");
-            }}
+            onPress={collateData}
             style={styles.btn}
             disabled={isFetching}
           >
