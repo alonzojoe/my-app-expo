@@ -138,7 +138,7 @@ const Home = () => {
             <View style={{ marginVertical: 10 }} />
             <View>
               <Card
-                onPress={() => console.log("face to face")}
+                onPress={() => router.replace("/onsiteappointment")}
                 style={{ backgroundColor: "#3CA4E6" }}
               >
                 <Card.Title
