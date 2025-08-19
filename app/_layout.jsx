@@ -125,6 +125,19 @@ const RootLayout = () => {
               }}
             />
             <Stack.Screen
+              name="onsiteappointment"
+              options={{
+                title: "Appointment Details",
+                headerShown: true,
+                headerLeft: () => (
+                  <IconButton
+                    icon="arrow-left"
+                    onPress={() => router.replace("/home")}
+                  />
+                ),
+              }}
+            />
+            <Stack.Screen
               name="rate"
               options={{
                 title: "Rate",
