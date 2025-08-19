@@ -17,7 +17,7 @@ const OnsiteAppointment = () => {
       <ScrollView style={{ marginBottom: bottom }}>
         <View style={styles.container}>
           <FormInfo
-            content={`Reminder: Please type the reason for your consultation below. Provide clear and detailed information (e.g., description of the main concern, details of symptoms, other illnesses, available laboratory and imaging results, and any previous consultations if any) to ensure your appointment is properly scheduled and to avoid inconvenience or delays. Thank you very much.`}
+            content={`FACE TO FACE KONSULTA: Please type the reason for your consultation below. Provide clear and detailed information, description of the main concern, details of symptoms, other illnesses.`}
           />
         </View>
       </ScrollView>
