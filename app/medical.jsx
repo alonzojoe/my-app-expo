@@ -7,7 +7,7 @@ import {
   Text as PaperText,
   Button,
 } from "react-native-paper";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import React, { useState, useMemo, useCallback } from "react";
 import SafeView from "../components/SafeView";
 import TransactionItem from "../components/Transactions/TransactionItem";
@@ -67,19 +67,42 @@ const Medical = () => {
 
   return (
     <SafeView>
-      <ScrollView style={{ paddingBottom: bottom }}>
-        {error ? (
+      {error ? (
+        <ScrollView style={{ paddingBottom: bottom }}>
           <ErrorWithRefetch refresh={() => refetch()} />
-        ) : (
-          <>
-            <View style={styles.container}>
+        </ScrollView>
+      ) : (
+        <FlatList
+          data={filteredRecords}
+          keyExtractor={(item, index) =>
+            `${item.PatientHistoryID}-${item.TransactionNo}-${index}`
+          }
+          renderItem={({ item }) => (
+            <TransactionItem
+              onView={() => {
+                selectRecord(item);
+                toggleShow(true);
+              }}
+              transaction={item.TransactionNo}
+              transactionDate={formatDate(item.AdmissionDateTime)}
+            />
+          )}
+          ListHeaderComponent={() => (
+            <View style={{ marginTop: 15, marginBottom: 15 }}>
               <Searchbar
                 placeholder="Search"
                 onChangeText={setSearchQuery}
                 value={searchQuery}
               />
             </View>
-            {isFetching ? (
+          )}
+          contentContainerStyle={{
+            paddingHorizontal: 15,
+            paddingBottom: 100,
+          }}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          ListEmptyComponent={
+            isFetching ? (
               <View
                 style={{
                   display: "flex",
@@ -96,31 +119,24 @@ const Medical = () => {
                 />
               </View>
             ) : (
-              <View
-                style={{
-                  paddingHorizontal: 15,
-                  marginTop: 15,
-                  gap: 10,
-                  marginBottom: 5,
-                  paddingBottom: 50,
-                }}
-              >
-                {filteredRecords.map((medical) => (
-                  <TransactionItem
-                    onView={() => {
-                      selectRecord(medical);
-                      toggleShow(true);
-                    }}
-                    key={medical.PatientHistoryID}
-                    transaction={medical.TransactionNo}
-                    transactionDate={formatDate(medical.AdmissionDateTime)}
-                  />
-                ))}
+              <View style={{ padding: 20, alignItems: "center" }}>
+                <PaperText style={{ color: "#999" }}>
+                  No transactions found
+                </PaperText>
               </View>
-            )}
-          </>
-        )}
-      </ScrollView>
+            )
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={isFetching}
+              onRefresh={refetch}
+              tintColor="#007AFF"
+              colors={["#007AFF"]}
+            />
+          }
+        />
+      )}
+
       <Portal>
         <Modal
           visible={show}
