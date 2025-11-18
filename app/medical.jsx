@@ -67,19 +67,42 @@ const Medical = () => {
 
   return (
     <SafeView>
-      <ScrollView style={{ paddingBottom: bottom }}>
-        {error ? (
+      {error ? (
+        <ScrollView style={{ paddingBottom: bottom }}>
           <ErrorWithRefetch refresh={() => refetch()} />
-        ) : (
-          <>
-            <View style={styles.container}>
+        </ScrollView>
+      ) : (
+        <FlatList
+          data={filteredRecords}
+          keyExtractor={(item, index) =>
+            `${item.PatientHistoryID}-${item.TransactionNo}-${index}`
+          }
+          renderItem={({ item }) => (
+            <TransactionItem
+              onView={() => {
+                selectRecord(item);
+                toggleShow(true);
+              }}
+              transaction={item.TransactionNo}
+              transactionDate={formatDate(item.AdmissionDateTime)}
+            />
+          )}
+          ListHeaderComponent={() => (
+            <View style={{ marginTop: 15, marginBottom: 15 }}>
               <Searchbar
                 placeholder="Search"
                 onChangeText={setSearchQuery}
                 value={searchQuery}
               />
             </View>
-            {isFetching ? (
+          )}
+          contentContainerStyle={{
+            paddingHorizontal: 15,
+            paddingBottom: 100,
+          }}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          ListEmptyComponent={
+            isFetching ? (
               <View
                 style={{
                   display: "flex",
@@ -96,47 +119,22 @@ const Medical = () => {
                 />
               </View>
             ) : (
-              <FlatList
-                data={filteredRecords}
-                keyExtractor={(item, index) =>
-                  `${item.PatientHistoryID}-${item.TransactionNo}-${index}`
-                }
-                renderItem={({ item }) => (
-                  <TransactionItem
-                    onView={() => {
-                      selectRecord(item);
-                      toggleShow(true);
-                    }}
-                    transaction={item.TransactionNo}
-                    transactionDate={formatDate(item.AdmissionDateTime)}
-                  />
-                )}
-                contentContainerStyle={{
-                  paddingHorizontal: 15,
-                  paddingTop: 15,
-                  paddingBottom: 50,
-                  gap: 10,
-                }}
-                ListEmptyComponent={
-                  <View style={{ padding: 20, alignItems: "center" }}>
-                    <Text style={{ color: "#999" }}>
-                      {isFetching ? "Loading..." : "No transactions found"}
-                    </Text>
-                  </View>
-                }
-                refreshControl={
-                  <RefreshControl
-                    refreshing={isFetching}
-                    onRefresh={refetch}
-                    tintColor="#007AFF"
-                    colors={["#007AFF"]}
-                  />
-                }
-              />
-            )}
-          </>
-        )}
-      </ScrollView>
+              <View style={{ padding: 20, alignItems: "center" }}>
+                <Text style={{ color: "#999" }}>No transactions found</Text>
+              </View>
+            )
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={isFetching}
+              onRefresh={refetch}
+              tintColor="#007AFF"
+              colors={["#007AFF"]}
+            />
+          }
+        />
+      )}
+
       <Portal>
         <Modal
           visible={show}
