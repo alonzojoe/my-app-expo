@@ -96,31 +96,10 @@ const Medical = () => {
                 />
               </View>
             ) : (
-              // <View
-              //   style={{
-              //     paddingHorizontal: 15,
-              //     marginTop: 15,
-              //     gap: 10,
-              //     marginBottom: 5,
-              //     paddingBottom: 50,
-              //   }}
-              // >
-              //   {filteredRecords.map((medical) => (
-              //     <TransactionItem
-              //       onView={() => {
-              //         selectRecord(medical);
-              //         toggleShow(true);
-              //       }}
-              //       key={`${medical.PatientHistoryID}-${medical.TransactionNo}`}
-              //       transaction={medical.TransactionNo}
-              //       transactionDate={formatDate(medical.AdmissionDateTime)}
-              //     />
-              //   ))}
-              // </View>
               <FlatList
                 data={filteredRecords}
-                keyExtractor={(item) =>
-                  `${item.PatientHistoryID}-${item.TransactionNo}`
+                keyExtractor={(item, index) =>
+                  `${item.PatientHistoryID}-${item.TransactionNo}-${index}`
                 }
                 renderItem={({ item }) => (
                   <TransactionItem
@@ -149,8 +128,8 @@ const Medical = () => {
                   <RefreshControl
                     refreshing={isFetching}
                     onRefresh={refetch}
-                    tintColor="#007AFF" 
-                    colors={["#007AFF"]} 
+                    tintColor="#007AFF"
+                    colors={["#007AFF"]}
                   />
                 }
               />
