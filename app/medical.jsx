@@ -7,7 +7,7 @@ import {
   Text as PaperText,
   Button,
 } from "react-native-paper";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import React, { useState, useMemo, useCallback } from "react";
 import SafeView from "../components/SafeView";
 import TransactionItem from "../components/Transactions/TransactionItem";
@@ -96,27 +96,64 @@ const Medical = () => {
                 />
               </View>
             ) : (
-              <View
-                style={{
-                  paddingHorizontal: 15,
-                  marginTop: 15,
-                  gap: 10,
-                  marginBottom: 5,
-                  paddingBottom: 50,
-                }}
-              >
-                {filteredRecords.map((medical) => (
+              // <View
+              //   style={{
+              //     paddingHorizontal: 15,
+              //     marginTop: 15,
+              //     gap: 10,
+              //     marginBottom: 5,
+              //     paddingBottom: 50,
+              //   }}
+              // >
+              //   {filteredRecords.map((medical) => (
+              //     <TransactionItem
+              //       onView={() => {
+              //         selectRecord(medical);
+              //         toggleShow(true);
+              //       }}
+              //       key={`${medical.PatientHistoryID}-${medical.TransactionNo}`}
+              //       transaction={medical.TransactionNo}
+              //       transactionDate={formatDate(medical.AdmissionDateTime)}
+              //     />
+              //   ))}
+              // </View>
+              <FlatList
+                data={filteredRecords}
+                keyExtractor={(item) =>
+                  `${item.PatientHistoryID}-${item.TransactionNo}`
+                }
+                renderItem={({ item }) => (
                   <TransactionItem
                     onView={() => {
-                      selectRecord(medical);
+                      selectRecord(item);
                       toggleShow(true);
                     }}
-                    key={medical.PatientHistoryID}
-                    transaction={medical.TransactionNo}
-                    transactionDate={formatDate(medical.AdmissionDateTime)}
+                    transaction={item.TransactionNo}
+                    transactionDate={formatDate(item.AdmissionDateTime)}
                   />
-                ))}
-              </View>
+                )}
+                contentContainerStyle={{
+                  paddingHorizontal: 15,
+                  paddingTop: 15,
+                  paddingBottom: 50,
+                  gap: 10,
+                }}
+                ListEmptyComponent={
+                  <View style={{ padding: 20, alignItems: "center" }}>
+                    <Text style={{ color: "#999" }}>
+                      {isFetching ? "Loading..." : "No transactions found"}
+                    </Text>
+                  </View>
+                }
+                refreshControl={
+                  <RefreshControl
+                    refreshing={isFetching}
+                    onRefresh={refetch}
+                    tintColor="#007AFF" 
+                    colors={["#007AFF"]} 
+                  />
+                }
+              />
             )}
           </>
         )}
