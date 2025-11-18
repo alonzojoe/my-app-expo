@@ -120,7 +120,9 @@ const Medical = () => {
               </View>
             ) : (
               <View style={{ padding: 20, alignItems: "center" }}>
-                <Text style={{ color: "#999" }}>No transactions found</Text>
+                <PaperText style={{ color: "#999" }}>
+                  No transactions found
+                </PaperText>
               </View>
             )
           }
