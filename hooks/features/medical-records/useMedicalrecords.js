@@ -1,9 +1,11 @@
-import { useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTransactions } from "../../../services/Medical/apiCalls";
+import useDebounce from "./../../useDebounce";
 
 const useMedicalrecords = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const { authUser } = useSelector((state) => state.auth);
 
   const PatientID = authUser?.PatientID;
@@ -17,6 +19,8 @@ const useMedicalrecords = () => {
     queryKey: ["transaction", PatientID],
     queryFn: () => fetchTransactions(PatientID),
   });
+
+  const searchDebounce = useDebounce(searchQuery);
 
   const filteredRecords = useMemo(() => {
     const query = (searchDebounce || "").trim().toLowerCase();
@@ -36,6 +40,9 @@ const useMedicalrecords = () => {
   }, []);
 
   return {
+    searchQuery,
+    setSearchQuery,
+    searchDebounce,
     MEDICAL_RECORDS,
     isFetching,
     error,
