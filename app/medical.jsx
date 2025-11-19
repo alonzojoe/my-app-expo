@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   Searchbar,
   Portal,
@@ -8,62 +9,48 @@ import {
   Button,
 } from "react-native-paper";
 import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
-import React, { useState, useMemo, useCallback } from "react";
 import SafeView from "../components/SafeView";
 import TransactionItem from "../components/Transactions/TransactionItem";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import useDebounce from "./../hooks/useDebounce";
 import useToggle from "../hooks/useToggle";
 import { PHYSICIANS, DIAGNOSIS, SOAP } from "../constants/global";
 import AdmittedForm from "../components/Transactions/AdmittedForm";
 import OutPatientForm from "../components/Transactions/OutPatientForm";
-import { useQuery } from "@tanstack/react-query";
-import { useSelector } from "react-redux";
 import { formatDate } from "../libs/utils";
-import { fetchTransactions } from "../services/Medical/apiCalls";
 import ErrorWithRefetch from "../components/Global/ErrorWithRefetch";
+import useMedicalrecords from "./../hooks/features/medical-records/useMedicalrecords";
+
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
-  const [searchQuery, setSearchQuery] = useState("");
-  const [show, toggleShow] = useToggle(false);
-  const [selected, setSelected] = useState(null);
-
-  const { authUser } = useSelector((state) => state.auth);
-
-  const PatientID = authUser?.PatientID;
-
   const {
-    data: MEDICAL_RECORDS,
+    searchQuery,
+    setSearchQuery,
+    searchDebounce,
+    MEDICAL_RECORDS,
     isFetching,
     error,
     refetch,
-  } = useQuery({
-    queryKey: ["transaction", PatientID],
-    queryFn: () => fetchTransactions(PatientID),
-  });
+    authUser,
+    PatientID,
+    filteredRecords,
+    selected,
+    selectRecord,
+  } = useMedicalrecords();
 
-  const searchDebounce = useDebounce(searchQuery);
+  const [show, toggleShow] = useToggle(false);
 
-  const filteredRecords = useMemo(() => {
-    const query = (searchDebounce || "").trim().toLowerCase();
-    if (!Array.isArray(MEDICAL_RECORDS) || MEDICAL_RECORDS.length === 0)
-      return [];
-    return MEDICAL_RECORDS.filter(
-      (record) =>
-        (record.transactionNo || "").toLowerCase().includes(query) ||
-        (record.transactionDate || "").toLowerCase().includes(query)
+  const SearchHeader = useMemo(() => {
+    return (
+      <View style={{ marginTop: 15, marginBottom: 15 }}>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={setSearchQuery}
+          value={searchQuery}
+        />
+      </View>
     );
-  }, [searchDebounce, MEDICAL_RECORDS]);
-
-  console.log("filtered", filteredRecords);
-
-  const selectRecord = useCallback(
-    (medical) => {
-      setSelected(medical);
-    },
-    [setSelected]
-  );
+  }, [searchQuery]);
 
   return (
     <SafeView>
@@ -87,15 +74,7 @@ const Medical = () => {
               transactionDate={formatDate(item.AdmissionDateTime)}
             />
           )}
-          ListHeaderComponent={() => (
-            <View style={{ marginTop: 15, marginBottom: 15 }}>
-              <Searchbar
-                placeholder="Search"
-                onChangeText={setSearchQuery}
-                value={searchQuery}
-              />
-            </View>
-          )}
+          ListHeaderComponent={SearchHeader}
           contentContainerStyle={{
             paddingHorizontal: 15,
             paddingBottom: 100,
