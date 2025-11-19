@@ -29,8 +29,8 @@ const useMedicalrecords = () => {
       return [];
     return MEDICAL_RECORDS.filter(
       (record) =>
-        (record.transactionNo || "").toLowerCase().includes(query) ||
-        (record.transactionDate || "").toLowerCase().includes(query)
+        (record.TransactionNo || "").toLowerCase().includes(query) ||
+        (record.AdmissionDateTime || "").toLowerCase().includes(query)
     );
   }, [searchDebounce, MEDICAL_RECORDS]);
 

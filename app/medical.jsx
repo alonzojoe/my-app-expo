@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   Searchbar,
   Portal,
@@ -39,6 +40,18 @@ const Medical = () => {
 
   const [show, toggleShow] = useToggle(false);
 
+  const SearchHeader = useMemo(() => {
+    return (
+      <View style={{ marginTop: 15, marginBottom: 15 }}>
+        <Searchbar
+          placeholder="Search"
+          onChangeText={setSearchQuery}
+          value={searchQuery}
+        />
+      </View>
+    );
+  }, [searchQuery]);
+
   return (
     <SafeView>
       {error ? (
@@ -61,15 +74,7 @@ const Medical = () => {
               transactionDate={formatDate(item.AdmissionDateTime)}
             />
           )}
-          ListHeaderComponent={() => (
-            <View style={{ marginTop: 15, marginBottom: 15 }}>
-              <Searchbar
-                placeholder="Search"
-                onChangeText={setSearchQuery}
-                value={searchQuery}
-              />
-            </View>
-          )}
+          ListHeaderComponent={SearchHeader}
           contentContainerStyle={{
             paddingHorizontal: 15,
             paddingBottom: 100,
