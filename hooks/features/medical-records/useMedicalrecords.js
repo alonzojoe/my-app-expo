@@ -6,6 +6,7 @@ import useDebounce from "./../../useDebounce";
 
 const useMedicalrecords = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selected, setSelected] = useState(null);
   const { authUser } = useSelector((state) => state.auth);
 
   const PatientID = authUser?.PatientID;
@@ -50,6 +51,7 @@ const useMedicalrecords = () => {
     authUser,
     PatientID,
     filteredRecords,
+    selected,
     selectRecord,
   };
 };
