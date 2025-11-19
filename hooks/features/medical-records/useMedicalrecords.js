@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTransactions } from "../../../services/Medical/apiCalls";
 import useDebounce from "./../../useDebounce";
+import { formatDate } from "./../../../libs/utils";
 
 const useMedicalrecords = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,10 +28,13 @@ const useMedicalrecords = () => {
     const query = (searchDebounce || "").trim().toLowerCase();
     if (!Array.isArray(MEDICAL_RECORDS) || MEDICAL_RECORDS.length === 0)
       return [];
-    return MEDICAL_RECORDS.filter(
+    return MEDICAL_RECORDS.map((record) => ({
+      ...record,
+      transDate: formatDate(record.AdmissionDateTime),
+    })).filter(
       (record) =>
         (record.TransactionNo || "").toLowerCase().includes(query) ||
-        (record.AdmissionDateTime || "").toLowerCase().includes(query)
+        (record.transDate || "").toLowerCase().includes(query)
     );
   }, [searchDebounce, MEDICAL_RECORDS]);
 
