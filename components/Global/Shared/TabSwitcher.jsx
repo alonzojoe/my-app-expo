@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Text as PaperText } from "react-native-paper";
 
-const TabSwitcher = () => {
-  const [activeTab, setActiveTab] = useState("Upcoming");
-
+const TabSwitcher = ({ activeTab, onSelect }) => {
   const tabs = ["Upcoming", "Past"];
 
   return (
@@ -15,7 +13,7 @@ const TabSwitcher = () => {
           <TouchableOpacity
             key={tab}
             style={[styles.tab, isActive && styles.activeTab]}
-            onPress={() => setActiveTab(tab)}
+            onPress={() => onSelect(tab)}
             activeOpacity={0.8}
           >
             <PaperText

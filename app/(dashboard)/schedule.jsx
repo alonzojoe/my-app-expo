@@ -16,6 +16,7 @@ import TabSwitcher from "../../components/Global/Shared/TabSwitcher";
 
 const Schedule = () => {
   const [confirmation, toggleConfirmation] = useToggle(false);
+  const [activeTab, setActiveTab] = useState("Upcoming");
 
   const showDialog = () => toggleConfirmation(true);
 
@@ -23,7 +24,7 @@ const Schedule = () => {
   return (
     <SafeView safe={true}>
       <Header />
-      <TabSwitcher />
+      <TabSwitcher activeTab={activeTab} onSelect={setActiveTab} />
       {APPOINTMENTS.length === 0 ? (
         <>
           <View style={{ marginTop: 10 }}>
