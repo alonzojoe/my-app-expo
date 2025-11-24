@@ -11,6 +11,7 @@
   "dependencies": {
     "@bayudev/react-native-bottom-sheet": "^1.0.8",
     "@expo/vector-icons": "^14.0.4",
+    "@gorhom/bottom-sheet": "^5.2.6",
     "@hookform/resolvers": "^5.1.1",
     "@quidone/react-native-wheel-picker": "^1.5.2",
     "@react-native-async-storage/async-storage": "^2.2.0",
