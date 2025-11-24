@@ -11,6 +11,7 @@ import {
 import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import SafeView from "../components/SafeView";
 import TransactionItem from "../components/Transactions/TransactionItem";
+import { MedicalItem } from "../components/Transactions/TransactionItem";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import useToggle from "../hooks/useToggle";
@@ -65,7 +66,15 @@ const Medical = () => {
             `${item.PatientHistoryID}-${item.TransactionNo}-${index}`
           }
           renderItem={({ item }) => (
-            <TransactionItem
+            // <TransactionItem
+            //   onView={() => {
+            //     selectRecord(item);
+            //     toggleShow(true);
+            //   }}
+            //   transaction={item.TransactionNo}
+            //   transactionDate={formatDate(item.AdmissionDateTime)}
+            // />
+            <MedicalItem
               onView={() => {
                 selectRecord(item);
                 toggleShow(true);
