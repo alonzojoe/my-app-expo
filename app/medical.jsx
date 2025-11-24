@@ -10,7 +10,6 @@ import {
 } from "react-native-paper";
 import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import SafeView from "../components/SafeView";
-import TransactionItem from "../components/Transactions/TransactionItem";
 import { MedicalItem } from "../components/Transactions/TransactionItem";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -27,13 +26,9 @@ const Medical = () => {
   const {
     searchQuery,
     setSearchQuery,
-    searchDebounce,
-    MEDICAL_RECORDS,
     isFetching,
     error,
     refetch,
-    authUser,
-    PatientID,
     filteredRecords,
     selected,
     selectRecord,
@@ -45,6 +40,7 @@ const Medical = () => {
     return (
       <View style={{ marginTop: 15, marginBottom: 15 }}>
         <Searchbar
+          style={{ backgroundColor: "#FFFFFFFF" }}
           placeholder="Search"
           onChangeText={setSearchQuery}
           value={searchQuery}
@@ -66,14 +62,6 @@ const Medical = () => {
             `${item.PatientHistoryID}-${item.TransactionNo}-${index}`
           }
           renderItem={({ item }) => (
-            // <TransactionItem
-            //   onView={() => {
-            //     selectRecord(item);
-            //     toggleShow(true);
-            //   }}
-            //   transaction={item.TransactionNo}
-            //   transactionDate={formatDate(item.AdmissionDateTime)}
-            // />
             <MedicalItem
               onView={() => {
                 selectRecord(item);
