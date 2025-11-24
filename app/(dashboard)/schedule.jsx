@@ -13,6 +13,7 @@ import {
   Text as PaperText,
 } from "react-native-paper";
 import TabSwitcher from "../../components/Global/Shared/TabSwitcher";
+import AppointmentItem from "../../components/Appointment/AppointmentItem";
 
 const Schedule = () => {
   const [confirmation, toggleConfirmation] = useToggle(false);
@@ -46,6 +47,10 @@ const Schedule = () => {
               appointment={a.appointment}
             />
           ))}
+          <AppointmentItem
+            service="Dermatology Consultation"
+            appointment="Thu Jun 21 • 8:00 – 8:30 AM"
+          />
         </View>
       )}
 
