@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import {
   Searchbar,
   Portal,
@@ -20,6 +20,7 @@ import OutPatientForm from "../components/Transactions/OutPatientForm";
 import { formatDate } from "../libs/utils";
 import ErrorWithRefetch from "../components/Global/ErrorWithRefetch";
 import useMedicalrecords from "./../hooks/features/medical-records/useMedicalrecords";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
@@ -33,8 +34,10 @@ const Medical = () => {
     selected,
     selectRecord,
   } = useMedicalrecords();
-
+  const bottomSheetRef = useRef(null);
   const [show, toggleShow] = useToggle(false);
+
+  const snapPoints = useMemo(() => ["25%", "50%", "90%"], []);
 
   const SearchHeader = useMemo(() => {
     return (
@@ -51,6 +54,16 @@ const Medical = () => {
 
   return (
     <SafeView>
+      <Button
+        title="Open"
+        style={{ color: "#0000" }}
+        onPress={() => bottomSheetRef.current?.expand()}
+      />
+      <Button
+        title="Close"
+        style={{ color: "#0000" }}
+        onPress={() => bottomSheetRef.current?.close()}
+      />
       {error ? (
         <ScrollView style={{ paddingBottom: bottom }}>
           <ErrorWithRefetch refresh={() => refetch()} />
@@ -112,6 +125,17 @@ const Medical = () => {
           }
         />
       )}
+
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={-1}
+        snapPoints={snapPoints}
+        enablePanDownToClose
+      >
+        <BottomSheetView style={{ flex: 1, padding: 24 }}>
+          <Text>Bottom Sheet Content</Text>
+        </BottomSheetView>
+      </BottomSheet>
 
       <Portal>
         <Modal

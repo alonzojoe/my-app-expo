@@ -1,7 +1,7 @@
 {
   "expo": {
     "scheme": "myapp",
-    "name": "",
+    "name": "_",
     "slug": "LingadCare",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -31,8 +31,11 @@
       "edgeToEdgeEnabled": true,
       "permissions": [
         "INTERNET",
+        "CAMERA",
+        "INTERNET",
         "CAMERA"
-      ]
+      ],
+      "package": "com.myapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
