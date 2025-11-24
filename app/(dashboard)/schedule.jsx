@@ -13,6 +13,7 @@ import {
   Text as PaperText,
 } from "react-native-paper";
 import TabSwitcher from "../../components/Global/Shared/TabSwitcher";
+import AppointmentItem from "../../components/Appointment/AppointmentItem";
 
 const Schedule = () => {
   const [confirmation, toggleConfirmation] = useToggle(false);
@@ -39,11 +40,11 @@ const Schedule = () => {
       ) : (
         <View style={styles.container}>
           {APPOINTMENTS.map((a) => (
-            <ListItem
-              onCancel={showDialog}
+            <AppointmentItem
               key={a.id}
               service={a.service}
               appointment={a.appointment}
+              onCancel={showDialog}
             />
           ))}
         </View>

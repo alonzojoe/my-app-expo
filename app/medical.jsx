@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import {
   Searchbar,
   Portal,
@@ -10,7 +10,7 @@ import {
 } from "react-native-paper";
 import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
 import SafeView from "../components/SafeView";
-import TransactionItem from "../components/Transactions/TransactionItem";
+import { MedicalItem } from "../components/Transactions/TransactionItem";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import useToggle from "../hooks/useToggle";
@@ -20,30 +20,30 @@ import OutPatientForm from "../components/Transactions/OutPatientForm";
 import { formatDate } from "../libs/utils";
 import ErrorWithRefetch from "../components/Global/ErrorWithRefetch";
 import useMedicalrecords from "./../hooks/features/medical-records/useMedicalrecords";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
   const {
     searchQuery,
     setSearchQuery,
-    searchDebounce,
-    MEDICAL_RECORDS,
     isFetching,
     error,
     refetch,
-    authUser,
-    PatientID,
     filteredRecords,
     selected,
     selectRecord,
   } = useMedicalrecords();
-
+  const bottomSheetRef = useRef(null);
   const [show, toggleShow] = useToggle(false);
+
+  const snapPoints = useMemo(() => ["25%", "50%", "90%"], []);
 
   const SearchHeader = useMemo(() => {
     return (
       <View style={{ marginTop: 15, marginBottom: 15 }}>
         <Searchbar
+          style={{ backgroundColor: "#FFFFFFFF" }}
           placeholder="Search"
           onChangeText={setSearchQuery}
           value={searchQuery}
@@ -54,6 +54,16 @@ const Medical = () => {
 
   return (
     <SafeView>
+      <Button
+        title="Open"
+        style={{ color: "#0000" }}
+        onPress={() => bottomSheetRef.current?.expand()}
+      />
+      <Button
+        title="Close"
+        style={{ color: "#0000" }}
+        onPress={() => bottomSheetRef.current?.close()}
+      />
       {error ? (
         <ScrollView style={{ paddingBottom: bottom }}>
           <ErrorWithRefetch refresh={() => refetch()} />
@@ -65,7 +75,7 @@ const Medical = () => {
             `${item.PatientHistoryID}-${item.TransactionNo}-${index}`
           }
           renderItem={({ item }) => (
-            <TransactionItem
+            <MedicalItem
               onView={() => {
                 selectRecord(item);
                 toggleShow(true);
@@ -79,7 +89,7 @@ const Medical = () => {
             paddingHorizontal: 15,
             paddingBottom: 100,
           }}
-          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          ItemSeparatorComponent={() => <View style={{ height: 1 }} />}
           ListEmptyComponent={
             isFetching ? (
               <View
@@ -115,6 +125,17 @@ const Medical = () => {
           }
         />
       )}
+
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={-1}
+        snapPoints={snapPoints}
+        enablePanDownToClose
+      >
+        <BottomSheetView style={{ flex: 1, padding: 24 }}>
+          <Text>Bottom Sheet Content</Text>
+        </BottomSheetView>
+      </BottomSheet>
 
       <Portal>
         <Modal

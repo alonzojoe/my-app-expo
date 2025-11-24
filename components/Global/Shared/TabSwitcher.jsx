@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: 50,
     padding: 4,
-    marginVertical: 15,
+    marginVertical: 10,
     marginHorizontal: 18,
   },
   tab: {
