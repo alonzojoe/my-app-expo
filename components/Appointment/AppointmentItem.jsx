@@ -11,16 +11,38 @@ const ListItem = ({ service, appointment, onPress, onCancel }) => {
       {/* Main content */}
       <TouchableOpacity style={styles.content} onPress={onPress}>
         {/* Appointment Date */}
-        <View style={styles.row}>
+        <View style={styles.col}>
           <Text style={styles.appointmentTextHeader}>{`Appointment date`}</Text>
+          <View style={[styles.row]}>
+            <FontAwesome name="clock-o" size={16} color="#000000" />
+            <Text style={styles.appointmentText}>{appointment}</Text>
+          </View>
         </View>
-        <View style={styles.row}>
-          <FontAwesome name="clock-o" size={16} color="#6E7AA3" />
-          <Text style={styles.appointmentText}>{appointment}</Text>
-        </View>
-        <Divider />
+
+        <Divider style={{ marginVertical: "5" }} />
         {/* Service Name */}
-        <Text style={styles.serviceText}>{service}</Text>
+        <View style={[styles.row]}>
+          {/* <View
+            onPress={onPress}
+            style={{
+              backgroundColor: "#004C82",
+              borderRadius: 24,
+              width: 40,
+              height: 40,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <IconButton
+              onPress={onPress}
+              icon="medical"
+              size={25}
+              iconColor="#FFF"
+              style={{ margin: 0 }}
+            />
+          </View> */}
+          <Text style={styles.serviceText}>{service}</Text>
+        </View>
       </TouchableOpacity>
 
       {/* Right menu icon */}
@@ -59,6 +81,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  col: {
+    flexDirection: "column",
+    gap: 5,
+  },
   appointmentTextHeader: {
     marginLeft: 0,
     color: "#6E7AA3",
@@ -67,7 +93,7 @@ const styles = StyleSheet.create({
   },
   appointmentText: {
     marginLeft: 6,
-    color: "#6E7AA3",
+    color: "#000000",
     fontSize: 13,
   },
   serviceText: {
