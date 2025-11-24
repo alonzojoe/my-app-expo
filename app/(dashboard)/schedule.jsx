@@ -48,7 +48,7 @@ const Schedule = () => {
             />
           ))}
           <AppointmentItem
-            service="Dermatology Consultation"
+            service="DERMATOLOGY - CONSULTATION"
             appointment="Thu Jun 21 • 8:00 – 8:30 AM"
           />
         </View>

@@ -1,6 +1,7 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { IconButton, Divider } from "react-native-paper";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 const ListItem = ({ service, appointment, onPress, onCancel }) => {
   return (
@@ -11,15 +12,29 @@ const ListItem = ({ service, appointment, onPress, onCancel }) => {
       {/* Main content */}
       <TouchableOpacity style={styles.content} onPress={onPress}>
         {/* Appointment Date */}
-        <View style={styles.col}>
-          <Text style={styles.appointmentTextHeader}>{`Appointment date`}</Text>
-          <View style={[styles.row]}>
-            <FontAwesome name="clock-o" size={16} color="#000000" />
-            <Text style={styles.appointmentText}>{appointment}</Text>
+        <View
+          style={[
+            styles.row,
+            { justifyContent: "space-between", alignItems: "start" },
+          ]}
+        >
+          <View style={styles.col}>
+            <Text
+              style={styles.appointmentTextHeader}
+            >{`Appointment date`}</Text>
+            <View style={[styles.row]}>
+              <FontAwesome name="clock-o" size={16} color="#000000" />
+              <Text style={styles.appointmentText}>{appointment}</Text>
+            </View>
           </View>
+
+          <TouchableOpacity onPress={onCancel} style={styles.menu}>
+            {/* <FontAwesome name="ellipsis-v" size={20} color="#6E7AA3" /> */}
+            <FontAwesome6 name="times-circle" size={23} color="#DD3353" />
+          </TouchableOpacity>
         </View>
 
-        <Divider style={{ marginVertical: "5" }} />
+        <Divider style={{ marginVertical: "3" }} />
         {/* Service Name */}
         <View style={[styles.row]}>
           {/* <View
@@ -46,9 +61,9 @@ const ListItem = ({ service, appointment, onPress, onCancel }) => {
       </TouchableOpacity>
 
       {/* Right menu icon */}
-      <TouchableOpacity onPress={onCancel} style={styles.menu}>
+      {/* <TouchableOpacity onPress={onCancel} style={styles.menu}>
         <FontAwesome name="ellipsis-v" size={20} color="#6E7AA3" />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
