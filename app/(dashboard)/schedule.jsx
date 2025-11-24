@@ -40,17 +40,13 @@ const Schedule = () => {
       ) : (
         <View style={styles.container}>
           {APPOINTMENTS.map((a) => (
-            <ListItem
-              onCancel={showDialog}
+            <AppointmentItem
               key={a.id}
               service={a.service}
               appointment={a.appointment}
+              onCancel={showDialog}
             />
           ))}
-          <AppointmentItem
-            service="DERMATOLOGY - CONSULTATION"
-            appointment="Thu Jun 21 • 8:00 – 8:30 AM"
-          />
         </View>
       )}
 
