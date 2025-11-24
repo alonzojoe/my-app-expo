@@ -88,7 +88,7 @@ const Medical = () => {
             paddingHorizontal: 15,
             paddingBottom: 100,
           }}
-          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          ItemSeparatorComponent={() => <View style={{ height: 1 }} />}
           ListEmptyComponent={
             isFetching ? (
               <View

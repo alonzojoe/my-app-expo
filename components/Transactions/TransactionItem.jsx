@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
-import { Card, IconButton } from "react-native-paper";
-import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import { Card, IconButton, Divider } from "react-native-paper";
+import { FontAwesome5, FontAwesome6, FontAwesome } from "@expo/vector-icons";
 const TransactionItem = ({ transaction, transactionDate, onView }) => {
   return (
     <Card onPress={onView}>
@@ -28,7 +28,7 @@ export const MedicalItem = ({ transaction, transactionDate, onView }) => {
       <View style={styles.leftBar} />
 
       {/* Main content */}
-      <TouchableOpacity style={styles.content} onPress={onPress}>
+      <TouchableOpacity style={styles.content} onPress={onView}>
         {/* Appointment Date */}
         <View
           style={[
@@ -39,16 +39,16 @@ export const MedicalItem = ({ transaction, transactionDate, onView }) => {
           <View style={styles.col}>
             <Text
               style={styles.appointmentTextHeader}
-            >{`Appointment date`}</Text>
+            >{`Transaction date`}</Text>
             <View style={[styles.row]}>
-              <FontAwesome name="clock-o" size={16} color="#000000" />
+              <FontAwesome name="calendar-o" size={16} color="#000000" />
               <Text style={styles.appointmentText}>{transactionDate}</Text>
             </View>
           </View>
 
-          <TouchableOpacity onPress={onCancel} style={styles.menu}>
+          <TouchableOpacity onPress={onView} style={styles.menu}>
             {/* <FontAwesome name="ellipsis-v" size={20} color="#6E7AA3" /> */}
-            <FontAwesome6 name="times-circle" size={23} color="#DD3353" />
+            <FontAwesome6 name="eye" size={20} color="#004C82" />
           </TouchableOpacity>
         </View>
 
