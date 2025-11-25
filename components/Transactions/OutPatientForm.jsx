@@ -51,9 +51,9 @@ const OutPatientForm = ({ selected, onToggle }) => {
         >
           {TransactionNo}
         </PaperText>
-        <PaperText onPress={() => onToggle(false)}>
+        {/* <PaperText onPress={() => onToggle(false)}>
           <FontAwesome5 name="times" size={20} color="#DD3254" />
-        </PaperText>
+        </PaperText> */}
       </View>
       <ScrollView
         nestedScrollEnabled={true}
@@ -119,7 +119,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
           </>
         </View>
       </ScrollView>
-      <View
+      {/* <View
         style={{
           flexDirection: "row",
           display: "flex",
@@ -133,7 +133,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
         >
           Close
         </PaperText>
-      </View>
+      </View> */}
     </>
   );
 };
