@@ -8,7 +8,13 @@ import {
   Text as PaperText,
   Button,
 } from "react-native-paper";
-import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  RefreshControl,
+  TouchableOpacity,
+} from "react-native";
 import SafeView from "../components/SafeView";
 import { MedicalItem } from "../components/Transactions/TransactionItem";
 import { ScrollView } from "react-native";
@@ -20,7 +26,7 @@ import OutPatientForm from "../components/Transactions/OutPatientForm";
 import { formatDate } from "../libs/utils";
 import ErrorWithRefetch from "../components/Global/ErrorWithRefetch";
 import useMedicalrecords from "./../hooks/features/medical-records/useMedicalrecords";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import BottomSheet from "../components/Shared/BottomSheet";
 
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
@@ -37,8 +43,6 @@ const Medical = () => {
   const bottomSheetRef = useRef(null);
   const [show, toggleShow] = useToggle(false);
 
-  const snapPoints = useMemo(() => ["25%", "50%", "90%"], []);
-
   const SearchHeader = useMemo(() => {
     return (
       <View style={{ marginTop: 15, marginBottom: 15 }}>
@@ -52,18 +56,27 @@ const Medical = () => {
     );
   }, [searchQuery]);
 
+  const viewMedicalRecord = () => {
+    bottomSheetRef.current?.snapToIndex(2);
+  };
+
   return (
     <SafeView>
-      <Button
-        title="Open"
-        style={{ color: "#0000" }}
-        onPress={() => bottomSheetRef.current?.expand()}
-      />
-      <Button
-        title="Close"
-        style={{ color: "#0000" }}
-        onPress={() => bottomSheetRef.current?.close()}
-      />
+      {/* <TouchableOpacity onPress={() => bottomSheetRef.current?.expand()}>
+        <PaperText>Open</PaperText>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => bottomSheetRef.current?.collapse()}>
+        <PaperText>Close</PaperText>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => bottomSheetRef.current?.snapToIndex(0)}>
+        <PaperText>30%</PaperText>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => bottomSheetRef.current?.snapToIndex(1)}>
+        <PaperText>50%</PaperText>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => bottomSheetRef.current?.snapToIndex(2)}>
+        <PaperText>90%</PaperText>
+      </TouchableOpacity> */}
       {error ? (
         <ScrollView style={{ paddingBottom: bottom }}>
           <ErrorWithRefetch refresh={() => refetch()} />
@@ -78,7 +91,8 @@ const Medical = () => {
             <MedicalItem
               onView={() => {
                 selectRecord(item);
-                toggleShow(true);
+                // toggleShow(true);
+                viewMedicalRecord();
               }}
               transaction={item.TransactionNo}
               transactionDate={formatDate(item.AdmissionDateTime)}
@@ -126,18 +140,19 @@ const Medical = () => {
         />
       )}
 
-      <BottomSheet
-        ref={bottomSheetRef}
-        index={-1}
-        snapPoints={snapPoints}
-        enablePanDownToClose
-      >
-        <BottomSheetView style={{ flex: 1, padding: 24 }}>
-          <Text>Bottom Sheet Content</Text>
-        </BottomSheetView>
+      <BottomSheet ref={bottomSheetRef} enableScroll={true}>
+        {selected && selected.TransactionNo.toLowerCase().includes("opd") ? (
+          <OutPatientForm selected={selected} onToggle={toggleShow} />
+        ) : (
+          <AdmittedForm
+            selected={selected}
+            physicians={PHYSICIANS}
+            diagnosis={DIAGNOSIS}
+            onToggle={toggleShow}
+          />
+        )}
       </BottomSheet>
-
-      <Portal>
+      {/* <Portal>
         <Modal
           visible={show}
           onDismiss={() => toggleShow(false)}
@@ -154,7 +169,7 @@ const Medical = () => {
             />
           )}
         </Modal>
-      </Portal>
+      </Portal> */}
     </SafeView>
   );
 };
@@ -171,5 +186,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     backgroundColor: "white",
     padding: 20,
+  },
+  text: {
+    color: "black",
+    lineHeight: 24,
   },
 });
