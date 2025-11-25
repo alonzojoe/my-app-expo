@@ -18,12 +18,12 @@ const BOTTOM_SHEET_HEIGHT = {
   max: WINDOW_HEIGHT * 0.7,
 };
 
-const BottomSheet = forwardRef(({ children, ref }) => {
+const BottomSheet = forwardRef(({ children }, ref) => {
   const [expanded, setExpanded] = useState(false);
   const { current: opacity } = useRef(new Animated.Value(0));
 
   const { current: translateY } = useRef(
-    new Animated.Value((WINDOW_HEIGHT = BOTTOM_SHEET_HEIGHT.min))
+    new Animated.Value(WINDOW_HEIGHT - BOTTOM_SHEET_HEIGHT.min)
   );
 
   const close = () => {
@@ -98,7 +98,7 @@ const BottomSheet = forwardRef(({ children, ref }) => {
 
   return (
     <>
-      <StatusBar translucent backgroundColor={`transparent`} />
+      {/* <StatusBar translucent backgroundColor={`transparent`} /> */}
       {expanded && <Animated.View style={[styles.overlay, { opacity }]} />}
       <Animated.View
         style={[

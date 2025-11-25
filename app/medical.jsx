@@ -8,7 +8,13 @@ import {
   Text as PaperText,
   Button,
 } from "react-native-paper";
-import { StyleSheet, View, FlatList, RefreshControl } from "react-native";
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  RefreshControl,
+  TouchableOpacity,
+} from "react-native";
 import SafeView from "../components/SafeView";
 import { MedicalItem } from "../components/Transactions/TransactionItem";
 import { ScrollView } from "react-native";
@@ -20,6 +26,7 @@ import OutPatientForm from "../components/Transactions/OutPatientForm";
 import { formatDate } from "../libs/utils";
 import ErrorWithRefetch from "../components/Global/ErrorWithRefetch";
 import useMedicalrecords from "./../hooks/features/medical-records/useMedicalrecords";
+import BottomSheet from "../components/Shared/BottomSheet";
 
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
@@ -33,10 +40,8 @@ const Medical = () => {
     selected,
     selectRecord,
   } = useMedicalrecords();
-  // const bottomSheetRef = useRef(null);
+  const bottomSheetRef = useRef(null);
   const [show, toggleShow] = useToggle(false);
-
-  // const snapPoints = useMemo(() => ["25%", "50%", "90%"], []);
 
   const SearchHeader = useMemo(() => {
     return (
@@ -53,16 +58,9 @@ const Medical = () => {
 
   return (
     <SafeView>
-      {/* <Button
-        title="Open"
-        style={{ color: "#0000" }}
-        onPress={() => bottomSheetRef.current?.expand()}
-      />
-      <Button
-        title="Close"
-        style={{ color: "#0000" }}
-        onPress={() => bottomSheetRef.current?.close()}
-      /> */}
+      <TouchableOpacity onPress={() => bottomSheetRef.current?.expand()}>
+        <PaperText>Touch</PaperText>
+      </TouchableOpacity>
       {error ? (
         <ScrollView style={{ paddingBottom: bottom }}>
           <ErrorWithRefetch refresh={() => refetch()} />
@@ -125,17 +123,16 @@ const Medical = () => {
         />
       )}
 
-      {/* <BottomSheet
-        ref={bottomSheetRef}
-        index={-1}
-        snapPoints={snapPoints}
-        enablePanDownToClose
-      >
-        <BottomSheetView style={{ flex: 1, padding: 24 }}>
-          <Text>Bottom Sheet Content</Text>
-        </BottomSheetView>
-      </BottomSheet> */}
-
+      <BottomSheet ref={bottomSheetRef}>
+        <View>
+          <PaperText style={styles.text}>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga
+            mollitia cupiditate voluptate. Quaerat doloribus laudantium
+            blanditiis ab labore sint aperiam aliquam, expedita quidem. Soluta,
+            nemo saepe aspernatur natus cum modi.
+          </PaperText>
+        </View>
+      </BottomSheet>
       <Portal>
         <Modal
           visible={show}
@@ -170,5 +167,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     backgroundColor: "white",
     padding: 20,
+  },
+  text: {
+    color: "black",
+    lineHeight: 24,
   },
 });
