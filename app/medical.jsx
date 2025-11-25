@@ -56,9 +56,13 @@ const Medical = () => {
     );
   }, [searchQuery]);
 
+  const viewMedicalRecord = () => {
+    bottomSheetRef.current?.snapToIndex(2);
+  };
+
   return (
     <SafeView>
-      <TouchableOpacity onPress={() => bottomSheetRef.current?.expand()}>
+      {/* <TouchableOpacity onPress={() => bottomSheetRef.current?.expand()}>
         <PaperText>Open</PaperText>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => bottomSheetRef.current?.collapse()}>
@@ -72,7 +76,7 @@ const Medical = () => {
       </TouchableOpacity>
       <TouchableOpacity onPress={() => bottomSheetRef.current?.snapToIndex(2)}>
         <PaperText>90%</PaperText>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {error ? (
         <ScrollView style={{ paddingBottom: bottom }}>
           <ErrorWithRefetch refresh={() => refetch()} />
@@ -87,7 +91,8 @@ const Medical = () => {
             <MedicalItem
               onView={() => {
                 selectRecord(item);
-                toggleShow(true);
+                // toggleShow(true);
+                viewMedicalRecord();
               }}
               transaction={item.TransactionNo}
               transactionDate={formatDate(item.AdmissionDateTime)}
@@ -147,7 +152,7 @@ const Medical = () => {
           />
         )}
       </BottomSheet>
-      <Portal>
+      {/* <Portal>
         <Modal
           visible={show}
           onDismiss={() => toggleShow(false)}
@@ -164,7 +169,7 @@ const Medical = () => {
             />
           )}
         </Modal>
-      </Portal>
+      </Portal> */}
     </SafeView>
   );
 };
