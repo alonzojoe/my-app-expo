@@ -1,10 +1,4 @@
-import af from "dayjs/locale/af";
-import React, {
-  useState,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from "react";
+import { useState, forwardRef, useImperativeHandle, useRef } from "react";
 import {
   View,
   Animated,
@@ -104,7 +98,21 @@ const BottomSheet = forwardRef(({ children, ref }) => {
 
   return (
     <>
-      <Text>BottomSheet</Text>
+      <StatusBar translucent backgroundColor={`transparent`} />
+      {expanded && <Animated.View style={[styles.overlay, { opacity }]} />}
+      <Animated.View
+        style={[
+          styles.bottomSheet,
+          {
+            transform: [{ translateY }],
+          },
+        ]}
+      >
+        <View style={styles.handleWrapper} {...panResponder.panHandlers}>
+          <View style={styles.handle} />
+        </View>
+        {children}
+      </Animated.View>
     </>
   );
 });
