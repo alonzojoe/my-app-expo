@@ -1,162 +1,245 @@
-import { useState, forwardRef, useImperativeHandle, useRef } from "react";
+import {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useEffect,
+} from "react";
 import {
   View,
   Animated,
-  StatusBar,
   StyleSheet,
   Dimensions,
   PanResponder,
+  TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
-import { overlay } from "react-native-paper";
-
-const DRAG_TRESH = 100;
 
 const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get("screen");
 
-const BOTTOM_SHEET_HEIGHT = {
-  min: 54,
-  max: WINDOW_HEIGHT * 0.7,
-};
+const SNAP_POINTS = ["30%", "50%", "90%"];
 
-const BottomSheet = forwardRef(({ children }, ref) => {
-  const [expanded, setExpanded] = useState(false);
-  const { current: opacity } = useRef(new Animated.Value(0));
+const BottomSheet = forwardRef(
+  ({ children, snapPoints = SNAP_POINTS, index = -1 }, ref) => {
+    const [visible, setVisible] = useState(index >= 0);
+    const [currentIndex, setCurrentIndex] = useState(index);
 
-  const { current: translateY } = useRef(
-    new Animated.Value(WINDOW_HEIGHT - BOTTOM_SHEET_HEIGHT.min)
-  );
+    const { current: opacity } = useRef(
+      new Animated.Value(index >= 0 ? 0.5 : 0)
+    );
+    const { current: translateY } = useRef(new Animated.Value(WINDOW_HEIGHT));
 
-  const close = () => {
-    translateY.flattenOffset();
-
-    const a1 = Animated.spring(translateY, {
-      toValue: WINDOW_HEIGHT - BOTTOM_SHEET_HEIGHT.min,
-      useNativeDriver: false,
+    const snapValues = snapPoints.map((point) => {
+      if (typeof point === "string" && point.includes("%")) {
+        const percentage = parseFloat(point) / 100;
+        return WINDOW_HEIGHT - WINDOW_HEIGHT * percentage;
+      }
+      return WINDOW_HEIGHT - point;
     });
 
-    const a2 = Animated.timing(opacity, {
-      toValue: 0,
-      duration: 100,
-      useNativeDriver: false,
-    });
+    const animateToSnapPoint = (snapIndex, callback) => {
+      if (snapIndex < 0) {
+        close();
+        return;
+      }
 
-    const animations = Animated.parallel([a1, a2]);
-    animations.start(() => setExpanded(false));
-  };
+      translateY.flattenOffset();
 
-  const open = () => {
-    translateY.flattenOffset();
-    setExpanded(true);
+      requestAnimationFrame(() => {
+        setVisible(true);
+        setCurrentIndex(snapIndex);
+      });
 
-    const a1 = Animated.spring(translateY, {
-      toValue: WINDOW_HEIGHT - BOTTOM_SHEET_HEIGHT.max,
-      useNativeDriver: false,
-    });
+      const targetValue = snapValues[snapIndex];
 
-    const a2 = Animated.timing(opacity, {
-      toValue: 0.1,
-      duration: 100,
-      useNativeDriver: false,
-    });
+      const a1 = Animated.spring(translateY, {
+        toValue: targetValue,
+        useNativeDriver: true,
+        damping: 20,
+        stiffness: 90,
+      });
 
-    const animations = Animated.parallel([a1, a2]);
-    animations.start(() => setExpanded(true));
-  };
+      const a2 = Animated.timing(opacity, {
+        toValue: 0.5,
+        duration: 200,
+        useNativeDriver: true,
+      });
 
-  const { current: panResponder } = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        translateY.extractOffset();
-      },
-      onPanResponderMove: Animated.event([null, { dy: translateY }], {
-        useNativeDriver: false,
-      }),
-      onPanResponderRelease: (_event, _gesture) => {
-        const dy = translateY._value;
+      Animated.parallel([a1, a2]).start(callback);
+    };
 
-        if (Math.abs(dy) < DRAG_TRESH) {
-          Animated.spring(translateY, {
-            toValue: 0,
-            useNativeDriver: false,
-          }).start();
+    const close = () => {
+      translateY.flattenOffset();
+
+      const a1 = Animated.spring(translateY, {
+        toValue: WINDOW_HEIGHT,
+        useNativeDriver: true,
+      });
+
+      const a2 = Animated.timing(opacity, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      });
+
+      Animated.parallel([a1, a2]).start(() => {
+        requestAnimationFrame(() => {
+          setVisible(false);
+          setCurrentIndex(-1);
+        });
+      });
+    };
+
+    const findClosestSnapPoint = (currentY) => {
+      let closest = 0;
+      let minDistance = Math.abs(snapValues[0] - currentY);
+
+      snapValues.forEach((value, index) => {
+        const distance = Math.abs(value - currentY);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closest = index;
         }
+      });
 
-        if (dy > 0) {
-          close();
-        } else {
-          open();
-        }
-      },
-    })
-  );
+      return closest;
+    };
 
-  useImperativeHandle(ref, () => ({
-    expand: open,
-    collapse: close,
-  }));
+    const { current: panResponder } = useRef(
+      PanResponder.create({
+        onMoveShouldSetPanResponder: (_, gestureState) => {
+          return Math.abs(gestureState.dy) > 5;
+        },
+        onPanResponderGrant: () => {
+          translateY.extractOffset();
+        },
+        onPanResponderMove: (_, gestureState) => {
+          const newValue = gestureState.dy;
+          if (newValue < snapValues[snapValues.length - 1]) {
+            return;
+          }
+          translateY.setValue(newValue);
+        },
+        onPanResponderRelease: (_, gestureState) => {
+          const currentY = translateY._value + translateY._offset;
+          const velocity = gestureState.vy;
 
-  return (
-    <>
-      {/* <StatusBar translucent backgroundColor={`transparent`} /> */}
-      {expanded && <Animated.View style={[styles.overlay, { opacity }]} />}
-      <Animated.View
-        style={[
-          styles.bottomSheet,
-          {
-            transform: [{ translateY }],
-          },
-        ]}
-      >
-        <View style={styles.handleWrapper} {...panResponder.panHandlers}>
-          <View style={styles.handle} />
-        </View>
-        {children}
-      </Animated.View>
-    </>
-  );
-});
+          if (velocity > 1 && gestureState.dy > 50) {
+            close();
+            return;
+          }
+
+          if (currentY > WINDOW_HEIGHT * 0.75) {
+            close();
+            return;
+          }
+
+          const closestIndex = findClosestSnapPoint(currentY);
+          animateToSnapPoint(closestIndex);
+        },
+      })
+    );
+
+    useImperativeHandle(ref, () => ({
+      expand: () => animateToSnapPoint(snapValues.length - 1),
+      collapse: close,
+      snapToIndex: (snapIndex) => animateToSnapPoint(snapIndex),
+    }));
+
+    useEffect(() => {
+      if (index >= 0 && index < snapValues.length) {
+        setTimeout(() => {
+          animateToSnapPoint(index);
+        }, 0);
+      }
+    }, []);
+
+    return (
+      <>
+        {visible && (
+          <TouchableWithoutFeedback onPress={close}>
+            <Animated.View
+              style={[
+                styles.overlay,
+                {
+                  opacity,
+                  zIndex: 999,
+                },
+              ]}
+            />
+          </TouchableWithoutFeedback>
+        )}
+
+        <Animated.View
+          style={[
+            styles.bottomSheet,
+            {
+              transform: [{ translateY }],
+              zIndex: 1000,
+            },
+          ]}
+        >
+          <View style={styles.handleWrapper} {...panResponder.panHandlers}>
+            <View style={styles.handle} />
+          </View>
+
+          <ScrollView
+            style={styles.content}
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+          >
+            {children}
+          </ScrollView>
+        </Animated.View>
+      </>
+    );
+  }
+);
 
 const styles = StyleSheet.create({
   bottomSheet: {
-    padding: 24,
     backgroundColor: "#FFFFFF",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    left: 0,
     position: "absolute",
     width: WINDOW_WIDTH,
-    height: BOTTOM_SHEET_HEIGHT.max,
-    shadow: "#000",
+    height: WINDOW_HEIGHT,
+    left: 0,
+    top: 0,
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 0,
+      height: -4,
     },
-    shadowOpacity: 1,
-    shadowRadius: 15.19,
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
     elevation: 20,
   },
 
   overlay: {
+    position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    elevation: 10,
-    position: "absolute",
+    bottom: 0,
     backgroundColor: "#000000",
   },
 
   handle: {
-    height: 8,
-    width: 100,
-    borderRadius: 4,
+    height: 4,
+    width: 40,
+    borderRadius: 2,
     alignSelf: "center",
-    backgroundColor: "black",
+    backgroundColor: "#D1D5DB",
   },
 
   handleWrapper: {
-    marginTop: -24,
-    paddingVertical: 24,
+    paddingVertical: 16,
+  },
+
+  content: {
+    flex: 1,
+    paddingHorizontal: 24,
   },
 });
 

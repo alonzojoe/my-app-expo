@@ -59,7 +59,19 @@ const Medical = () => {
   return (
     <SafeView>
       <TouchableOpacity onPress={() => bottomSheetRef.current?.expand()}>
-        <PaperText>Touch</PaperText>
+        <PaperText>Open</PaperText>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => bottomSheetRef.current?.collapse()}>
+        <PaperText>Close</PaperText>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => bottomSheetRef.current?.snapToIndex(0)}>
+        <PaperText>30%</PaperText>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => bottomSheetRef.current?.snapToIndex(1)}>
+        <PaperText>50%</PaperText>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => bottomSheetRef.current?.snapToIndex(2)}>
+        <PaperText>90%</PaperText>
       </TouchableOpacity>
       {error ? (
         <ScrollView style={{ paddingBottom: bottom }}>
