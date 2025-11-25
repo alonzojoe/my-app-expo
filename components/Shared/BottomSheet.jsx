@@ -1,4 +1,4 @@
-import {
+import React, {
   useState,
   forwardRef,
   useImperativeHandle,
@@ -12,18 +12,27 @@ import {
   Dimensions,
   PanResponder,
   TouchableWithoutFeedback,
-  ScrollView,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { width: WINDOW_WIDTH, height: WINDOW_HEIGHT } = Dimensions.get("screen");
 
-const SNAP_POINTS = ["30%", "50%", "90%"];
-
 const BottomSheet = forwardRef(
-  ({ children, snapPoints = SNAP_POINTS, index = -1 }, ref) => {
+  (
+    {
+      children,
+      snapPoints = ["25%", "50%", "90%"],
+      index = -1,
+      enablePanDownToClose = true,
+    },
+    ref
+  ) => {
     const [visible, setVisible] = useState(index >= 0);
     const [currentIndex, setCurrentIndex] = useState(index);
+    const [currentHeight, setCurrentHeight] = useState(0);
 
+    const { bottom } = useSafeAreaInsets();
     const { current: opacity } = useRef(
       new Animated.Value(index >= 0 ? 0.5 : 0)
     );
@@ -48,6 +57,7 @@ const BottomSheet = forwardRef(
       requestAnimationFrame(() => {
         setVisible(true);
         setCurrentIndex(snapIndex);
+        setCurrentHeight(WINDOW_HEIGHT - snapValues[snapIndex]); // set height dynamically
       });
 
       const targetValue = snapValues[snapIndex];
@@ -107,6 +117,7 @@ const BottomSheet = forwardRef(
 
     const { current: panResponder } = useRef(
       PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
         onMoveShouldSetPanResponder: (_, gestureState) => {
           return Math.abs(gestureState.dy) > 5;
         },
@@ -115,21 +126,19 @@ const BottomSheet = forwardRef(
         },
         onPanResponderMove: (_, gestureState) => {
           const newValue = gestureState.dy;
-          if (newValue < snapValues[snapValues.length - 1]) {
-            return;
-          }
+          if (newValue < snapValues[snapValues.length - 1]) return;
           translateY.setValue(newValue);
         },
         onPanResponderRelease: (_, gestureState) => {
           const currentY = translateY._value + translateY._offset;
           const velocity = gestureState.vy;
 
-          if (velocity > 1 && gestureState.dy > 50) {
+          if (enablePanDownToClose && velocity > 1 && gestureState.dy > 50) {
             close();
             return;
           }
 
-          if (currentY > WINDOW_HEIGHT * 0.75) {
+          if (enablePanDownToClose && currentY > WINDOW_HEIGHT * 0.75) {
             close();
             return;
           }
@@ -154,29 +163,18 @@ const BottomSheet = forwardRef(
       }
     }, []);
 
+    if (!visible) return null;
+
     return (
       <>
-        {visible && (
-          <TouchableWithoutFeedback onPress={close}>
-            <Animated.View
-              style={[
-                styles.overlay,
-                {
-                  opacity,
-                  zIndex: 999,
-                },
-              ]}
-            />
-          </TouchableWithoutFeedback>
-        )}
+        <TouchableWithoutFeedback onPress={close}>
+          <Animated.View style={[styles.overlay, { opacity, zIndex: 999 }]} />
+        </TouchableWithoutFeedback>
 
         <Animated.View
           style={[
             styles.bottomSheet,
-            {
-              transform: [{ translateY }],
-              zIndex: 1000,
-            },
+            { transform: [{ translateY }], zIndex: 1000 },
           ]}
         >
           <View style={styles.handleWrapper} {...panResponder.panHandlers}>
@@ -184,11 +182,11 @@ const BottomSheet = forwardRef(
           </View>
 
           <ScrollView
-            style={styles.content}
-            showsVerticalScrollIndicator={false}
-            bounces={false}
+            style={{ maxHeight: currentHeight }}
+            contentContainerStyle={{ paddingBottom: bottom + 200 }}
+            showsVerticalScrollIndicator
           >
-            {children}
+            <View style={styles.contentWrapper}>{children}</View>
           </ScrollView>
         </Animated.View>
       </>
@@ -207,15 +205,11 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: -4,
-    },
+    shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.25,
     shadowRadius: 8,
     elevation: 20,
   },
-
   overlay: {
     position: "absolute",
     top: 0,
@@ -224,21 +218,20 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: "#000000",
   },
-
+  handleWrapper: {
+    paddingVertical: 12,
+    alignItems: "center",
+  },
   handle: {
     height: 4,
     width: 40,
     borderRadius: 2,
-    alignSelf: "center",
     backgroundColor: "#D1D5DB",
   },
-
-  handleWrapper: {
-    paddingVertical: 16,
+  scrollContent: {
+    paddingBottom: 200,
   },
-
-  content: {
-    flex: 1,
+  contentWrapper: {
     paddingHorizontal: 24,
   },
 });

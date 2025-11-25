@@ -135,15 +135,17 @@ const Medical = () => {
         />
       )}
 
-      <BottomSheet ref={bottomSheetRef}>
-        <View>
-          <PaperText style={styles.text}>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga
-            mollitia cupiditate voluptate. Quaerat doloribus laudantium
-            blanditiis ab labore sint aperiam aliquam, expedita quidem. Soluta,
-            nemo saepe aspernatur natus cum modi.
-          </PaperText>
-        </View>
+      <BottomSheet ref={bottomSheetRef} enableScroll={true}>
+        {selected && selected.TransactionNo.toLowerCase().includes("opd") ? (
+          <OutPatientForm selected={selected} onToggle={toggleShow} />
+        ) : (
+          <AdmittedForm
+            selected={selected}
+            physicians={PHYSICIANS}
+            diagnosis={DIAGNOSIS}
+            onToggle={toggleShow}
+          />
+        )}
       </BottomSheet>
       <Portal>
         <Modal

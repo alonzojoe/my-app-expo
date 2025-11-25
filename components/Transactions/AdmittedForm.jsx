@@ -55,7 +55,10 @@ const AdmittedForm = ({ selected, onToggle }) => {
           <FontAwesome5 name="times" size={20} color="#DD3254" />
         </PaperText>
       </View>
-      <ScrollView>
+      <ScrollView
+        nestedScrollEnabled={true}
+        showsVerticalScrollIndicator={true}
+      >
         <View>
           <>
             <ContentTitle title="Physicians" mb={5} />
