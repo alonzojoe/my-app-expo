@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Text } from "react-native";
 import { Text as PaperText } from "react-native-paper";
 import { FontAwesome5 } from "@expo/vector-icons";
 import ContentTitle from "./ContentTitle";
@@ -11,6 +11,7 @@ import {
   createPhysiciansQueryOptions,
   createDiagnosisQueryOptions,
 } from "./../../services/QueryOptions/queryOptions";
+import PDFIcon from "../../assets/image/png-iconv.png";
 
 const AdmittedForm = ({ selected, onToggle }) => {
   const { TransactionNo, PatientHistoryID, ReferID } = selected;
@@ -127,6 +128,46 @@ const AdmittedForm = ({ selected, onToggle }) => {
               />
             </>
           )}
+
+          <ContentTitle title="Laboratory results" />
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContent}
+          >
+            {Array.from({ length: 6 }).map((_, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => console.log("download")}
+                style={styles.cardTouchable}
+              >
+                <View style={styles.card}>
+                  <Image source={PDFIcon} style={styles.cardImage} />
+                  <Text style={styles.textContent}>{`CBC, PC`}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+
+          <ContentTitle title="Radiology results" />
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContent}
+          >
+            {Array.from({ length: 6 }).map((_, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => console.log("download")}
+                style={styles.cardTouchable}
+              >
+                <View style={styles.card}>
+                  <Image source={PDFIcon} style={styles.cardImage} />
+                  <Text style={styles.textContent}>{`CBC, PC`}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         </View>
       </ScrollView>
       {/* <View
@@ -150,4 +191,35 @@ const AdmittedForm = ({ selected, onToggle }) => {
 
 export default AdmittedForm;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  scrollContent: {
+    marginVertical: 15,
+    paddingHorizontal: 10,
+    gap: 15,
+  },
+
+  cardTouchable: {},
+
+  card: {
+    backgroundColor: "#F8F8FA",
+    padding: 15,
+    width: 110,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  cardImage: {
+    width: 60,
+    height: 60,
+  },
+
+  textContent: {
+    marginTop: 10,
+    textAlign: "center",
+    marginLeft: 0,
+    color: "#23233D",
+    fontSize: 11,
+    fontWeight: "bold",
+  },
+});

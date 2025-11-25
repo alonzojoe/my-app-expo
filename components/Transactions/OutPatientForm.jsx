@@ -194,9 +194,7 @@ const styles = StyleSheet.create({
     gap: 15,
   },
 
-  cardTouchable: {
-    // Makes full card pressable without affecting layout
-  },
+  cardTouchable: {},
 
   card: {
     backgroundColor: "#F8F8FA",
