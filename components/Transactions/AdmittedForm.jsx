@@ -21,6 +21,7 @@ import {
 } from "./../../services/QueryOptions/queryOptions";
 import PDFIcon from "../../assets/image/png-iconv.png";
 import * as WebBrowser from "expo-web-browser";
+import { trimmedName } from "../../libs/utils";
 
 const NAS_URL = process.env.EXPO_PUBLIC_NAS_URL;
 
@@ -192,7 +193,7 @@ const AdmittedForm = ({ selected, onToggle }) => {
                         <View style={styles.card}>
                           <Image source={PDFIcon} style={styles.cardImage} />
                           <Text style={styles.textContent}>
-                            {res.description.toUpperCase()}
+                            {trimmedName(res.description)}
                           </Text>
                         </View>
                       </TouchableOpacity>

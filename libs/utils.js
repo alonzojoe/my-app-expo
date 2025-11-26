@@ -44,3 +44,9 @@ export const formatName = (name) => {
 export const formatDate = (val) => {
   return moment(val).format("LL");
 };
+
+export const trimmedName = (desc) => {
+  const formatted = desc.length > 7 ? `${desc.slice(0, 7)}...` : desc;
+
+  return formatted.toUpperCase();
+};
