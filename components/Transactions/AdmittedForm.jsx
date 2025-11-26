@@ -20,6 +20,9 @@ import {
   createLabQueryOptions,
 } from "./../../services/QueryOptions/queryOptions";
 import PDFIcon from "../../assets/image/png-iconv.png";
+import * as WebBrowser from "expo-web-browser";
+
+const NAS_URL = process.env.EXPO_PUBLIC_NAS_URL;
 
 const AdmittedForm = ({ selected, onToggle }) => {
   const { TransactionNo, PatientHistoryID, ReferID } = selected;
@@ -42,6 +45,27 @@ const AdmittedForm = ({ selected, onToggle }) => {
 
   const { data: LAB_RESULTS, isFetchingLab, errorLab } = labresults;
   console.log("lab", LAB_RESULTS);
+
+  const viewResults = async (selected) => {
+    const { DocumentPath } = selected;
+    try {
+      let cleanPath = DocumentPath.replace(/\\/g, "/").replace(/^\//, "");
+
+      const parts = cleanPath.split("/");
+      const directory = parts.slice(0, parts.length - 1).join("/");
+      const filename = parts[parts.length - 1];
+
+      const encodedFilename = encodeURIComponent(filename);
+
+      const finalURL = `${NAS_URL}/${directory}/${encodedFilename}`;
+
+      console.log("Opening URL:", finalURL);
+
+      await WebBrowser.openBrowserAsync(finalURL);
+    } catch (error) {
+      console.error("Error opening document:", error);
+    }
+  };
 
   return (
     <>
@@ -154,13 +178,13 @@ const AdmittedForm = ({ selected, onToggle }) => {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.scrollContent}
             >
-              {LAB_RESULTS.length === 0 ? (
+              {LAB_RESULTS?.length === 0 ? (
                 <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
               ) : (
-                LAB_RESULTS.map((res) => (
+                LAB_RESULTS?.map((res) => (
                   <TouchableOpacity
                     key={res.id}
-                    onPress={() => console.log("download")}
+                    onPress={() => viewResults(res)}
                     style={styles.cardTouchable}
                   >
                     <View style={styles.card}>
