@@ -20,11 +20,15 @@ import {
   createLabQueryOptions,
 } from "./../../services/QueryOptions/queryOptions";
 import PDFIcon from "../../assets/image/png-iconv.png";
+import * as WebBrowser from "expo-web-browser";
+import { trimmedName } from "../../libs/utils";
+
+const NAS_URL = process.env.EXPO_PUBLIC_NAS_URL;
 
 const OutPatientForm = ({ selected, onToggle }) => {
   const { TransactionNo, PatientHistoryID, ReferID } = selected;
 
-  const [physicians, diagnostics] = useQueries({
+  const [physicians, diagnostics, labresults] = useQueries({
     queries: [
       createPhysiciansQueryOptions(PatientHistoryID, ReferID),
       createDiagnosisQueryOptions(PatientHistoryID, ReferID),
@@ -39,6 +43,29 @@ const OutPatientForm = ({ selected, onToggle }) => {
     isFetching: isLoading,
     error: errorDiagnosis,
   } = diagnostics;
+
+  const { data: LAB_RESULTS, isFetching: isFetchingLab, errorLab } = labresults;
+
+  const viewResults = async (selected) => {
+    const { DocumentPath } = selected;
+    try {
+      let cleanPath = DocumentPath.replace(/\\/g, "/").replace(/^\//, "");
+
+      const parts = cleanPath.split("/");
+      const directory = parts.slice(0, parts.length - 1).join("/");
+      const filename = parts[parts.length - 1];
+
+      const encodedFilename = encodeURIComponent(filename);
+
+      const finalURL = `${NAS_URL}/${directory}/${encodedFilename}`;
+
+      console.log("Opening URL:", finalURL);
+
+      await WebBrowser.openBrowserAsync(finalURL);
+    } catch (error) {
+      console.error("Error opening document:", error);
+    }
+  };
 
   return (
     <>
@@ -128,26 +155,46 @@ const OutPatientForm = ({ selected, onToggle }) => {
             )}
           </>
           <ContentTitle title="Laboratory results" />
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.scrollContent}
-          >
-            {Array.from({ length: 6 }).map((_, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => console.log("download")}
-                style={styles.cardTouchable}
-              >
-                <View style={styles.card}>
-                  <Image source={PDFIcon} style={styles.cardImage} />
-                  <Text style={styles.textContent}>{`CBC, PC`}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          <View style={{ marginVertical: 10 }}>
+            {errorLab ? (
+              <ErrorFetching size={15} mt={10}>
+                Something went wrong
+              </ErrorFetching>
+            ) : (
+              <>
+                {isFetchingLab ? (
+                  <LoaderSpinner />
+                ) : (
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.scrollContent}
+                  >
+                    {LAB_RESULTS?.length === 0 ? (
+                      <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+                    ) : (
+                      LAB_RESULTS?.map((res) => (
+                        <TouchableOpacity
+                          key={res.id}
+                          onPress={() => viewResults(res)}
+                          style={styles.cardTouchable}
+                        >
+                          <View style={styles.card}>
+                            <Image source={PDFIcon} style={styles.cardImage} />
+                            <Text style={styles.textContent}>
+                              {trimmedName(res.description)}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      ))
+                    )}
+                  </ScrollView>
+                )}
+              </>
+            )}
+          </View>
 
-          <ContentTitle title="Radiology results" />
+          {/* <ContentTitle title="Radiology results" />
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -165,7 +212,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
                 </View>
               </TouchableOpacity>
             ))}
-          </ScrollView>
+          </ScrollView> */}
         </View>
       </ScrollView>
       {/* <View
@@ -191,12 +238,18 @@ export default OutPatientForm;
 
 const styles = StyleSheet.create({
   scrollContent: {
-    marginVertical: 15,
+    flexDirection: "row",
+    flexGrow: 1,
+    marginVertical: 10,
     paddingHorizontal: 10,
     gap: 15,
+    alignItems: "stretch",
+    marginBottom: 15,
   },
 
-  cardTouchable: {},
+  cardTouchable: {
+    alignSelf: "stretch",
+  },
 
   card: {
     backgroundColor: "#F8F8FA",
@@ -205,6 +258,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    flex: 1,
   },
 
   cardImage: {
