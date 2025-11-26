@@ -80,7 +80,7 @@ export const fetchLabResults = async (PatientHistoryID) => {
       signal: controller.signal,
     });
     clearTimeout(timeout);
-    console.log("res", res);
+    console.log("res lab resutlts", res.data.data);
     return res.data.data;
   } catch (error) {
     clearTimeout(timeout);

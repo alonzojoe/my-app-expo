@@ -17,6 +17,7 @@ import { useQueries } from "@tanstack/react-query";
 import {
   createPhysiciansQueryOptions,
   createDiagnosisQueryOptions,
+  createLabQueryOptions,
 } from "./../../services/QueryOptions/queryOptions";
 import PDFIcon from "../../assets/image/png-iconv.png";
 
@@ -27,6 +28,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
     queries: [
       createPhysiciansQueryOptions(PatientHistoryID, ReferID),
       createDiagnosisQueryOptions(PatientHistoryID, ReferID),
+      createLabQueryOptions(PatientHistoryID),
     ],
   });
 
