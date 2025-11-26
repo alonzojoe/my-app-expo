@@ -41,18 +41,18 @@ const Header = () => {
 
       <View>
         <TouchableOpacity>
-          {/* <FontAwesome
+          <FontAwesome
             onPress={() => router.replace("/profile")}
             size={35}
             name={"user-circle"}
             color={"#001C63"}
-          /> */}
-          <MaterialCommunityIcons
+          />
+          {/* <MaterialCommunityIcons
             onPress={() => router.replace("/profile")}
             name={avatar}
             size={40}
             color={"#001C63"}
-          />
+          /> */}
         </TouchableOpacity>
       </View>
     </View>

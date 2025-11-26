@@ -17,16 +17,22 @@ import { useQueries } from "@tanstack/react-query";
 import {
   createPhysiciansQueryOptions,
   createDiagnosisQueryOptions,
+  createLabQueryOptions,
 } from "./../../services/QueryOptions/queryOptions";
 import PDFIcon from "../../assets/image/png-iconv.png";
+import * as WebBrowser from "expo-web-browser";
+import { trimmedName } from "../../libs/utils";
+
+const NAS_URL = process.env.EXPO_PUBLIC_NAS_URL;
 
 const OutPatientForm = ({ selected, onToggle }) => {
   const { TransactionNo, PatientHistoryID, ReferID } = selected;
 
-  const [physicians, diagnostics] = useQueries({
+  const [physicians, diagnostics, labresults] = useQueries({
     queries: [
       createPhysiciansQueryOptions(PatientHistoryID, ReferID),
       createDiagnosisQueryOptions(PatientHistoryID, ReferID),
+      createLabQueryOptions(PatientHistoryID),
     ],
   });
 
@@ -38,6 +44,29 @@ const OutPatientForm = ({ selected, onToggle }) => {
     error: errorDiagnosis,
   } = diagnostics;
 
+  const { data: LAB_RESULTS, isFetching: isFetchingLab, errorLab } = labresults;
+
+  const viewResults = async (selected) => {
+    const { DocumentPath } = selected;
+    try {
+      let cleanPath = DocumentPath.replace(/\\/g, "/").replace(/^\//, "");
+
+      const parts = cleanPath.split("/");
+      const directory = parts.slice(0, parts.length - 1).join("/");
+      const filename = parts[parts.length - 1];
+
+      const encodedFilename = encodeURIComponent(filename);
+
+      const finalURL = `${NAS_URL}/${directory}/${encodedFilename}`;
+
+      console.log("Opening URL:", finalURL);
+
+      await WebBrowser.openBrowserAsync(finalURL);
+    } catch (error) {
+      console.error("Error opening document:", error);
+    }
+  };
+
   return (
     <>
       <View
@@ -45,15 +74,17 @@ const OutPatientForm = ({ selected, onToggle }) => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "center",
           marginBottom: 10,
         }}
       >
         <PaperText
           variant="titleMedium"
           style={{
-            color: "#004C82",
-            textDecorationLine: "underline",
+            color: "#23233D",
+            textAlign: "center",
+            fontSize: 18,
+            // textDecorationLine: "underline",
             fontWeight: "bold",
           }}
         >
@@ -69,7 +100,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
       >
         <View>
           <>
-            <ContentTitle title="Physicians" mb={5} />
+            <ContentTitle title="Physicians" mb={0} />
             {error ? (
               <ErrorFetching size={15} mt={10}>
                 Something went wrong
@@ -79,7 +110,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
                 {isFetching ? (
                   <LoaderSpinner />
                 ) : (
-                  <View style={{ marginBottom: 5 }}>
+                  <View style={{ marginBottom: 10 }}>
                     {PHYSICIANS.length === 0 ? (
                       <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
                     ) : (
@@ -96,56 +127,80 @@ const OutPatientForm = ({ selected, onToggle }) => {
               </>
             )}
           </>
+
           <ContentTitle title="SOAP" />
-          <>
-            {errorDiagnosis ? (
+          <View style={{ marginVertical: 10 }}>
+            <>
+              {errorDiagnosis ? (
+                <ErrorFetching size={15} mt={10}>
+                  Something went wrong
+                </ErrorFetching>
+              ) : isLoading ? (
+                <LoaderSpinner />
+              ) : (
+                <>
+                  <ContentData
+                    title="Subjective"
+                    content={DIAGNOSIS?.Subjective.toUpperCase() || "-"}
+                  />
+                  <ContentData
+                    title="Objective"
+                    content={DIAGNOSIS?.Objective.toUpperCase() || "-"}
+                  />
+                  <ContentData
+                    title="Assessment"
+                    content={DIAGNOSIS?.Assessment.toUpperCase() || "-"}
+                  />
+                  <ContentData
+                    title="Plan"
+                    content={DIAGNOSIS?.PlanText.toUpperCase() || "-"}
+                  />
+                </>
+              )}
+            </>
+          </View>
+
+          <ContentTitle title="Laboratory results" />
+          <View style={{ marginVertical: 10 }}>
+            {errorLab ? (
               <ErrorFetching size={15} mt={10}>
                 Something went wrong
               </ErrorFetching>
-            ) : isLoading ? (
-              <LoaderSpinner />
             ) : (
               <>
-                <ContentData
-                  title="Subjective"
-                  content={DIAGNOSIS?.Subjective || "-"}
-                />
-                <ContentData
-                  title="Objective"
-                  content={DIAGNOSIS?.Objective || "-"}
-                />
-                <ContentData
-                  title="Assessment"
-                  content={DIAGNOSIS?.Assessment || "-"}
-                />
-                <ContentData
-                  title="Plan"
-                  content={DIAGNOSIS?.PlanText || "-"}
-                />
+                {isFetchingLab ? (
+                  <LoaderSpinner />
+                ) : (
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.scrollContent}
+                  >
+                    {LAB_RESULTS?.length === 0 ? (
+                      <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+                    ) : (
+                      LAB_RESULTS?.map((res) => (
+                        <TouchableOpacity
+                          key={res.id}
+                          onPress={() => viewResults(res)}
+                          style={styles.cardTouchable}
+                        >
+                          <View style={styles.card}>
+                            <Image source={PDFIcon} style={styles.cardImage} />
+                            <Text style={styles.textContent}>
+                              {trimmedName(res.description)}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      ))
+                    )}
+                  </ScrollView>
+                )}
               </>
             )}
-          </>
-          <ContentTitle title="Laboratory results" />
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.scrollContent}
-          >
-            {Array.from({ length: 6 }).map((_, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => console.log("download")}
-                style={styles.cardTouchable}
-              >
-                <View style={styles.card}>
-                  <Image source={PDFIcon} style={styles.cardImage} />
-                  <Text style={styles.textContent}>{`CBC, PC`}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          </View>
 
-          <ContentTitle title="Radiology results" />
+          {/* <ContentTitle title="Radiology results" />
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -163,7 +218,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
                 </View>
               </TouchableOpacity>
             ))}
-          </ScrollView>
+          </ScrollView> */}
         </View>
       </ScrollView>
       {/* <View
@@ -189,12 +244,18 @@ export default OutPatientForm;
 
 const styles = StyleSheet.create({
   scrollContent: {
-    marginVertical: 15,
+    flexDirection: "row",
+    flexGrow: 1,
+    marginVertical: 10,
     paddingHorizontal: 10,
     gap: 15,
+    alignItems: "stretch",
+    marginBottom: 15,
   },
 
-  cardTouchable: {},
+  cardTouchable: {
+    alignSelf: "stretch",
+  },
 
   card: {
     backgroundColor: "#F8F8FA",
@@ -203,6 +264,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    flex: 1,
   },
 
   cardImage: {
