@@ -98,7 +98,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
       >
         <View>
           <>
-            <ContentTitle title="Physicians" mb={5} />
+            <ContentTitle title="Physicians" mb={0} />
             {error ? (
               <ErrorFetching size={15} mt={10}>
                 Something went wrong
@@ -108,7 +108,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
                 {isFetching ? (
                   <LoaderSpinner />
                 ) : (
-                  <View style={{ marginBottom: 5 }}>
+                  <View style={{ marginBottom: 10 }}>
                     {PHYSICIANS.length === 0 ? (
                       <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
                     ) : (
@@ -125,35 +125,39 @@ const OutPatientForm = ({ selected, onToggle }) => {
               </>
             )}
           </>
+
           <ContentTitle title="SOAP" />
-          <>
-            {errorDiagnosis ? (
-              <ErrorFetching size={15} mt={10}>
-                Something went wrong
-              </ErrorFetching>
-            ) : isLoading ? (
-              <LoaderSpinner />
-            ) : (
-              <>
-                <ContentData
-                  title="Subjective"
-                  content={DIAGNOSIS?.Subjective || "-"}
-                />
-                <ContentData
-                  title="Objective"
-                  content={DIAGNOSIS?.Objective || "-"}
-                />
-                <ContentData
-                  title="Assessment"
-                  content={DIAGNOSIS?.Assessment || "-"}
-                />
-                <ContentData
-                  title="Plan"
-                  content={DIAGNOSIS?.PlanText || "-"}
-                />
-              </>
-            )}
-          </>
+          <View style={{ marginVertical: 10 }}>
+            <>
+              {errorDiagnosis ? (
+                <ErrorFetching size={15} mt={10}>
+                  Something went wrong
+                </ErrorFetching>
+              ) : isLoading ? (
+                <LoaderSpinner />
+              ) : (
+                <>
+                  <ContentData
+                    title="Subjective"
+                    content={DIAGNOSIS?.Subjective.toUpperCase() || "-"}
+                  />
+                  <ContentData
+                    title="Objective"
+                    content={DIAGNOSIS?.Objective.toUpperCase() || "-"}
+                  />
+                  <ContentData
+                    title="Assessment"
+                    content={DIAGNOSIS?.Assessment.toUpperCase() || "-"}
+                  />
+                  <ContentData
+                    title="Plan"
+                    content={DIAGNOSIS?.PlanText.toUpperCase() || "-"}
+                  />
+                </>
+              )}
+            </>
+          </View>
+
           <ContentTitle title="Laboratory results" />
           <View style={{ marginVertical: 10 }}>
             {errorLab ? (
