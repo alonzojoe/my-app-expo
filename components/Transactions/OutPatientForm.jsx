@@ -74,15 +74,17 @@ const OutPatientForm = ({ selected, onToggle }) => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "center",
           marginBottom: 10,
         }}
       >
         <PaperText
           variant="titleMedium"
           style={{
-            color: "#004C82",
-            textDecorationLine: "underline",
+            color: "#23233D",
+            textAlign: "center",
+            fontSize: 18,
+            // textDecorationLine: "underline",
             fontWeight: "bold",
           }}
         >

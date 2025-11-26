@@ -75,7 +75,7 @@ const Profile = () => {
               title={birthDay}
               titleStyle={{ color: "#6E7AA3" }}
               left={(props) => (
-                <FontAwesome5 name="calendar-day" size={24} color="#6E7AA3" />
+                <FontAwesome5 name="birthday-cake" size={24} color="#6E7AA3" />
               )}
             />
           </View>
