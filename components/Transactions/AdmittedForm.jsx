@@ -43,7 +43,7 @@ const AdmittedForm = ({ selected, onToggle }) => {
     error: errorDiagnosis,
   } = diagnosis;
 
-  const { data: LAB_RESULTS, isFetchingLab, errorLab } = labresults;
+  const { data: LAB_RESULTS, isFetching: isFetchingLab, errorLab } = labresults;
   console.log("lab", LAB_RESULTS);
 
   const viewResults = async (selected) => {
@@ -170,36 +170,40 @@ const AdmittedForm = ({ selected, onToggle }) => {
             <ErrorFetching size={15} mt={10}>
               Something went wrong
             </ErrorFetching>
-          ) : isFetchingLab ? (
-            <LoaderSpinner />
           ) : (
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.scrollContent}
-            >
-              {LAB_RESULTS?.length === 0 ? (
-                <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+            <>
+              {isFetchingLab ? (
+                <LoaderSpinner />
               ) : (
-                LAB_RESULTS?.map((res) => (
-                  <TouchableOpacity
-                    key={res.id}
-                    onPress={() => viewResults(res)}
-                    style={styles.cardTouchable}
-                  >
-                    <View style={styles.card}>
-                      <Image source={PDFIcon} style={styles.cardImage} />
-                      <Text style={styles.textContent}>
-                        {res.description.toUpperCase()}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                ))
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.scrollContent}
+                >
+                  {LAB_RESULTS?.length === 0 ? (
+                    <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+                  ) : (
+                    LAB_RESULTS?.map((res) => (
+                      <TouchableOpacity
+                        key={res.id}
+                        onPress={() => viewResults(res)}
+                        style={styles.cardTouchable}
+                      >
+                        <View style={styles.card}>
+                          <Image source={PDFIcon} style={styles.cardImage} />
+                          <Text style={styles.textContent}>
+                            {res.description.toUpperCase()}
+                          </Text>
+                        </View>
+                      </TouchableOpacity>
+                    ))
+                  )}
+                </ScrollView>
               )}
-            </ScrollView>
+            </>
           )}
 
-          <ContentTitle title="Radiology results" />
+          {/* <ContentTitle title="Radiology results" />
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -217,7 +221,7 @@ const AdmittedForm = ({ selected, onToggle }) => {
                 </View>
               </TouchableOpacity>
             ))}
-          </ScrollView>
+          </ScrollView> */}
         </View>
       </ScrollView>
       {/* <View
