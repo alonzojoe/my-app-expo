@@ -4,6 +4,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { Text as PaperText } from "react-native-paper";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -23,7 +24,7 @@ import PDFIcon from "../../assets/image/png-iconv.png";
 const AdmittedForm = ({ selected, onToggle }) => {
   const { TransactionNo, PatientHistoryID, ReferID } = selected;
 
-  const [physicians, diagnosis] = useQueries({
+  const [physicians, diagnosis, labresults] = useQueries({
     queries: [
       createPhysiciansQueryOptions(PatientHistoryID, ReferID),
       createDiagnosisQueryOptions(PatientHistoryID, ReferID),
@@ -38,6 +39,9 @@ const AdmittedForm = ({ selected, onToggle }) => {
     isFetching: isLoading,
     error: errorDiagnosis,
   } = diagnosis;
+
+  const { data: LAB_RESULTS, isFetchingLab, errorLab } = labresults;
+  console.log("lab", LAB_RESULTS);
 
   return (
     <>
@@ -138,24 +142,38 @@ const AdmittedForm = ({ selected, onToggle }) => {
           )}
 
           <ContentTitle title="Laboratory results" />
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.scrollContent}
-          >
-            {Array.from({ length: 6 }).map((_, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => console.log("download")}
-                style={styles.cardTouchable}
-              >
-                <View style={styles.card}>
-                  <Image source={PDFIcon} style={styles.cardImage} />
-                  <Text style={styles.textContent}>{`CBC, PC`}</Text>
-                </View>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+          {errorLab ? (
+            <ErrorFetching size={15} mt={10}>
+              Something went wrong
+            </ErrorFetching>
+          ) : isFetchingLab ? (
+            <LoaderSpinner />
+          ) : (
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.scrollContent}
+            >
+              {LAB_RESULTS.length === 0 ? (
+                <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+              ) : (
+                LAB_RESULTS.map((res) => (
+                  <TouchableOpacity
+                    key={res.id}
+                    onPress={() => console.log("download")}
+                    style={styles.cardTouchable}
+                  >
+                    <View style={styles.card}>
+                      <Image source={PDFIcon} style={styles.cardImage} />
+                      <Text style={styles.textContent}>
+                        {res.description.toUpperCase()}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                ))
+              )}
+            </ScrollView>
+          )}
 
           <ContentTitle title="Radiology results" />
           <ScrollView
@@ -201,12 +219,18 @@ export default AdmittedForm;
 
 const styles = StyleSheet.create({
   scrollContent: {
-    marginVertical: 15,
+    flexDirection: "row",
+    flexGrow: 1,
+    marginVertical: 10,
     paddingHorizontal: 10,
     gap: 15,
+    alignItems: "stretch",
+    marginBottom: 15,
   },
 
-  cardTouchable: {},
+  cardTouchable: {
+    alignSelf: "stretch",
+  },
 
   card: {
     backgroundColor: "#F8F8FA",
@@ -215,6 +239,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
+    flex: 1,
   },
 
   cardImage: {
