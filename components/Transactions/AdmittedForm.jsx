@@ -75,15 +75,17 @@ const AdmittedForm = ({ selected, onToggle }) => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: "center",
           marginBottom: 10,
         }}
       >
         <PaperText
           variant="titleMedium"
           style={{
-            color: "#004C82",
-            textDecorationLine: "underline",
+            color: "#23233D",
+            textAlign: "center",
+            fontSize: 18,
+            // textDecorationLine: "underline",
             fontWeight: "bold",
           }}
         >
@@ -99,7 +101,7 @@ const AdmittedForm = ({ selected, onToggle }) => {
       >
         <View>
           <>
-            <ContentTitle title="Physicians" mb={5} />
+            <ContentTitle title="Physicians" mb={0} />
             {error ? (
               <ErrorFetching size={15} mt={10}>
                 Something went wrong
@@ -109,7 +111,7 @@ const AdmittedForm = ({ selected, onToggle }) => {
                 {isFetching ? (
                   <LoaderSpinner />
                 ) : (
-                  <View style={{ marginBottom: 5 }}>
+                  <View style={{ marginBottom: 10 }}>
                     {PHYSICIANS.length === 0 ? (
                       <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
                     ) : (
@@ -128,82 +130,88 @@ const AdmittedForm = ({ selected, onToggle }) => {
           </>
 
           <ContentTitle title="Diagnosis" />
-          {errorDiagnosis ? (
-            <ErrorFetching size={15} mt={10}>
-              Something went wrong
-            </ErrorFetching>
-          ) : isLoading ? (
-            <LoaderSpinner />
-          ) : (
-            <>
-              <ContentData
-                title={`Initial Diagnosis`}
-                content={DIAGNOSIS.initial || "-"}
-              />
-              <ContentData
-                title={`Final Diagnosis`}
-                content={DIAGNOSIS.final || "-"}
-              />
-            </>
-          )}
+          <View style={{ marginVertical: 10 }}>
+            {errorDiagnosis ? (
+              <ErrorFetching size={15} mt={10}>
+                Something went wrong
+              </ErrorFetching>
+            ) : isLoading ? (
+              <LoaderSpinner />
+            ) : (
+              <>
+                <ContentData
+                  title={`Initial Diagnosis`}
+                  content={DIAGNOSIS.initial.toUpperCase() || "-"}
+                />
+                <ContentData
+                  title={`Final Diagnosis`}
+                  content={DIAGNOSIS.final.toUpperCase() || "-"}
+                />
+              </>
+            )}
+          </View>
+
           <ContentTitle title="Procedure Done" />
-          {errorDiagnosis ? (
-            <ErrorFetching size={15} mt={10}>
-              Something went wrong
-            </ErrorFetching>
-          ) : isLoading ? (
-            <LoaderSpinner />
-          ) : (
-            <>
-              <ContentData
-                title={`Main Operation`}
-                content={DIAGNOSIS.MainOperation || "-"}
-              />
-              <ContentData
-                title={`Other Operation`}
-                content={DIAGNOSIS.OtherOperation || "-"}
-              />
-            </>
-          )}
+          <View style={{ marginVertical: 10 }}>
+            {errorDiagnosis ? (
+              <ErrorFetching size={15} mt={10}>
+                Something went wrong
+              </ErrorFetching>
+            ) : isLoading ? (
+              <LoaderSpinner />
+            ) : (
+              <>
+                <ContentData
+                  title={`Main Operation`}
+                  content={DIAGNOSIS.MainOperation.toUpperCase() || "-"}
+                />
+                <ContentData
+                  title={`Other Operation`}
+                  content={DIAGNOSIS.OtherOperation.toUpperCase() || "-"}
+                />
+              </>
+            )}
+          </View>
 
           <ContentTitle title="Laboratory results" />
-          {errorLab ? (
-            <ErrorFetching size={15} mt={10}>
-              Something went wrong
-            </ErrorFetching>
-          ) : (
-            <>
-              {isFetchingLab ? (
-                <LoaderSpinner />
-              ) : (
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.scrollContent}
-                >
-                  {LAB_RESULTS?.length === 0 ? (
-                    <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
-                  ) : (
-                    LAB_RESULTS?.map((res) => (
-                      <TouchableOpacity
-                        key={res.id}
-                        onPress={() => viewResults(res)}
-                        style={styles.cardTouchable}
-                      >
-                        <View style={styles.card}>
-                          <Image source={PDFIcon} style={styles.cardImage} />
-                          <Text style={styles.textContent}>
-                            {trimmedName(res.description)}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    ))
-                  )}
-                </ScrollView>
-              )}
-            </>
-          )}
-
+          <View style={{ marginVertical: 10 }}>
+            {errorLab ? (
+              <ErrorFetching size={15} mt={10}>
+                Something went wrong
+              </ErrorFetching>
+            ) : (
+              <>
+                {isFetchingLab ? (
+                  <LoaderSpinner />
+                ) : (
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.scrollContent}
+                  >
+                    {LAB_RESULTS?.length === 0 ? (
+                      <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+                    ) : (
+                      LAB_RESULTS?.map((res) => (
+                        <TouchableOpacity
+                          key={res.id}
+                          onPress={() => viewResults(res)}
+                          style={styles.cardTouchable}
+                        >
+                          <View style={styles.card}>
+                            <Image source={PDFIcon} style={styles.cardImage} />
+                            <Text style={styles.textContent}>
+                              {trimmedName(res.description)}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      ))
+                    )}
+                  </ScrollView>
+                )}
+              </>
+            )}
+          </View>
           {/* <ContentTitle title="Radiology results" />
           <ScrollView
             horizontal
