@@ -18,7 +18,7 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     try {
-      const res = await api.get("/verify", {
+      const res = await api.get("/verify/v2", {
         params: {
           ...formData,
           birthdate: moment(formData.birthdate, "MM/DD/YYYY").format(
@@ -36,9 +36,9 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
 
         return;
       }
-      storeUser(res.data.data[0]);
-      dispatch(setUser({ user: res.data.data[0] }));
-      console.log("user", res.data.data[0]);
+      storeUser(res.data.data);
+      dispatch(setUser({ user: res.data.data }));
+      console.log("user", res.data.data);
       tm.toast(
         "SUCCESS",
         "Verification Successful",
@@ -87,7 +87,7 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
 
   const verifyQRData = async (bday) => {
     try {
-      const res = await api.get("/verifybday", {
+      const res = await api.get("/verifybday/v2", {
         params: {
           patientno: scannedQR,
           birthdate: moment(bday, "MM/DD/YYYY").format("YYYY-MM-DD"),
@@ -103,9 +103,9 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
 
         return;
       }
-      storeUser(res.data.data[0]);
-      dispatch(setUser({ user: res.data.data[0] }));
-      console.log("user", res.data.data[0]);
+      storeUser(res.data.data);
+      dispatch(setUser({ user: res.data.data }));
+      console.log("user", res.data.data);
       tm.toast(
         "SUCCESS",
         "Verification Successful",

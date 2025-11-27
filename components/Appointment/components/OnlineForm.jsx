@@ -1,5 +1,6 @@
 import { StyleSheet, View, Alert } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import {
   Card,
   Button,
@@ -25,20 +26,48 @@ const OnlineForm = ({ onSubmit }) => {
   const [value, setValue] = useState(null);
   const [popUp, togglePopUp] = useToggle(false);
 
+  useEffect(() => {
+    if (availableDates?.length > 0) {
+      const firstDay = availableDates[0]?.datesched;
+
+      handleSelectDate(firstDay);
+    }
+  }, [availableDates]);
+
+  useEffect(() => {
+    console.log("selected date effect", selected);
+    console.log("value", value);
+  }, [selected, value]);
+
   const handleChooseTime = (selectedTime) => {
     setValue(selectedTime);
     togglePopUp(false);
   };
 
+  const handleSelectDate = (date) => {
+    setSelected(date);
+    getTimeSlots(date);
+    setValue(null);
+  };
+
   const collateData = () => {
+    const selectedSlot = timeslots.find((s) => s.id === value);
+
     const appointmentData = {
       serviceId: 212,
       date: moment(selected).format("YYYY-MM-DD"),
       time: value,
+      selectedSlot: selectedSlot,
     };
 
     console.log("appointment data", appointmentData);
+
+    console.log("selected date & time slot", selectedSlot);
+
+    // onSubmit(appointmentData);
   };
+
+  console.log("timeslots", timeslots);
 
   return (
     <>
@@ -82,8 +111,7 @@ const OnlineForm = ({ onSubmit }) => {
             mode="single"
             date={selected}
             onChange={({ date }) => {
-              setSelected(date);
-              getTimeSlots(date);
+              handleSelectDate(date);
             }}
             styles={{
               ...defaultStyles,
@@ -122,7 +150,7 @@ const OnlineForm = ({ onSubmit }) => {
           value={value}
           setOpen={() => {
             if (timeslots.length === 0) {
-              console.error("Please select a date first");
+              console.error("Please select a date with slots.");
             } else {
               togglePopUp(true);
             }
@@ -136,7 +164,7 @@ const OnlineForm = ({ onSubmit }) => {
             style={styles.btn}
             disabled={isFetching}
           >
-            Create Appointment
+            Proceed
           </Button>
         </View>
       </>
