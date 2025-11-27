@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { useRouter } from "expo-router";
 import {
   Text as PaperText,
   TextInput,
@@ -19,6 +20,8 @@ import {
 const FormData = ({ data }) => {
   console.log("data", data);
   const { authUser } = useSelector((state) => state.auth);
+
+  const router = useRouter();
 
   const defaultValues = {
     phone: "",
@@ -74,6 +77,7 @@ const FormData = ({ data }) => {
 
     console.log("create apt", createApt);
     alert("Appointment created successfully!");
+    router.replace("/schedule");
     return;
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
