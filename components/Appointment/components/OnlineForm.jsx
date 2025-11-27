@@ -49,6 +49,7 @@ const OnlineForm = ({ onSubmit }) => {
     console.log("selected date & time slot", selectedSlot);
 
     console.log("auth", authUser);
+    onSubmit(appointmentData);
   };
 
   return (
@@ -147,7 +148,7 @@ const OnlineForm = ({ onSubmit }) => {
             style={styles.btn}
             disabled={isFetching}
           >
-            Create Appointment
+            Proceed
           </Button>
         </View>
       </>
