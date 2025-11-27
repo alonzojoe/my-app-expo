@@ -37,21 +37,37 @@ const FormData = ({ data }) => {
     console.log("selected slot", data);
     console.log("Form Data:", formData);
 
-    const payload = {
+    const slotPayload = {
       serviceId: data?.serviceId,
       opdtimeid: data?.selectedSlot?.opdtimeid,
       date: data?.date,
     };
 
-    const res = await checkSlots(payload);
+    const res = await checkSlots(slotPayload);
 
-    console.log("checkSlots", res);
+    console.log("checkSlots", res.length);
 
-    if (res.length === 0) {
+    if (!res || res.length === 0) {
       alert("Please select another slot!");
       return;
     }
 
+    const payload = {
+      ...authUser,
+      Barangay: authUser?.BarangayID,
+      BirthDate: authUser?.birthdate,
+      OldNew: 0,
+      ChiefComplaint: formData?.complaints?.toUpperCase(),
+      AltContactNo: formData?.phone,
+      SelectedTime: data?.selectedSlot,
+      SelectedDate: data?.selectedSlot?.date,
+      SelectedDateId: data?.selectedSlot?.opddateslotsid,
+      ServiceType: data?.serviceId,
+    };
+
+    console.log("updated payload", payload);
+
+    return;
     await new Promise((resolve) => setTimeout(resolve, 1000));
     alert("Appointment created successfully!");
     // reset();
