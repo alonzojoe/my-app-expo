@@ -1,58 +1,117 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import {
   Text as PaperText,
   TextInput,
   Button,
   ActivityIndicator,
 } from "react-native-paper";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import ContentTitle from "./../../Transactions/ContentTitle";
+import { eappointmentForm } from "../../../schema/schema";
 
 const FormData = () => {
-  const [phone, setPhone] = useState("");
-  const [complaints, setComplaints] = useState("");
+  const defaultValues = {
+    phone: "",
+    complaints: "",
+  };
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm({
+    defaultValues,
+    resolver: zodResolver(eappointmentForm),
+  });
+
+  const onSubmit = async (data) => {
+    console.log("Form Data:", data);
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    alert("Appointment created successfully!");
+    reset();
+  };
 
   return (
     <View style={styles.container}>
-      <ContentTitle title={`Complete the form`} mb={0} />
+      <ContentTitle title={`Complete the form to proceed`} mb={0} />
 
-      {/* Alternate Phone Number */}
-      <PaperText variant="titleSmall" style={styles.labelText}>
-        Alternate Phone Number
-      </PaperText>
-      <TextInput
-        mode="outlined"
-        placeholder="Enter alternate phone number"
-        value={phone}
-        onChangeText={setPhone}
-        keyboardType="phone-pad"
-        style={styles.input}
-      />
+      <View style={styles.inputContainer}>
+        {/* Alternate Phone Number */}
+        <PaperText variant="titleSmall" style={styles.labelText}>
+          Alternate Phone Number
+        </PaperText>
+        <Controller
+          control={control}
+          name="phone"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              mode="outlined"
+              type="numeric"
+              ewq
+              placeholder="Enter alternate phone number"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              keyboardType="phone-pad"
+              style={styles.input}
+              error={!!errors.phone}
+              maxLength={10}
+            />
+          )}
+        />
+        {/* {errors.phone && ( */}
+        <Text style={styles.errorText}>
+          {errors.phone ? errors.phone.message : ""}
+        </Text>
+        {/* )} */}
 
-      {/* Chief Complaints */}
-      <PaperText variant="titleSmall" style={styles.labelText}>
-        Chief Complaint
-      </PaperText>
-      <TextInput
-        mode="outlined"
-        placeholder="Enter chief complaint"
-        value={complaints}
-        onChangeText={setComplaints}
-        multiline
-        numberOfLines={4}
-        style={[styles.input, styles.textArea]}
-      />
+        {/* Chief Complaint */}
+        <PaperText variant="titleSmall" style={styles.labelText}>
+          Chief Complaint
+        </PaperText>
+        <Controller
+          control={control}
+          name="complaints"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              mode="outlined"
+              placeholder="Enter chief complaint"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              multiline
+              numberOfLines={4}
+              style={[styles.input, styles.textArea]}
+              error={!!errors.complaints}
+            />
+          )}
+        />
+        {/* {errors.complaints && ( */}
+        <Text style={styles.errorText}>
+          {errors.complaints ? errors.complaints.message : " "}
+        </Text>
+        {/* )} */}
+      </View>
 
+      {/* Submit Button */}
       <View style={styles.textGroup}>
         <Button
           icon="check"
           mode="contained"
-          onPress={() => console.log("test")}
+          onPress={handleSubmit(onSubmit)}
           style={styles.btn}
           labelStyle={styles.btnLabel}
-          disabled={false}
+          disabled={isSubmitting}
         >
-          {false ? <ActivityIndicator size={20} /> : "Create Appointment"}
+          {isSubmitting ? (
+            <ActivityIndicator size={20} color="white" />
+          ) : (
+            "Create Appointment"
+          )}
         </Button>
       </View>
     </View>
@@ -64,14 +123,13 @@ export default FormData;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 3,
+    padding: 10,
     backgroundColor: "#F9FAFB",
     paddingBottom: 100,
     gap: 5,
   },
-  header: {
-    marginBottom: 20,
-    fontWeight: "bold",
+  inputContainer: {
+    paddingHorizontal: 5,
   },
   labelText: {
     marginTop: 10,
@@ -84,14 +142,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height: 40,
     fontSize: 13,
-    paddingVertical: 3,
-    paddingHorizontal: 2,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
   },
   textArea: {
     height: 90,
     textAlignVertical: "top",
     fontSize: 13,
-    paddingVertical: 1,
+    paddingVertical: 0,
   },
   textGroup: {
     marginTop: 15,
@@ -103,5 +161,10 @@ const styles = StyleSheet.create({
   btnLabel: {
     color: "white",
     fontWeight: "normal",
+  },
+  errorText: {
+    color: "#B3271C",
+    fontSize: 12,
+    marginTop: 2,
   },
 });
