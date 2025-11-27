@@ -26,29 +26,25 @@ const OnlineForm = ({ onSubmit }) => {
   const [value, setValue] = useState(null);
   const [popUp, togglePopUp] = useToggle(false);
 
-  const { authUser } = useSelector((state) => state.auth);
-
-  console.log(authUser);
-
   const handleChooseTime = (selectedTime) => {
     setValue(selectedTime);
     togglePopUp(false);
   };
 
   const collateData = () => {
+    const selectedSlot = timeslots.find((s) => s.id === value);
+
     const appointmentData = {
       serviceId: 212,
       date: moment(selected).format("YYYY-MM-DD"),
       time: value,
+      selectedSlot: selectedSlot,
     };
 
     console.log("appointment data", appointmentData);
 
-    const selectedSlot = timeslots.find((s) => s.id === appointmentData.time);
-
     console.log("selected date & time slot", selectedSlot);
 
-    console.log("auth", authUser);
     onSubmit(appointmentData);
   };
 

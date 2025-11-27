@@ -1,5 +1,5 @@
 import { StyleSheet, View, Text } from "react-native";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import SafeView from "../components/SafeView";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -9,12 +9,14 @@ import BottomSheet from "../components/Shared/BottomSheet";
 import VerificationForm from "../components/Forms/VerificationForm";
 import FormData from "../components/Appointment/components/FormData";
 const OnlineAppointment = () => {
+  const [appointmentData, setAppointmentData] = useState(null);
   const bottomSheetRef = useRef(null);
   const { bottom } = useSafeAreaInsets();
 
   const handleSubmit = async (formData) => {
     console.log("test");
     console.log(formData);
+    setAppointmentData(formData);
     handleProceed();
   };
 
@@ -38,7 +40,7 @@ const OnlineAppointment = () => {
         enableScroll={true}
       >
         <View>
-          <FormData />
+          <FormData data={appointmentData} />
         </View>
       </BottomSheet>
     </SafeView>

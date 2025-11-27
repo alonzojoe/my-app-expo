@@ -10,8 +10,12 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ContentTitle from "./../../Transactions/ContentTitle";
 import { eappointmentForm } from "../../../schema/schema";
+import { useSelector } from "react-redux";
 
-const FormData = () => {
+const FormData = ({ data }) => {
+  console.log("data", data);
+  const { authUser } = useSelector((state) => state.auth);
+
   const defaultValues = {
     phone: "",
     complaints: "",
@@ -27,8 +31,10 @@ const FormData = () => {
     resolver: zodResolver(eappointmentForm),
   });
 
-  const onSubmit = async (data) => {
-    console.log("Form Data:", data);
+  const onSubmit = async (formData) => {
+    console.log("auth", authUser);
+    console.log("selected slot", data);
+    console.log("Form Data:", formData);
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
     alert("Appointment created successfully!");
@@ -124,7 +130,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: "#F9FAFB",
     paddingBottom: 100,
     gap: 5,
   },
