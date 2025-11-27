@@ -47,6 +47,8 @@ const OnlineForm = ({ onSubmit }) => {
     const selectedSlot = timeslots.find((s) => s.id === appointmentData.time);
 
     console.log("selected date & time slot", selectedSlot);
+
+    console.log("auth", authUser);
   };
 
   return (
