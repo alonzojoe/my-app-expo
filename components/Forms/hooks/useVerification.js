@@ -18,7 +18,7 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     try {
-      const res = await api.get("/verify", {
+      const res = await api.get("/verify/v2", {
         params: {
           ...formData,
           birthdate: moment(formData.birthdate, "MM/DD/YYYY").format(

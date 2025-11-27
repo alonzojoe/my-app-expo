@@ -1,5 +1,6 @@
 import { StyleSheet, View, Alert } from "react-native";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Card,
   Button,
@@ -25,6 +26,10 @@ const OnlineForm = ({ onSubmit }) => {
   const [value, setValue] = useState(null);
   const [popUp, togglePopUp] = useToggle(false);
 
+  const { authUser } = useSelector((state) => state.auth);
+
+  console.log(authUser);
+
   const handleChooseTime = (selectedTime) => {
     setValue(selectedTime);
     togglePopUp(false);
@@ -38,6 +43,10 @@ const OnlineForm = ({ onSubmit }) => {
     };
 
     console.log("appointment data", appointmentData);
+
+    const selectedSlot = timeslots.find((s) => s.id === appointmentData.time);
+
+    console.log("selected date & time slot", selectedSlot);
   };
 
   return (
