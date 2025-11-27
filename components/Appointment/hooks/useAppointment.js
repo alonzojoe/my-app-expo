@@ -30,7 +30,11 @@ const useAppointment = (serviceID) => {
       });
       console.log("res timeslots", res.data);
       const times =
-        res.data.map((d) => ({ label: d.opdtime, value: d.id, ...d })) ?? [];
+        res.data.map((d) => ({
+          label: moment(d.opdtime, "HH:mm:ss").format("hh:mm A"),
+          value: d.id,
+          ...d,
+        })) ?? [];
       setTimeslots(times);
     } catch (error) {
       console.error(`Error fetching time slots`);

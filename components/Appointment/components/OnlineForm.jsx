@@ -1,5 +1,5 @@
 import { StyleSheet, View, Alert } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   Card,
@@ -26,9 +26,28 @@ const OnlineForm = ({ onSubmit }) => {
   const [value, setValue] = useState(null);
   const [popUp, togglePopUp] = useToggle(false);
 
+  useEffect(() => {
+    if (availableDates?.length > 0) {
+      const firstDay = availableDates[0]?.datesched;
+
+      handleSelectDate(firstDay);
+    }
+  }, [availableDates]);
+
+  useEffect(() => {
+    console.log("selected date effect", selected);
+    console.log("value", value);
+  }, [selected, value]);
+
   const handleChooseTime = (selectedTime) => {
     setValue(selectedTime);
     togglePopUp(false);
+  };
+
+  const handleSelectDate = (date) => {
+    setSelected(date);
+    getTimeSlots(date);
+    setValue(null);
   };
 
   const collateData = () => {
@@ -45,8 +64,10 @@ const OnlineForm = ({ onSubmit }) => {
 
     console.log("selected date & time slot", selectedSlot);
 
-    onSubmit(appointmentData);
+    // onSubmit(appointmentData);
   };
+
+  console.log("timeslots", timeslots);
 
   return (
     <>
@@ -90,8 +111,7 @@ const OnlineForm = ({ onSubmit }) => {
             mode="single"
             date={selected}
             onChange={({ date }) => {
-              setSelected(date);
-              getTimeSlots(date);
+              handleSelectDate(date);
             }}
             styles={{
               ...defaultStyles,
@@ -130,7 +150,7 @@ const OnlineForm = ({ onSubmit }) => {
           value={value}
           setOpen={() => {
             if (timeslots.length === 0) {
-              console.error("Please select a date first");
+              console.error("Please select a date with slots.");
             } else {
               togglePopUp(true);
             }

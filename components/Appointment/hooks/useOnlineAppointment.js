@@ -75,7 +75,6 @@ const useOnlineAppointment = () => {
     Controller,
     control,
     handleSubmit,
-    formState,
     errors,
     isSubmitting,
     reset,
