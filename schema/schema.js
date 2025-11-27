@@ -37,3 +37,23 @@ export const qrVerifySchema = z.object({
     .nonempty({ message: "is required" })
     .min(10, { message: "invalid format*" }),
 });
+
+export const eappointmentForm = z.object({
+  phone: z
+    .string({
+      required_error: "Alternate phone number is required*",
+      invalid_type_error: "Alternate phone number is required*",
+    })
+    .trim()
+    .nonempty({ message: "Alternate phone number is required*" })
+    .regex(/^9\d{9}$/, {
+      message: "Phone must start with 9 and be 10 digits*",
+    }),
+
+  complaints: z
+    .string({
+      required_error: "Chief complaints is required*",
+    })
+    .trim()
+    .nonempty({ message: "Chief complaints is required*" }),
+});

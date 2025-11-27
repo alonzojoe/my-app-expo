@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
   },
   btn: {
     width: "100%",
-    marginVertical: 12,
   },
   btnLabel: {
     color: "white",
