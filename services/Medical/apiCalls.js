@@ -1,4 +1,5 @@
 import api from "../index";
+import apiopd from "../opd";
 
 export const fetchTransactions = async (PatientID) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -88,5 +89,37 @@ export const fetchLabResults = async (PatientHistoryID) => {
     throw new Error(
       "Request failed or timed out—please check your connection."
     );
+  }
+};
+
+export const checkSlots = async (payload) => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  const {
+    serviceId: ServiceType,
+    opdtimeid: SelectedTime,
+    date: SelectedDate,
+  } = payload;
+
+  try {
+    const res = await apiopd.get(`/telehealth`, {
+      params: {
+        ServiceType,
+        SelectedTime,
+        SelectedDate,
+      },
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    console.log("slots", res.data);
+    return res.data;
+  } catch (error) {
+    clearTimeout(timeout);
+    console.error("Please check your connection.");
+
+    return [];
   }
 };

@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ContentTitle from "./../../Transactions/ContentTitle";
 import { eappointmentForm } from "../../../schema/schema";
 import { useSelector } from "react-redux";
+import { checkSlots } from "../../../services/Medical/apiCalls";
 
 const FormData = ({ data }) => {
   console.log("data", data);
@@ -36,9 +37,24 @@ const FormData = ({ data }) => {
     console.log("selected slot", data);
     console.log("Form Data:", formData);
 
+    const payload = {
+      serviceId: data?.serviceId,
+      opdtimeid: data?.selectedSlot?.opdtimeid,
+      date: data?.date,
+    };
+
+    const res = await checkSlots(payload);
+
+    console.log("checkSlots", res);
+
+    if (res.length === 0) {
+      alert("Please select another slot!");
+      return;
+    }
+
     await new Promise((resolve) => setTimeout(resolve, 1000));
     alert("Appointment created successfully!");
-    reset();
+    // reset();
   };
 
   return (
