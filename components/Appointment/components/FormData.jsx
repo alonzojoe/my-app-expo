@@ -11,7 +11,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ContentTitle from "./../../Transactions/ContentTitle";
 import { eappointmentForm } from "../../../schema/schema";
 import { useSelector } from "react-redux";
-import { checkSlots } from "../../../services/Medical/apiCalls";
+import {
+  checkSlots,
+  createOnlineAppointment,
+} from "../../../services/Medical/apiCalls";
 
 const FormData = ({ data }) => {
   console.log("data", data);
@@ -67,9 +70,13 @@ const FormData = ({ data }) => {
 
     console.log("updated payload", payload);
 
+    const createApt = await createOnlineAppointment(payload);
+
+    console.log("create apt", createApt);
+    alert("Appointment created successfully!");
     return;
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    alert("Appointment created successfully!");
+
     // reset();
   };
 
