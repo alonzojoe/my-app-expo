@@ -6,9 +6,19 @@ import useBluecardInfo from "../../hooks/features/useBluecardInfo";
 
 const BlueCardDetails = () => {
   const PatientInfo = useBluecardInfo();
+  const [cardSize, setCardSize] = React.useState({ width: 0, height: 0 });
 
   return (
-    <View style={styles.imgcontainer}>
+    <View
+      style={styles.imgcontainer}
+      onLayout={(event) => {
+        const { width, height } = event.nativeEvent.layout;
+        setCardSize({
+          width: parseFloat(width).toFixed(2),
+          height: parseFloat(height).toFixed(2),
+        });
+      }}
+    >
       <View style={styles.cardContainer}>
         <Image source={BlueF} style={styles.cardImage} />
         <View style={styles.overlayContainer}>
@@ -21,7 +31,9 @@ const BlueCardDetails = () => {
           <Text style={styles.address}>{PatientInfo.address}</Text>
           <Text style={styles.gender}>{PatientInfo.gender}</Text>
           <Text style={styles.civil}>{PatientInfo.civilstatus}</Text>
-          <Text style={styles.issued}>{PatientInfo.dateissued}</Text>
+          <Text style={styles.issued}>
+            {PatientInfo.dateissued}-{JSON.stringify(cardSize)}
+          </Text>
         </View>
       </View>
     </View>
