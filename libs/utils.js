@@ -1,6 +1,7 @@
 import { Toast, ALERT_TYPE } from "react-native-alert-notification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import * as WebBrowser from "expo-web-browser";
 import moment from "moment";
 
 const router = useRouter();
@@ -49,4 +50,26 @@ export const trimmedName = (desc) => {
   const formatted = desc.length > 7 ? `${desc.slice(0, 7)}...` : desc;
 
   return formatted.toUpperCase();
+};
+
+const NAS_URL = process.env.EXPO_PUBLIC_NAS_URL;
+
+export const constructURL = async (docPath) => {
+  try {
+    let formattedPath = docPath.replace(/\\/g, "/");
+
+    const pathSegments = formattedPath.split("/");
+
+    const fileName = encodeURIComponent(pathSegments.pop());
+
+    const encodedPath = [...pathSegments, fileName].join("/");
+
+    const finalURL = `${NAS_URL}${encodedPath}`;
+
+    console.log("Opening URL:", finalURL);
+
+    await WebBrowser.openBrowserAsync(finalURL);
+  } catch (error) {
+    console.error("Error opening document:", error);
+  }
 };
