@@ -7,20 +7,23 @@ const useBluecardInfo = () => {
   const { authUser } = useSelector((state) => state.auth);
 
   const label = useMemo(
-    () => CIVIL_STATUS.find((c) => c.id === authUser?.CivilStatusID),
+    () => CIVIL_STATUS.find((c) => c.id === authUser?.CivilStatus),
     [authUser]
   );
 
   const PatientInfo = {
-    name: authUser?.FullName,
-    birthdate: moment(authUser?.BirthDate).format("MMMM DD, YYYY"),
-    address: "-",
+    name: `${authUser?.LastName}, ${authUser?.FirstName} ${authUser?.MiddleName} `,
+    birthdate: authUser?.BirthDate,
+    address: `${authUser?.MunicipalityName}, ${authUser?.ProvinceName}`,
     gender: authUser?.Gender === "F" ? "FEMALE" : "MALE",
     civilstatus: label?.name,
     dateissued: "-",
     patientno: authUser?.PatientNo,
     qrcontent: `JBL-${authUser?.PatientNo}`,
   };
+
+  console.log("pinfo", PatientInfo);
+  console.log("authUser", authUser);
 
   return PatientInfo;
 };

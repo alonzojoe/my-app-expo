@@ -14,13 +14,15 @@ const BlueCardDetails = () => {
         <View style={styles.overlayContainer}>
           <QRCode value={PatientInfo.qrcontent} size={80} />
         </View>
-        <Text style={styles.patientno}>{PatientInfo.patientno}</Text>
-        <Text style={styles.name}>{PatientInfo.name}</Text>
-        <Text style={styles.bday}>{PatientInfo.birthdate}</Text>
-        <Text style={styles.address}>{PatientInfo.address}</Text>
-        <Text style={styles.gender}>{PatientInfo.gender}</Text>
-        <Text style={styles.civil}>{PatientInfo.civilstatus}</Text>
-        <Text style={styles.issued}>{PatientInfo.dateissued}</Text>
+        <View style={styles.textContainer}>
+          <Text style={styles.patientno}>{PatientInfo.patientno}</Text>
+          <Text style={styles.name}>{PatientInfo.name}</Text>
+          <Text style={styles.bday}>{PatientInfo.birthdate}</Text>
+          <Text style={styles.address}>{PatientInfo.address}</Text>
+          <Text style={styles.gender}>{PatientInfo.gender}</Text>
+          <Text style={styles.civil}>{PatientInfo.civilstatus}</Text>
+          <Text style={styles.issued}>{PatientInfo.dateissued}</Text>
+        </View>
       </View>
     </View>
   );
@@ -52,73 +54,72 @@ const styles = StyleSheet.create({
   },
   overlayContainer: {
     position: "absolute",
-    top: 7,
-    right: 7,
+    top: "3%",
+    right: "2%",
     zIndex: 10,
-    backgroundColor: "white", // optional: add contrast
+    backgroundColor: "white",
     padding: 4,
     borderRadius: 4,
   },
+  textContainer: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+  patientno: {
+    position: "absolute",
+    bottom: "58%",
+    left: "19.5%",
+    color: "#FFF",
+    fontSize: 24,
+    fontWeight: "bold",
+  },
   name: {
     position: "absolute",
-    bottom: 94,
-    left: 70,
+    bottom: "42.5%",
+    left: "21%",
     color: "black",
     fontSize: 13,
     fontWeight: "bold",
   },
   bday: {
     position: "absolute",
-    bottom: 75,
-    left: 70,
+    bottom: "34%",
+    left: "21%",
     color: "black",
     fontSize: 13,
     fontWeight: "bold",
   },
   address: {
     position: "absolute",
-    bottom: 60,
-    left: 70,
+    bottom: "26%",
+    left: "21%",
     color: "black",
-    fontSize: 10,
+    fontSize: 13,
     fontWeight: "bold",
   },
   gender: {
     position: "absolute",
-    bottom: 41,
-    left: 70,
+    bottom: "18%",
+    left: "21%",
     color: "black",
     fontSize: 13,
     fontWeight: "bold",
   },
   civil: {
     position: "absolute",
-    bottom: 22,
-    left: 70,
+    bottom: "10%",
+    left: "21%",
     color: "black",
     fontSize: 13,
     fontWeight: "bold",
   },
   issued: {
     position: "absolute",
-    bottom: 4,
-    left: 70,
+    bottom: "1.5%",
+    left: "21%",
     color: "black",
     fontSize: 13,
     fontWeight: "bold",
-  },
-  patientno: {
-    position: "absolute",
-    bottom: 128,
-    left: 67,
-    color: "#FFF",
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  qr: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    zIndex: 99999,
   },
 });
