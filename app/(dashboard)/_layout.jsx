@@ -44,6 +44,7 @@ const DashboardLayout = () => {
           name="schedule"
           options={{
             title: "Appointment",
+            tabBarStyle: { display: "none" },
             tabBarIcon: ({ focused }) => (
               <Ionicons
                 size={24}

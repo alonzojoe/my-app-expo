@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import SafeView from "../../components/SafeView";
 import Header from "../../components/Header";
 import ListItem from "../../components/Appointment/ListItem";
@@ -14,14 +14,22 @@ import {
 } from "react-native-paper";
 import TabSwitcher from "../../components/Global/Shared/TabSwitcher";
 import AppointmentItem from "../../components/Appointment/AppointmentItem";
+import BottomSheet from "../../components/Shared/BottomSheet";
+import ConfirmDialog from "../../components/Shared/ConfirmDialog";
 
 const Schedule = () => {
   const [confirmation, toggleConfirmation] = useToggle(false);
   const [activeTab, setActiveTab] = useState("Upcoming");
+  const bottomSheetRef = useRef(null);
 
   const showDialog = () => toggleConfirmation(true);
 
   const hideDialog = () => toggleConfirmation(false);
+
+  const handleCancel = () => {
+    bottomSheetRef.current?.snapToIndex(0);
+  };
+
   return (
     <SafeView safe={true}>
       <Header />
@@ -45,10 +53,19 @@ const Schedule = () => {
               service={a.service}
               appointment={a.appointment}
               onCancel={showDialog}
+              onPress={handleCancel}
             />
           ))}
         </View>
       )}
+
+      <BottomSheet
+        ref={bottomSheetRef}
+        enableScroll={false}
+        snapPoints={["45%", "60%", "80%"]}
+      >
+        <ConfirmDialog />
+      </BottomSheet>
 
       <Portal>
         <Dialog visible={confirmation} onDismiss={hideDialog}>
@@ -79,6 +96,9 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 10,
     paddingHorizontal: 16,
+    flexDirection: "column",
+
+    paddingBottom: 200,
 
     // backgroundColor: "#fff",
     // alignItems: "center",
