@@ -73,3 +73,8 @@ export const constructURL = async (docPath) => {
     console.error("Error opening document:", error);
   }
 };
+
+export const extractBeforeDash = (str) => {
+  if (!str) return "";
+  return str.split("-")[0].trim();
+};
