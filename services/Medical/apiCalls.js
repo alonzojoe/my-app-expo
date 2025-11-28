@@ -144,3 +144,25 @@ export const createOnlineAppointment = async (payload) => {
     return [];
   }
 };
+
+export const getAppointments = async (PatientNo) => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const res = await api.get(`/appointments`, {
+      params: { patientno: PatientNo },
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    console.log("appointments", res.data);
+    return res.data;
+  } catch (error) {
+    clearTimeout(timeout);
+    console.error("Please check your connection.");
+
+    return [];
+  }
+};

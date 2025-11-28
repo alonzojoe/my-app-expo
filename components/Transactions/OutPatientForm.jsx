@@ -20,10 +20,7 @@ import {
   createLabQueryOptions,
 } from "./../../services/QueryOptions/queryOptions";
 import PDFIcon from "../../assets/image/png-iconv.png";
-import * as WebBrowser from "expo-web-browser";
-import { trimmedName } from "../../libs/utils";
-
-const NAS_URL = process.env.EXPO_PUBLIC_NAS_URL;
+import { trimmedName, constructURL } from "../../libs/utils";
 
 const OutPatientForm = ({ selected, onToggle }) => {
   const { TransactionNo, PatientHistoryID, ReferID } = selected;
@@ -48,23 +45,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
 
   const viewResults = async (selected) => {
     const { DocumentPath } = selected;
-    try {
-      let cleanPath = DocumentPath.replace(/\\/g, "/").replace(/^\//, "");
-
-      const parts = cleanPath.split("/");
-      const directory = parts.slice(0, parts.length - 1).join("/");
-      const filename = parts[parts.length - 1];
-
-      const encodedFilename = encodeURIComponent(filename);
-
-      const finalURL = `${NAS_URL}/${directory}/${encodedFilename}`;
-
-      console.log("Opening URL:", finalURL);
-
-      await WebBrowser.openBrowserAsync(finalURL);
-    } catch (error) {
-      console.error("Error opening document:", error);
-    }
+    await constructURL(DocumentPath);
   };
 
   return (

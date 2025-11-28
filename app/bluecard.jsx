@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BlueF from "../assets/image/bluef.jpg";
 import BlueB from "../assets/image/blueb.jpg";
 import Spacer from "../components/Spacer";
+import BlueCardDetails from "../components/Home/BlueCardDetails";
 const BlueCard = () => {
   const { bottom } = useSafeAreaInsets;
 
@@ -13,12 +14,24 @@ const BlueCard = () => {
     <SafeView>
       <ScrollView style={{ paddingBottom: bottom }}>
         <View style={styles.container}>
-          <View style={styles.cardContainer}>
+          {/* <View style={styles.cardContainer}>
             <Image source={BlueF} style={styles.cardImage} />
-          </View>
+          </View> */}
+          {/* <View style={styles.cardContainer}> */}
+          <BlueCardDetails
+            captureWidth={353.45}
+            captureHeight={221.09}
+            renderAsImage={true}
+          />
+          {/* </View> */}
           <Spacer height={20} />
           <View style={styles.cardContainer}>
-            <Image source={BlueB} style={styles.cardImage} />
+            <Image
+              height={221.09}
+              width={353.45}
+              source={BlueB}
+              style={styles.cardImage}
+            />
           </View>
         </View>
       </ScrollView>
@@ -35,7 +48,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   cardContainer: {
-    width: "90%",
+    width: "95%",
     aspectRatio: 1.6,
     alignSelf: "center",
     borderRadius: 12,

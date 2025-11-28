@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { StyleSheet, View } from "react-native";
 import SafeView from "../../components/SafeView";
 import {
   Avatar,
@@ -19,13 +18,17 @@ import useToggle from "../../hooks/useToggle";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import { logoutUser, formatName } from "../../libs/utils";
-import moment from "moment";
+import Entypo from "@expo/vector-icons/Entypo";
+
 const Profile = () => {
   const [confirm, setConfirm] = useToggle(false);
   const router = useRouter();
 
   const { authUser } = useSelector((state) => state.auth);
-  const birthDay = moment(authUser?.BirthDate).format("MMMM DD, YYYY") ?? "";
+
+  console.log("authUser", authUser);
+
+  const birthDay = authUser?.BirthDate || "";
 
   const fullName = `${formatName(authUser?.FirstName)} ${formatName(
     authUser?.LastName
@@ -74,9 +77,7 @@ const Profile = () => {
             <List.Item
               title={birthDay}
               titleStyle={{ color: "#6E7AA3" }}
-              left={(props) => (
-                <FontAwesome5 name="birthday-cake" size={24} color="#6E7AA3" />
-              )}
+              left={(props) => <Entypo name="cake" size={24} color="#6E7AA3" />}
             />
           </View>
           <View style={{ paddingHorizontal: 10, marginTop: 10 }}>

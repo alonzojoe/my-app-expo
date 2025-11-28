@@ -1,38 +1,23 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Pressable,
-  Image,
-} from "react-native";
+import { StyleSheet, View, ScrollView, TouchableOpacity } from "react-native";
 import {
   Text as PaperText,
   Card,
   Modal,
   Portal,
   Button,
-  IconButton,
-  Avatar,
-  Divider,
 } from "react-native-paper";
-import React from "react";
 import SafeView from "../../components/SafeView";
 import Header from "../../components/Header";
-import Banner from "../../assets/banner.jpg";
 import Subtitle from "../../components/Subtitle";
 import ServiceItem from "./../../components/Services/ServiceItem";
-import BlankImg from "../../assets/image/blank.png";
 import { MENUS } from "../../constants/Menus";
 import Spacer from "../../components/Spacer";
 import useToggle from "../../hooks/useToggle";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import BlueF from "../../assets/image/bluef.jpg";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import BlueCardDetails from "../../components/Home/BlueCardDetails";
-const ITEMS = Array.from({ length: 2 }).map((_, index) => index + 1);
 
 const Home = () => {
   const [show, toggleShow] = useToggle(false);
@@ -55,7 +40,13 @@ const Home = () => {
           <Image source={BlueF} style={styles.cardImage} />
         </View>
       </View> */}
-      <BlueCardDetails />
+      <TouchableOpacity onPress={() => router.replace("/bluecard")}>
+        <BlueCardDetails
+          captureWidth={353.45}
+          captureHeight={221.09}
+          renderAsImage={true}
+        />
+      </TouchableOpacity>
 
       <Subtitle label={`Services`} style={{ marginVertical: 15 }} />
       <ScrollView

@@ -88,7 +88,11 @@ export const CIVIL_STATUS = [
   { id: 2, name: "MARRIED" },
   { id: 3, name: "WIDOW" },
   { id: 4, name: "DIVORCED" },
+  { id: 5, name: "CHILD" },
+  { id: 6, name: "INFANT" },
   { id: 7, name: "SEPARATED" },
+  { id: 9, name: "NEONATE" },
   { id: 10, name: "UNKNOWN" },
   { id: 11, name: "WIDOWER" },
+  { id: 12, name: "COMMON LAW" },
 ];
