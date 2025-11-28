@@ -1,9 +1,20 @@
-import { StyleSheet, View, Image, Text } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+  Modal,
+  Dimensions,
+  Animated,
+} from "react-native";
 import React, { useRef, useState, useEffect } from "react";
 import BlueF from "../../assets/image/bluef.jpg";
 import QRCode from "react-native-qrcode-svg";
 import useBluecardInfo from "../../hooks/features/useBluecardInfo";
 import { captureRef } from "react-native-view-shot";
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const BlueCardDetails = ({
   captureWidth = 353.45,
@@ -14,6 +25,8 @@ const BlueCardDetails = ({
   const [capturedImage, setCapturedImage] = useState(null);
   const [isCapturing, setIsCapturing] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const rotateAnim = useRef(new Animated.Value(0)).current;
   const PatientInfo = useBluecardInfo();
   const [cardSize, setCardSize] = React.useState({ width: 0, height: 0 });
 
@@ -56,67 +69,181 @@ const BlueCardDetails = ({
     }
   };
 
+  const handleCardPress = () => {
+    setIsFullscreen(true);
+    Animated.spring(rotateAnim, {
+      toValue: 1,
+      useNativeDriver: true,
+      tension: 50,
+      friction: 8,
+    }).start();
+  };
+
+  const handleCloseFullscreen = () => {
+    // Reset rotation immediately BEFORE closing
+    rotateAnim.setValue(0);
+    setIsFullscreen(false);
+  };
+
+  const rotation = rotateAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "90deg"],
+  });
+
+  // When rotated 90°, the card's height becomes the visual width
+  // So we need to fit the card's height into the screen width
+  const fullscreenHeight = SCREEN_WIDTH * 0.85;
+  const fullscreenWidth = fullscreenHeight * (captureWidth / captureHeight);
+
   if (renderAsImage && capturedImage) {
     return (
-      <View style={styles.imgcontainer}>
-        <Image
-          source={{ uri: capturedImage }}
-          style={{
-            width: captureWidth,
-            height: captureHeight,
-            borderRadius: 12,
-            alignSelf: "center",
-          }}
-          resizeMode="contain"
-        />
-      </View>
+      <>
+        <TouchableOpacity
+          style={styles.imgcontainer}
+          onPress={handleCardPress}
+          activeOpacity={0.9}
+        >
+          <Image
+            source={{ uri: capturedImage }}
+            style={{
+              width: captureWidth,
+              height: captureHeight,
+              borderRadius: 12,
+              alignSelf: "center",
+            }}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+
+        <Modal
+          visible={isFullscreen}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={handleCloseFullscreen}
+          onDismiss={() => rotateAnim.setValue(0)}
+        >
+          <TouchableOpacity
+            style={styles.modalOverlay}
+            activeOpacity={1}
+            onPress={handleCloseFullscreen}
+          >
+            <Animated.View
+              style={[
+                styles.fullscreenContainer,
+                { transform: [{ rotate: rotation }] },
+              ]}
+            >
+              <Image
+                source={{ uri: capturedImage }}
+                style={{
+                  width: fullscreenWidth,
+                  height: fullscreenHeight,
+                  borderRadius: 12,
+                }}
+                resizeMode="contain"
+              />
+            </Animated.View>
+          </TouchableOpacity>
+        </Modal>
+      </>
     );
   }
 
   return (
-    <View style={styles.imgcontainer}>
-      <View
-        ref={viewRef}
-        collapsable={false}
-        style={[
-          styles.cardContainer,
-          {
-            width: cardWidth,
-            height: cardHeight,
-            opacity: renderAsImage && !capturedImage ? 0 : 1,
-          },
-        ]}
-        onLayout={(event) => {
-          const { width, height } = event.nativeEvent.layout;
-          setCardSize({
-            width: parseFloat(width).toFixed(2),
-            height: parseFloat(height).toFixed(2),
-          });
-        }}
+    <>
+      <TouchableOpacity
+        style={styles.imgcontainer}
+        onPress={handleCardPress}
+        activeOpacity={0.9}
       >
-        <Image
-          source={BlueF}
-          style={styles.cardImage}
-          onLoad={() => setImageLoaded(true)}
-          onError={(error) => {
-            console.error("Image failed to load:", error);
-            setImageLoaded(true);
+        <View
+          ref={viewRef}
+          collapsable={false}
+          style={[
+            styles.cardContainer,
+            {
+              width: cardWidth,
+              height: cardHeight,
+              opacity: renderAsImage && !capturedImage ? 0 : 1,
+            },
+          ]}
+          onLayout={(event) => {
+            const { width, height } = event.nativeEvent.layout;
+            setCardSize({
+              width: parseFloat(width).toFixed(2),
+              height: parseFloat(height).toFixed(2),
+            });
           }}
-        />
-        <View style={styles.overlayContainer}>
-          <QRCode value={PatientInfo.qrcontent} size={80} />
+        >
+          <Image
+            source={BlueF}
+            style={styles.cardImage}
+            onLoad={() => setImageLoaded(true)}
+            onError={(error) => {
+              console.error("Image failed to load:", error);
+              setImageLoaded(true);
+            }}
+          />
+          <View style={styles.overlayContainer}>
+            <QRCode value={PatientInfo.qrcontent} size={80} />
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.patientno}>{PatientInfo.patientno}</Text>
+            <Text style={styles.name}>{PatientInfo.name}</Text>
+            <Text style={styles.bday}>{PatientInfo.birthdate}</Text>
+            <Text style={styles.address}>{PatientInfo.address}</Text>
+            <Text style={styles.gender}>{PatientInfo.gender}</Text>
+            <Text style={styles.civil}>{PatientInfo.civilstatus}</Text>
+            <Text style={styles.issued}>{PatientInfo.dateissued}</Text>
+          </View>
         </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.patientno}>{PatientInfo.patientno}</Text>
-          <Text style={styles.name}>{PatientInfo.name}</Text>
-          <Text style={styles.bday}>{PatientInfo.birthdate}</Text>
-          <Text style={styles.address}>{PatientInfo.address}</Text>
-          <Text style={styles.gender}>{PatientInfo.gender}</Text>
-          <Text style={styles.civil}>{PatientInfo.civilstatus}</Text>
-          <Text style={styles.issued}>{PatientInfo.dateissued}</Text>
-        </View>
-      </View>
-    </View>
+      </TouchableOpacity>
+
+      <Modal
+        visible={isFullscreen}
+        transparent={true}
+        animationType="none"
+        onRequestClose={handleCloseFullscreen}
+        onDismiss={() => rotateAnim.setValue(0)}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={handleCloseFullscreen}
+        >
+          <Animated.View
+            style={[
+              styles.fullscreenContainer,
+              { transform: [{ rotate: rotation }] },
+            ]}
+          >
+            <View
+              style={[
+                styles.cardContainer,
+                {
+                  width: fullscreenWidth,
+                  height: fullscreenHeight,
+                },
+              ]}
+            >
+              <Image source={BlueF} style={styles.cardImage} />
+              <View style={styles.overlayContainer}>
+                <QRCode value={PatientInfo.qrcontent} size={80} />
+              </View>
+              <View style={styles.textContainer}>
+                <Text style={styles.patientno}>{PatientInfo.patientno}</Text>
+                <Text style={styles.name}>{PatientInfo.name}</Text>
+                <Text style={styles.bday}>{PatientInfo.birthdate}</Text>
+                <Text style={styles.address}>{PatientInfo.address}</Text>
+                <Text style={styles.gender}>{PatientInfo.gender}</Text>
+                <Text style={styles.civil}>{PatientInfo.civilstatus}</Text>
+                <Text style={styles.issued}>{PatientInfo.dateissued}</Text>
+              </View>
+            </View>
+          </Animated.View>
+        </TouchableOpacity>
+      </Modal>
+    </>
   );
 };
 
@@ -223,5 +350,15 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 13,
     fontWeight: "bold",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  fullscreenContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
