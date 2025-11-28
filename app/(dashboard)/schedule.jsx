@@ -112,7 +112,7 @@ const Schedule = () => {
         </ScrollView>
       ) : (
         <FlatList
-          style={{ marginHorizontal: 0, marginBottom: 200 }}
+          style={{ marginHorizontal: 0, marginBottom: 100 }}
           data={FILTERED_APPOINTMENTS}
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={({ item }) => (
