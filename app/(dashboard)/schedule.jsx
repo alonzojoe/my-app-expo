@@ -16,11 +16,30 @@ import TabSwitcher from "../../components/Global/Shared/TabSwitcher";
 import AppointmentItem from "../../components/Appointment/AppointmentItem";
 import BottomSheet from "../../components/Shared/BottomSheet";
 import ConfirmDialog from "../../components/Shared/ConfirmDialog";
+import { useQuery } from "@tanstack/react-query";
+import { getAppointments } from "../../services/Medical/apiCalls";
+import { useSelector } from "react-redux";
 
 const Schedule = () => {
   const [confirmation, toggleConfirmation] = useToggle(false);
   const [activeTab, setActiveTab] = useState("Upcoming");
   const bottomSheetRef = useRef(null);
+
+  const { authUser } = useSelector((state) => state.auth);
+
+  const PatientNo = authUser?.PatientNo;
+
+  const {
+    data: APPOINTMENTS_LISTS,
+    isFetching,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["appointments", PatientNo],
+    queryFn: () => getAppointments(PatientNo),
+  });
+
+  console.log("appointemnts", APPOINTMENTS);
 
   const showDialog = () => toggleConfirmation(true);
 

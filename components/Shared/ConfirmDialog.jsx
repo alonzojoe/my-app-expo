@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     marginBottom: 28,
     color: "#6E7AA3",
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
   },
   buttonContainer: {
     flexDirection: "row",
