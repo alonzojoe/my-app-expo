@@ -17,10 +17,21 @@ const BlueCard = () => {
           {/* <View style={styles.cardContainer}>
             <Image source={BlueF} style={styles.cardImage} />
           </View> */}
-          <BlueCardDetails />
+          {/* <View style={styles.cardContainer}> */}
+          <BlueCardDetails
+            captureWidth={353.45}
+            captureHeight={221.09}
+            renderAsImage={true}
+          />
+          {/* </View> */}
           <Spacer height={20} />
           <View style={styles.cardContainer}>
-            <Image source={BlueB} style={styles.cardImage} />
+            <Image
+              height={221.09}
+              width={353.45}
+              source={BlueB}
+              style={styles.cardImage}
+            />
           </View>
         </View>
       </ScrollView>
@@ -37,7 +48,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   cardContainer: {
-    width: "90%",
+    width: "95%",
     aspectRatio: 1.6,
     alignSelf: "center",
     borderRadius: 12,

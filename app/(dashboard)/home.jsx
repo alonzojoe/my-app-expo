@@ -55,7 +55,11 @@ const Home = () => {
           <Image source={BlueF} style={styles.cardImage} />
         </View>
       </View> */}
-      <BlueCardDetails />
+      <BlueCardDetails
+        captureWidth={353.45}
+        captureHeight={221.09}
+        renderAsImage={true}
+      />
 
       <Subtitle label={`Services`} style={{ marginVertical: 15 }} />
       <ScrollView
