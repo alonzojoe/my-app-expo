@@ -33,8 +33,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { extractBeforeDash } from "../../libs/utils";
 import moment from "moment";
 const Schedule = () => {
-  const [confirmation, toggleConfirmation] = useToggle(false);
   const [activeTab, setActiveTab] = useState("Upcoming");
+  const [selected, setSelected] = useState(null);
   const bottomSheetRef = useRef(null);
   const { bottom } = useSafeAreaInsets;
   const { authUser } = useSelector((state) => state.auth);
@@ -53,11 +53,8 @@ const Schedule = () => {
 
   console.log("appointemnts", APPOINTMENTS);
 
-  const showDialog = () => toggleConfirmation(true);
-
-  const hideDialog = () => toggleConfirmation(false);
-
-  const handleCancel = () => {
+  const handleCancel = (item) => {
+    setSelected(item);
     bottomSheetRef.current?.snapToIndex(0);
   };
 
@@ -85,30 +82,6 @@ const Schedule = () => {
     <SafeView safe={true}>
       <Header />
       <TabSwitcher activeTab={activeTab} onSelect={setActiveTab} />
-      {/* {APPOINTMENTS.length === 0 ? (
-        <>
-          <View style={{ marginTop: 10 }}>
-            <PaperText
-              variant="titleMedium"
-              style={{ textAlign: "center", color: "#FF2245" }}
-            >
-              You don’t have any upcoming appointments at this time.
-            </PaperText>
-          </View>
-        </>
-      ) : (
-        <View style={styles.container}>
-          {APPOINTMENTS.map((a) => (
-            <AppointmentItem
-              key={a.id}
-              service={a.service}
-              appointment={a.appointment}
-              onCancel={showDialog}
-              onPress={handleCancel}
-            />
-          ))}
-        </View>
-      )} */}
 
       {error ? (
         <ScrollView style={{ paddingBottom: bottom }}>
@@ -125,7 +98,7 @@ const Schedule = () => {
               key={item.id}
               service={extractBeforeDash(item.servicedesc)}
               appointment={`${item.formatted_date} ${item.timedesc}`}
-              onPress={handleCancel}
+              onPress={() => handleCancel(item)}
             />
           )}
           ListHeaderComponent={
@@ -183,28 +156,12 @@ const Schedule = () => {
         enableScroll={false}
         snapPoints={["45%", "60%", "80%"]}
       >
-        <ConfirmDialog onCancel={closeDialog} />
+        <ConfirmDialog
+          refetch={refetch}
+          selected={selected}
+          onCancel={closeDialog}
+        />
       </BottomSheet>
-
-      {/* <Portal>
-        <Dialog visible={confirmation} onDismiss={hideDialog}>
-          <Dialog.Icon icon="alert" />
-          <Dialog.Title style={styles.title}>Confirmation</Dialog.Title>
-          <Dialog.Content>
-            <PaperText variant="bodyMedium" style={{ textAlign: "center" }}>
-              Are you sure to cancel your appointment?
-            </PaperText>
-          </Dialog.Content>
-          <Dialog.Actions>
-            <Button onPress={hideDialog} textColor="#DD3353">
-              Cancel
-            </Button>
-            <Button onPress={hideDialog} textColor="#007BFF">
-              Yes
-            </Button>
-          </Dialog.Actions>
-        </Dialog>
-      </Portal> */}
     </SafeView>
   );
 };

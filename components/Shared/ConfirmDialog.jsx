@@ -1,11 +1,30 @@
 // ConfirmDialogContent.js
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Button from "./Button";
+import FSLoader from "../Global/FSLoader";
+import { cancelAppointment } from "../../services/Medical/apiCalls";
 
-export default function ConfirmDialogContent({ onConfirm, onCancel }) {
+export default function ConfirmDialogContent({
+  selected,
+  onConfirm,
+  onCancel,
+  refetch,
+}) {
+  console.log("selected", selected);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleCancel = async () => {
+    setIsLoading(true);
+    await cancelAppointment(selected?.id);
+    setIsLoading(false);
+    refetch();
+    onCancel();
+  };
+
   return (
     <View style={styles.container}>
+      {isLoading && <FSLoader />}
       {/* Icon or visual indicator */}
       <View style={styles.iconContainer}>
         <View style={styles.iconCircle}>
@@ -22,7 +41,7 @@ export default function ConfirmDialogContent({ onConfirm, onCancel }) {
 
       <View style={styles.buttonContainer}>
         <Button label="No, Keep it" type="secondary" onPress={onCancel} />
-        <Button label="Yes, Cancel" type="primary" onPress={onConfirm} />
+        <Button label="Yes, Cancel" type="primary" onPress={handleCancel} />
       </View>
     </View>
   );
