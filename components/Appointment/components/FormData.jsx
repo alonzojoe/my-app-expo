@@ -7,6 +7,7 @@ import {
 } from "react-native-paper";
 import ContentTitle from "./../../Transactions/ContentTitle";
 import useOnlineAppointment from "../hooks/useOnlineAppointment";
+import ToastManager from "toastify-react-native/components/ToastManager";
 
 const FormData = ({ data }) => {
   const { Controller, control, handleSubmit, errors, isSubmitting, onSubmit } =
@@ -16,6 +17,7 @@ const FormData = ({ data }) => {
 
   return (
     <View style={styles.container}>
+      <ToastManager />
       <ContentTitle title={`Complete the form to proceed`} mb={0} />
 
       <View style={styles.inputContainer}>

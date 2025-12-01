@@ -7,6 +7,7 @@ import {
   checkSlots,
   createOnlineAppointment,
 } from "./../../../services/Medical/apiCalls";
+import { Toast } from "toastify-react-native";
 
 const useOnlineAppointment = () => {
   const { authUser } = useSelector((state) => state.auth);
@@ -65,7 +66,7 @@ const useOnlineAppointment = () => {
     const createApt = await createOnlineAppointment(payload);
 
     console.log("create apt", createApt);
-    alert("Appointment created successfully!");
+    Toast.success("Appointment created successfully!", "top");
     router.replace("/schedule");
 
     reset();
