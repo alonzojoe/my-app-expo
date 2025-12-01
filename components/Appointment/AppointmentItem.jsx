@@ -3,11 +3,20 @@ import { IconButton, Divider } from "react-native-paper";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
-const ListItem = ({ service, appointment, onPress, onCancel }) => {
+const ListItem = ({ sched, service, appointment, onPress, onCancel }) => {
+  const { id, status } = sched;
+  console.log("sched id status", { id, status });
   return (
     <View style={styles.card}>
       {/* Left colored bar */}
-      <View style={styles.leftBar} />
+      <View
+        style={[
+          styles.leftBar,
+          {
+            backgroundColor: status == 0 ? "#3AC17B" : "#DD3353",
+          },
+        ]}
+      />
 
       {/* Main content */}
       <TouchableOpacity style={styles.content} onPress={onPress}>
@@ -28,10 +37,12 @@ const ListItem = ({ service, appointment, onPress, onCancel }) => {
             </View>
           </View>
 
-          <TouchableOpacity onPress={onCancel} style={styles.menu}>
-            {/* <FontAwesome name="ellipsis-v" size={20} color="#6E7AA3" /> */}
-            <FontAwesome6 name="times-circle" size={23} color="#DD3353" />
-          </TouchableOpacity>
+          {status === 0 && (
+            <TouchableOpacity onPress={onCancel} style={styles.menu}>
+              {/* <FontAwesome name="ellipsis-v" size={20} color="#6E7AA3" /> */}
+              <FontAwesome6 name="times-circle" size={23} color="#DD3353" />
+            </TouchableOpacity>
+          )}
         </View>
 
         <Divider style={{ marginVertical: "3" }} />

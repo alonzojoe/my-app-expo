@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Button from "./Button";
 
-export default function ConfirmDialogContent({ onCancel, onConfirm }) {
+export default function ConfirmDialogContent({ onConfirm, onCancel }) {
   return (
     <View style={styles.container}>
       {/* Icon or visual indicator */}

@@ -61,6 +61,10 @@ const Schedule = () => {
     bottomSheetRef.current?.snapToIndex(0);
   };
 
+  const closeDialog = () => {
+    bottomSheetRef?.current?.collapse();
+  };
+
   const FILTERED_APPOINTMENTS = useMemo(() => {
     const now = moment();
     if (FILTERED_APPOINTMENTS?.length === 0) return [];
@@ -117,6 +121,7 @@ const Schedule = () => {
           keyExtractor={(item, index) => `${item.id}-${index}`}
           renderItem={({ item }) => (
             <AppointmentItem
+              sched={item}
               key={item.id}
               service={extractBeforeDash(item.servicedesc)}
               appointment={`${item.formatted_date} ${item.timedesc}`}
@@ -179,7 +184,7 @@ const Schedule = () => {
         enableScroll={false}
         snapPoints={["45%", "60%", "80%"]}
       >
-        <ConfirmDialog />
+        <ConfirmDialog onCancel={closeDialog} />
       </BottomSheet>
 
       {/* <Portal>
