@@ -125,7 +125,6 @@ const Schedule = () => {
               key={item.id}
               service={extractBeforeDash(item.servicedesc)}
               appointment={`${item.formatted_date} ${item.timedesc}`}
-              onCancel={showDialog}
               onPress={handleCancel}
             />
           )}
