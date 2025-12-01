@@ -16,6 +16,7 @@ import useAppointment from "../hooks/useAppointment";
 import useToggle from "../../../hooks/useToggle";
 import FSLoader from "../../../components/Global/FSLoader";
 import moment from "moment";
+import ToastManager, { Toast } from "toastify-react-native";
 
 const OnlineForm = ({ onSubmit }) => {
   const defaultStyles = useDefaultStyles();
@@ -62,9 +63,12 @@ const OnlineForm = ({ onSubmit }) => {
 
     console.log("appointment data", appointmentData);
 
-    console.log("selected date & time slot", selectedSlot);
+    if (!selectedSlot || !value) {
+      return Toast.error("Please time of schedule.", "top");
+    }
 
-    // onSubmit(appointmentData);
+    console.log("selected date & time slot", selectedSlot);
+    onSubmit(appointmentData);
   };
 
   console.log("timeslots", timeslots);
@@ -73,6 +77,7 @@ const OnlineForm = ({ onSubmit }) => {
     <>
       <>
         {isFetching && <FSLoader />}
+        <ToastManager />
         <View style={styles.headerItem}>
           <FontAwesome5 name="briefcase-medical" size={24} color="#001C63" />
           <PaperText
@@ -150,7 +155,7 @@ const OnlineForm = ({ onSubmit }) => {
           value={value}
           setOpen={() => {
             if (timeslots.length === 0) {
-              console.error("Please select a date with slots.");
+              Toast.error("Please select a date with slots.", "top");
             } else {
               togglePopUp(true);
             }

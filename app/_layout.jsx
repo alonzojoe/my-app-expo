@@ -13,6 +13,7 @@ import { useRouter } from "expo-router";
 import store from "../store";
 import useNetInfo from "../hooks/useNetInfo";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import ToastManager from "toastify-react-native/components/ToastManager";
 
 const appTheme = {
   ...DefaultTheme,
@@ -176,6 +177,7 @@ const RootLayout = () => {
           </PaperProvider>
         </Provider>
       </QueryClientProvider>
+      <ToastManager />
     </GestureHandlerRootView>
     //Stack component Renders child component with page title and back button
     //Slot component Renders child component without page title and back button same as children in React

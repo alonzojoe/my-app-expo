@@ -162,7 +162,28 @@ export const getAppointments = async (PatientNo) => {
   } catch (error) {
     clearTimeout(timeout);
     console.error("Please check your connection.");
+  }
+};
 
-    return [];
+export const cancelAppointment = async (appointmentId) => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  const payload = {
+    pid: appointmentId,
+  };
+
+  try {
+    const res = await apiopd.post("/cancelappointment", payload, {
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeout);
+    console.log("cancel", res.data);
+  } catch (error) {
+    clearTimeout(timeout);
+    console.error("Please check your connection.");
   }
 };

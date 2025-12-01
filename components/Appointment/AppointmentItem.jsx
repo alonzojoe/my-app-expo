@@ -2,15 +2,30 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { IconButton, Divider } from "react-native-paper";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
-const ListItem = ({ service, appointment, onPress, onCancel }) => {
+const ListItem = ({ sched, service, appointment, onPress }) => {
+  const { id, status } = sched;
+  console.log("sched id status", { id, status });
+
+  const pressFn = () => {
+    status == 0 ? onPress() : () => console.log("disabled");
+  };
+
   return (
     <View style={styles.card}>
       {/* Left colored bar */}
-      <View style={styles.leftBar} />
+      <View
+        style={[
+          styles.leftBar,
+          {
+            backgroundColor: status == 0 ? "#3AC17B" : "#DD3353",
+          },
+        ]}
+      />
 
       {/* Main content */}
-      <TouchableOpacity style={styles.content} onPress={onPress}>
+      <TouchableOpacity style={styles.content} onPress={pressFn}>
         {/* Appointment Date */}
         <View
           style={[
@@ -28,9 +43,12 @@ const ListItem = ({ service, appointment, onPress, onCancel }) => {
             </View>
           </View>
 
-          <TouchableOpacity onPress={onCancel} style={styles.menu}>
-            {/* <FontAwesome name="ellipsis-v" size={20} color="#6E7AA3" /> */}
-            <FontAwesome6 name="times-circle" size={23} color="#DD3353" />
+          <TouchableOpacity onPress={pressFn} style={styles.menu}>
+            {status == 0 ? (
+              <FontAwesome6 name="times-circle" size={23} color="#DD3353" />
+            ) : (
+              <MaterialCommunityIcons name="cancel" size={24} color="#DD3353" />
+            )}
           </TouchableOpacity>
         </View>
 
