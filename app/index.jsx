@@ -14,6 +14,7 @@ import useAuthentication from "../hooks/useAuthentication";
 import FSLoader from "../components/Global/FSLoader";
 import useVerification from "../components/Forms/hooks/useVerification";
 import useNetInfo from "../hooks/useNetInfo";
+import ToastManager from "toastify-react-native";
 const Auth = () => {
   const hasNet = useNetInfo();
   const [showQr, toggleShowQr] = useToggle(false);
@@ -25,6 +26,7 @@ const Auth = () => {
 
   return (
     <SafeView safe={true} style={styles.container}>
+      <ToastManager />
       <AlertNotificationRoot theme="dark" style={{ marginVertical: 20 }}>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
           <Spacer />

@@ -4,6 +4,7 @@ import { Tabs } from "expo-router";
 import { Colors } from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
+import ToastManager from "toastify-react-native/components/ToastManager";
 const DashboardLayout = () => {
   const colorScheme = useColorScheme();
 
@@ -81,6 +82,7 @@ const DashboardLayout = () => {
           }}
         />
       </Tabs>
+      <ToastManager />
     </>
   );
 };

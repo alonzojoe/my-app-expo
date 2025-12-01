@@ -1,9 +1,10 @@
 // ConfirmDialogContent.js
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button as Btnx } from "react-native";
 import Button from "./Button";
 import FSLoader from "../Global/FSLoader";
 import { cancelAppointment } from "../../services/Medical/apiCalls";
+import ToastManager, { Toast } from "toastify-react-native";
 
 export default function ConfirmDialogContent({
   selected,
@@ -13,6 +14,7 @@ export default function ConfirmDialogContent({
 }) {
   console.log("selected", selected);
   const [isLoading, setIsLoading] = useState(false);
+  const position = "top";
 
   const handleCancel = async () => {
     setIsLoading(true);
@@ -20,6 +22,7 @@ export default function ConfirmDialogContent({
     setIsLoading(false);
     refetch();
     onCancel();
+    Toast.success("Appointment cancelled!", position);
   };
 
   return (
@@ -43,6 +46,7 @@ export default function ConfirmDialogContent({
         <Button label="No, Keep it" type="secondary" onPress={onCancel} />
         <Button label="Yes, Cancel" type="primary" onPress={handleCancel} />
       </View>
+      <ToastManager />
     </View>
   );
 }
