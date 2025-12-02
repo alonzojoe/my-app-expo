@@ -4,7 +4,7 @@ import SafeView from "../components/SafeView";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FormInfo from "../components/Appointment/components/FormInfo";
-import OnlineForm from "../components/Appointment/components/OnlineForm";
+import EskedForm from "../components/Appointment/components/EskedForm";
 import * as WebBrowser from "expo-web-browser";
 const OnsiteAppointment = () => {
   const { bottom } = useSafeAreaInsets();
@@ -34,6 +34,7 @@ const OnsiteAppointment = () => {
               </View>
             }
           />
+          <EskedForm />
         </View>
       </ScrollView>
     </SafeView>
