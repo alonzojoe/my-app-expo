@@ -50,7 +50,7 @@ const EskedForm = ({ onSubmit }) => {
 
     console.log("appointment data", appointmentData);
 
-    // onSubmit(appointmentData);
+    onSubmit(appointmentData);
   };
 
   return (
@@ -81,7 +81,7 @@ const EskedForm = ({ onSubmit }) => {
             variant="titleMedium"
             style={{ color: "#001C63", fontWeight: "bold" }}
           >
-            Date of Schedule
+            Preferred Date
           </PaperText>
         </View>
         <Card style={{ marginTop: 10, backgroundColor: "#001C63", padding: 1 }}>

@@ -1,22 +1,32 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState, useRef } from "react";
 import SafeView from "../components/SafeView";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FormInfo from "../components/Appointment/components/FormInfo";
 import EskedForm from "../components/Appointment/components/EskedForm";
+import BottomSheet from "../components/Shared/BottomSheet";
 import * as WebBrowser from "expo-web-browser";
 const OnsiteAppointment = () => {
+  const [appointmentData, setAppointmentData] = useState(null);
+  const bottomSheetRef = useRef(null);
   const { bottom } = useSafeAreaInsets();
-
-  const handleSubmit = async (formData) => {
-    console.log(formData);
-  };
 
   const viewServices = async () => {
     await WebBrowser.openBrowserAsync(
       "https://online.jblmgh.info/portal/#/services"
     );
+  };
+
+  const handleSubmit = async (formData) => {
+    console.log("test");
+    console.log(formData);
+    setAppointmentData(formData);
+    handleProceed();
+  };
+
+  const handleProceed = () => {
+    bottomSheetRef.current?.snapToIndex(2);
   };
 
   return (
@@ -34,9 +44,18 @@ const OnsiteAppointment = () => {
               </View>
             }
           />
-          <EskedForm />
+          <EskedForm onSubmit={handleSubmit} />
         </View>
       </ScrollView>
+      <BottomSheet
+        snapPoints={["30%", "60%", "80%"]}
+        ref={bottomSheetRef}
+        enableScroll={true}
+      >
+        <View>
+          <Text>Hello</Text>
+        </View>
+      </BottomSheet>
     </SafeView>
   );
 };
