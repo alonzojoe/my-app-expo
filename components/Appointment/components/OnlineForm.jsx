@@ -64,7 +64,7 @@ const OnlineForm = ({ onSubmit }) => {
     console.log("appointment data", appointmentData);
 
     if (!selectedSlot || !value) {
-      return Toast.error("Please time of schedule.", "top");
+      return Toast.error("Please select time of schedule.", "top");
     }
 
     console.log("selected date & time slot", selectedSlot);
@@ -155,7 +155,7 @@ const OnlineForm = ({ onSubmit }) => {
           value={value}
           setOpen={() => {
             if (timeslots.length === 0) {
-              Toast.error("Please select a date with slots.", "top");
+              Toast.error("Please select a date with available slots.", "top");
             } else {
               togglePopUp(true);
             }

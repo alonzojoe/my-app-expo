@@ -22,63 +22,36 @@ import dayjs from "dayjs";
 
 const EskedForm = ({ onSubmit }) => {
   const defaultStyles = useDefaultStyles();
-  const { isFetching, availableDates, getTimeSlots, timeslots, isLoading } =
-    useAppointment(212);
 
-  const { holidays, isFetching: isLoadingv2, error } = useEskedAppointment();
+  const { holidays, isFetching, error } = useEskedAppointment();
 
   console.log("holidays");
 
   const [selected, setSelected] = useState();
 
-  const [value, setValue] = useState(null);
-  const [popUp, togglePopUp] = useToggle(false);
-
-  useEffect(() => {
-    if (availableDates?.length > 0) {
-      const firstDay = availableDates[0]?.datesched;
-
-      handleSelectDate(firstDay);
-    }
-  }, [availableDates]);
-
   useEffect(() => {
     console.log("selected date effect", selected);
-    console.log("value", value);
-  }, [selected, value]);
+  }, [selected]);
 
-  const handleChooseTime = (selectedTime) => {
-    setValue(selectedTime);
-    togglePopUp(false);
-  };
-
-  const handleSelectDate = (date) => {
-    setSelected(date);
-    getTimeSlots(date);
-    setValue(null);
+  const handleSelectDate = (selectedDate) => {
+    const formatted = dayjs(selectedDate).format("YYYY-MM-DD");
+    setSelected(formatted);
+    console.log("Selected date:", formatted);
   };
 
   const collateData = () => {
-    const selectedSlot = timeslots.find((s) => s.id === value);
-
     const appointmentData = {
-      serviceId: 212,
-      date: moment(selected).format("YYYY-MM-DD"),
-      time: value,
-      selectedSlot: selectedSlot,
+      selected,
     };
+
+    if (!selected) {
+      return Toast.error("Please select date of schedule.", "top");
+    }
 
     console.log("appointment data", appointmentData);
 
-    if (!selectedSlot || !value) {
-      return Toast.error("Please time of schedule.", "top");
-    }
-
-    console.log("selected date & time slot", selectedSlot);
-    onSubmit(appointmentData);
+    // onSubmit(appointmentData);
   };
-
-  console.log("timeslots", timeslots);
 
   return (
     <>
