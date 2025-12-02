@@ -57,3 +57,35 @@ export const eappointmentForm = z.object({
     .trim()
     .nonempty({ message: "Chief complaints is required*" }),
 });
+
+export const eskedSchema = z.object({
+  phone: z
+    .string({
+      required_error: "Alternate phone number is required*",
+      invalid_type_error: "Alternate phone number is required*",
+    })
+    .trim()
+    .nonempty({ message: "Alternate phone number is required*" })
+    .regex(/^9\d{9}$/, {
+      message: "Phone must start with 9 and be 10 digits*",
+    }),
+
+  consultation: z
+    .string({
+      required_error: "Consultation is required*",
+    })
+    .trim()
+    .nonempty({ message: "Consultation is required*" }),
+  month: z
+    .string({
+      required_error: "Month is required*",
+    })
+    .trim()
+    .nonempty({ message: "Month is required*" }),
+  experience: z
+    .string({
+      required_error: "Experience is required*",
+    })
+    .trim()
+    .nonempty({ message: "Experience is required*" }),
+});
