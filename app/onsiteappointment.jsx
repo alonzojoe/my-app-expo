@@ -7,6 +7,8 @@ import FormInfo from "../components/Appointment/components/FormInfo";
 import EskedForm from "../components/Appointment/components/EskedForm";
 import BottomSheet from "../components/Shared/BottomSheet";
 import * as WebBrowser from "expo-web-browser";
+import EskedFormData from "../components/Appointment/components/EskedFormData";
+
 const OnsiteAppointment = () => {
   const [appointmentData, setAppointmentData] = useState(null);
   const bottomSheetRef = useRef(null);
@@ -53,7 +55,7 @@ const OnsiteAppointment = () => {
         enableScroll={true}
       >
         <View>
-          <Text>Hello</Text>
+          <EskedFormData data={appointmentData} />
         </View>
       </BottomSheet>
     </SafeView>
