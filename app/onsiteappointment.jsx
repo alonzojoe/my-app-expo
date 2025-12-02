@@ -1,10 +1,11 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import SafeView from "../components/SafeView";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import FormInfo from "../components/Appointment/components/FormInfo";
 import OnlineForm from "../components/Appointment/components/OnlineForm";
+import * as WebBrowser from "expo-web-browser";
 const OnsiteAppointment = () => {
   const { bottom } = useSafeAreaInsets();
 
@@ -12,12 +13,26 @@ const OnsiteAppointment = () => {
     console.log(formData);
   };
 
+  const viewServices = async () => {
+    await WebBrowser.openBrowserAsync(
+      "https://online.jblmgh.info/portal/#/services"
+    );
+  };
+
   return (
     <SafeView>
       <ScrollView style={{ marginBottom: bottom }}>
         <View style={styles.container}>
           <FormInfo
-            content={`FACE TO FACE KONSULTA: Please type the reason for your consultation below. Provide clear and detailed information, description of the main concern, details of symptoms, other illnesses.`}
+            content={
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text>FACE TO FACE KONSULTA: </Text>
+
+                <TouchableOpacity onPress={viewServices}>
+                  <Text style={{ color: "blue" }}>SERVICES SCHEDULE</Text>
+                </TouchableOpacity>
+              </View>
+            }
           />
         </View>
       </ScrollView>

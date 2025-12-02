@@ -136,7 +136,7 @@ const Home = () => {
                   titleStyle={{ color: "#fff" }}
                   subtitleStyle={{ color: "#fff" }}
                   title="FACE TO FACE CONSULTATION"
-                  subtitle="(OPD APPOINTMENT)"
+                  subtitle="(eSKED)"
                   left={(props) => (
                     <View
                       style={{
