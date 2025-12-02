@@ -13,65 +13,45 @@ import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
 import WheelPopUp from "./WheelPopUp";
 import useAppointment from "../hooks/useAppointment";
+import useEskedAppointment from "../hooks/useEskedAppointment";
 import useToggle from "../../../hooks/useToggle";
 import FSLoader from "../../../components/Global/FSLoader";
 import moment from "moment";
 import ToastManager, { Toast } from "toastify-react-native";
+import dayjs from "dayjs";
 
-const OnlineForm = ({ onSubmit }) => {
+const EskedForm = ({ onSubmit }) => {
   const defaultStyles = useDefaultStyles();
-  const { isFetching, availableDates, getTimeSlots, timeslots, isLoading } =
-    useAppointment(212);
+
+  const { holidays, isFetching, error } = useEskedAppointment();
+
+  console.log("holidays");
+
   const [selected, setSelected] = useState();
-
-  const [value, setValue] = useState(null);
-  const [popUp, togglePopUp] = useToggle(false);
-
-  useEffect(() => {
-    if (availableDates?.length > 0) {
-      const firstDay = availableDates[0]?.datesched;
-
-      handleSelectDate(firstDay);
-    }
-  }, [availableDates]);
 
   useEffect(() => {
     console.log("selected date effect", selected);
-    console.log("value", value);
-  }, [selected, value]);
+  }, [selected]);
 
-  const handleChooseTime = (selectedTime) => {
-    setValue(selectedTime);
-    togglePopUp(false);
-  };
-
-  const handleSelectDate = (date) => {
-    setSelected(date);
-    getTimeSlots(date);
-    setValue(null);
+  const handleSelectDate = (selectedDate) => {
+    const formatted = dayjs(selectedDate).format("YYYY-MM-DD");
+    setSelected(formatted);
+    console.log("Selected date:", formatted);
   };
 
   const collateData = () => {
-    const selectedSlot = timeslots.find((s) => s.id === value);
-
     const appointmentData = {
-      serviceId: 212,
-      date: moment(selected).format("YYYY-MM-DD"),
-      time: value,
-      selectedSlot: selectedSlot,
+      selected,
     };
+
+    if (!selected) {
+      return Toast.error("Please select date of schedule.", "top");
+    }
 
     console.log("appointment data", appointmentData);
 
-    if (!selectedSlot || !value) {
-      return Toast.error("Please select time of schedule.", "top");
-    }
-
-    console.log("selected date & time slot", selectedSlot);
     onSubmit(appointmentData);
   };
-
-  console.log("timeslots", timeslots);
 
   return (
     <>
@@ -90,7 +70,7 @@ const OnlineForm = ({ onSubmit }) => {
         <DropDownPicker
           style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
           value={212}
-          items={[{ label: "TELEHEALTH", value: 212 }]}
+          items={[{ label: "eSKED - TBD", value: 212 }]}
           disabled={true}
         />
       </>
@@ -101,7 +81,7 @@ const OnlineForm = ({ onSubmit }) => {
             variant="titleMedium"
             style={{ color: "#001C63", fontWeight: "bold" }}
           >
-            Date of Schedule
+            Preferred Date
           </PaperText>
         </View>
         <Card style={{ marginTop: 10, backgroundColor: "#001C63", padding: 1 }}>
@@ -124,45 +104,25 @@ const OnlineForm = ({ onSubmit }) => {
               selected: { backgroundColor: "#001C63" },
               selected_label: { color: "white" },
             }}
-            enabledDates={availableDates?.map((d) => d.datesched || [])}
+            disabledDates={(date) => {
+              const d = dayjs(date).startOf("day");
+              const today = dayjs().startOf("day");
+
+              const isPast = d.isBefore(today, "day");
+
+              const isWeekend = [0, 6].includes(d.day());
+
+              const isHoliday = holidays?.some((h) =>
+                dayjs(h).isSame(d, "day")
+              );
+
+              return isPast || isWeekend || isHoliday;
+            }}
           />
         </Card>
       </>
       <>
-        <View style={styles.activityContainer}>
-          <View style={styles.headerItem}>
-            <AntDesign name="clockcircle" size={24} color="#001C63" />
-            <PaperText
-              variant="titleMedium"
-              style={{ color: "#001C63", fontWeight: "bold" }}
-            >
-              Time of Schedule
-            </PaperText>
-          </View>
-          {isLoading && (
-            <ActivityIndicator
-              style={{ marginTop: 15 }}
-              animating={true}
-              size={22}
-              color="#001C63"
-            />
-          )}
-        </View>
-        <DropDownPicker
-          style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
-          items={timeslots}
-          open={false}
-          value={value}
-          setOpen={() => {
-            if (timeslots.length === 0) {
-              Toast.error("Please select a date with available slots.", "top");
-            } else {
-              togglePopUp(true);
-            }
-          }}
-          setValue={setValue}
-        />
-        <View style={styles.textGroup}>
+        <View style={[styles.textGroup, { marginTop: 10 }]}>
           <Button
             mode="contained"
             onPress={collateData}
@@ -173,17 +133,11 @@ const OnlineForm = ({ onSubmit }) => {
           </Button>
         </View>
       </>
-      <WheelPopUp
-        timeslots={timeslots}
-        show={popUp}
-        onToggle={togglePopUp}
-        onSelect={handleChooseTime}
-      />
     </>
   );
 };
 
-export default OnlineForm;
+export default EskedForm;
 
 const styles = StyleSheet.create({
   container: {
