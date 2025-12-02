@@ -13,15 +13,22 @@ import DropDownPicker from "react-native-dropdown-picker";
 import DateTimePicker, { useDefaultStyles } from "react-native-ui-datepicker";
 import WheelPopUp from "./WheelPopUp";
 import useAppointment from "../hooks/useAppointment";
+import useEskedAppointment from "../hooks/useEskedAppointment";
 import useToggle from "../../../hooks/useToggle";
 import FSLoader from "../../../components/Global/FSLoader";
 import moment from "moment";
 import ToastManager, { Toast } from "toastify-react-native";
+import dayjs from "dayjs";
 
 const EskedForm = ({ onSubmit }) => {
   const defaultStyles = useDefaultStyles();
   const { isFetching, availableDates, getTimeSlots, timeslots, isLoading } =
     useAppointment(212);
+
+  const { holidays, isFetching: isLoadingv2, error } = useEskedAppointment();
+
+  console.log("holidays");
+
   const [selected, setSelected] = useState();
 
   const [value, setValue] = useState(null);
@@ -124,7 +131,20 @@ const EskedForm = ({ onSubmit }) => {
               selected: { backgroundColor: "#001C63" },
               selected_label: { color: "white" },
             }}
-            enabledDates={availableDates?.map((d) => d.datesched || [])}
+            disabledDates={(date) => {
+              const d = dayjs(date).startOf("day");
+              const today = dayjs().startOf("day");
+
+              const isPast = d.isBefore(today, "day");
+
+              const isWeekend = [0, 6].includes(d.day());
+
+              const isHoliday = holidays?.some((h) =>
+                dayjs(h).isSame(d, "day")
+              );
+
+              return isPast || isWeekend || isHoliday;
+            }}
           />
         </Card>
       </>
