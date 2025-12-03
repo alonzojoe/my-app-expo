@@ -42,7 +42,7 @@ const Header = () => {
       <View>
         <TouchableOpacity>
           <FontAwesome
-            onPress={() => router.replace("/profile")}
+            onPress={() => router.replace("/(dashboard)/profile")}
             size={35}
             name={"user-circle"}
             color={"#001C63"}

@@ -71,7 +71,7 @@ const useEskedForm = (data) => {
     console.log("create apt", createApt);
     Toast.success("Appointment added to waitlisted!", "top");
     await new Promise((resolve) => setTimeout(resolve, 500));
-    router.replace("/schedule");
+    router.replace("/(dashboard)/schedule");
 
     reset();
   };

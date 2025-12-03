@@ -83,7 +83,7 @@ const RootLayout = () => {
                   headerLeft: () => (
                     <IconButton
                       icon="arrow-left"
-                      onPress={() => router.replace("/home")}
+                      onPress={() => router.replace("/(dashboard)/home")}
                     />
                   ),
                 }}
@@ -96,7 +96,7 @@ const RootLayout = () => {
                   headerLeft: () => (
                     <IconButton
                       icon="arrow-left"
-                      onPress={() => router.replace("/home")}
+                      onPress={() => router.replace("/(dashboard)/home")}
                     />
                   ),
                 }}
@@ -109,7 +109,7 @@ const RootLayout = () => {
                   headerLeft: () => (
                     <IconButton
                       icon="arrow-left"
-                      onPress={() => router.replace("/profile")}
+                      onPress={() => router.replace("/(dashboard)/profile")}
                     />
                   ),
                 }}
@@ -122,7 +122,7 @@ const RootLayout = () => {
                   headerLeft: () => (
                     <IconButton
                       icon="arrow-left"
-                      onPress={() => router.replace("/home")}
+                      onPress={() => router.replace("/(dashboard)/home")}
                     />
                   ),
                 }}
@@ -135,7 +135,7 @@ const RootLayout = () => {
                   headerLeft: () => (
                     <IconButton
                       icon="arrow-left"
-                      onPress={() => router.replace("/home")}
+                      onPress={() => router.replace("/(dashboard)/home")}
                     />
                   ),
                 }}
@@ -148,7 +148,7 @@ const RootLayout = () => {
                   headerLeft: () => (
                     <IconButton
                       icon="arrow-left"
-                      onPress={() => router.replace("/profile")}
+                      onPress={() => router.replace("/(dashboard)/profile")}
                     />
                   ),
                 }}

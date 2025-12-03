@@ -45,7 +45,7 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
         "Your information has been verified successfully."
       );
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      router.replace("/home");
+      router.replace("/(dashboard)/home");
     } catch (error) {
       console.log(error);
       tm.toast("DANGER", "Something went wrong", "Please try again later.");
@@ -112,7 +112,7 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
         "Your information has been verified successfully. You may now proceed to the next step."
       );
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      router.replace("/home");
+      router.replace("/(dashboard)/home");
     } catch (error) {
       console.log(error);
       tm.toast("DANGER", "Something went wrong", "Please try again later.");

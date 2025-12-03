@@ -9,7 +9,6 @@ const useAuthentication = () => {
   const router = useRouter();
 
   useEffect(() => {
-    setIsLoading(true);
     const checkUser = async () => {
       console.clear();
       try {
@@ -18,16 +17,20 @@ const useAuthentication = () => {
           const userData = JSON.parse(storedUser);
           dispatch(setUser({ user: userData }));
           console.log("Redirecting, user found:", userData);
-          router.replace("/home");
+
+          try {
+            router.replace("/(dashboard)/home");
+          } catch (navError) {
+            console.log("Navigation error:", navError);
+            setIsLoading(false);
+          }
         } else {
           console.log("No user found, staying on login screen");
+          setIsLoading(false);
         }
       } catch (error) {
         console.log("Error checking user authentication:", error);
-      } finally {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
+        setIsLoading(false);
       }
     };
 
@@ -36,5 +39,4 @@ const useAuthentication = () => {
 
   return { isLoading };
 };
-
 export default useAuthentication;

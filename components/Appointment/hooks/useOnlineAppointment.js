@@ -69,7 +69,7 @@ const useOnlineAppointment = (data) => {
     Toast.success("Appointment created successfully!", "top");
     // console.log("create apt", createApt);
     await new Promise((resolve) => setTimeout(resolve, 500));
-    router.replace("/schedule");
+    router.replace("/(dashboard)/schedule");
 
     reset();
   };
