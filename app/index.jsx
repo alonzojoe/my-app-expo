@@ -22,7 +22,7 @@ const Auth = () => {
   const { isLoading } = useAuthentication();
   const { scanQR } = useVerification(toggleShowVerify, toggleShowQr);
 
-  if (isLoading) return <FSLoader />;
+  // if (isLoading) return <FSLoader />;
 
   return (
     <SafeView safe={true} style={styles.container}>
@@ -41,7 +41,7 @@ const Auth = () => {
               variant="titleMedium"
               style={{ color: "#48444E", marginBottom: 10 }}
             >
-              Login your account
+              Login your account {JSON.stringify(isLoading)}
             </PaperText>
           </View>
           <View style={{ marginHorizontal: 40 }}>
