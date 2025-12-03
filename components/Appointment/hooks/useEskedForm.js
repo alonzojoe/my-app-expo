@@ -7,6 +7,7 @@ import { computeAge } from "../../../libs/utils";
 import {
   checkSlots,
   createOnlineAppointment,
+  createEskedAppointment,
 } from "./../../../services/Medical/apiCalls";
 import { Toast } from "toastify-react-native";
 
@@ -66,10 +67,8 @@ const useEskedForm = (data) => {
     };
 
     console.log("updated payload", payload);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    // const createApt = await createOnlineAppointment(payload);
-
-    // console.log("create apt", createApt);
+    const createApt = await createEskedAppointment(payload);
+    console.log("create apt", createApt);
     Toast.success("Appointment added to waitlisted!", "top");
     await new Promise((resolve) => setTimeout(resolve, 500));
     router.replace("/schedule");
