@@ -39,20 +39,8 @@ const useEskedForm = (data) => {
     console.log("data", data);
 
     const { phone, guardian, consultation, month, experience } = formData;
-    // const slotPayload = {
-    //   serviceId: data?.serviceId,
-    //   opdtimeid: data?.selectedSlot?.opdtimeid,
-    //   date: data?.date,
-    // };
 
-    // const res = await checkSlots(slotPayload);
-
-    // console.log("checkSlots", res.length);
-
-    // if (!res || res.length === 0) {
-    //   alert("Please select another slot!");
-    //   return;
-    // }
+    const chiefComplaint = `I would like to have a consultation for ${consultation} This started ${month} At Present. I am experiencing ${experience}.`;
 
     const payload = {
       patientNo: authUser?.PatientNo,
@@ -68,7 +56,7 @@ const useEskedForm = (data) => {
       provinceid: authUser?.Province,
       municipalityid: authUser?.Municipality,
       barangayid: authUser?.BarangayID,
-      chiefc: "",
+      chiefc: chiefComplaint,
       contactNo: authUser?.ContactNo,
       altContactNo: phone,
       dob: authUser?.birthdate,
@@ -78,7 +66,7 @@ const useEskedForm = (data) => {
     };
 
     console.log("updated payload", payload);
-
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     // const createApt = await createOnlineAppointment(payload);
 
     // console.log("create apt", createApt);

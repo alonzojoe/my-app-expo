@@ -11,9 +11,7 @@ import ToastManager from "toastify-react-native/components/ToastManager";
 
 const FormData = ({ data }) => {
   const { Controller, control, handleSubmit, errors, isSubmitting, onSubmit } =
-    useOnlineAppointment();
-
-  console.log("data", data);
+    useOnlineAppointment(data);
 
   return (
     <View style={styles.container}>
