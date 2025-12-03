@@ -59,7 +59,7 @@ const EskedFormData = ({ data }) => {
           name="consultation"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              mode="outlined"
+              mode="flat"
               placeholder=""
               value={value}
               onChangeText={onChange}
@@ -81,26 +81,23 @@ const EskedFormData = ({ data }) => {
         </PaperText>
         <Controller
           control={control}
-          name="phone"
+          name="month"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               mode="flat"
-              type="numeric"
               ewq
               placeholder=""
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
-              keyboardType="phone-pad"
               style={styles.input}
-              error={!!errors.phone}
-              maxLength={10}
+              error={!!errors.month}
             />
           )}
         />
-        {/* {errors.phone && ( */}
+        {/* {errors.month && ( */}
         <Text style={styles.errorText}>
-          {errors.phone ? errors.phone.message : ""}
+          {errors.month ? errors.month.message : ""}
         </Text>
         {/* )} */}
 
@@ -110,26 +107,22 @@ const EskedFormData = ({ data }) => {
         </PaperText>
         <Controller
           control={control}
-          name="phone"
+          name="experience"
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               mode="flat"
-              type="numeric"
-              ewq
               placeholder=""
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
-              keyboardType="phone-pad"
               style={styles.input}
-              error={!!errors.phone}
-              maxLength={10}
+              error={!!errors.experience}
             />
           )}
         />
         {/* {errors.phone && ( */}
         <Text style={styles.errorText}>
-          {errors.phone ? errors.phone.message : ""}
+          {errors.experience ? errors.experience.message : ""}
         </Text>
         {/* )} */}
       </View>
@@ -161,7 +154,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    paddingBottom: 100,
+    paddingBottom: 150,
     gap: 5,
   },
   inputContainer: {
@@ -196,6 +189,6 @@ const styles = StyleSheet.create({
     // textAlign: "center",
     color: "#B3271C",
     fontSize: 12,
-    marginTop: 2,
+    marginTop: 3,
   },
 });
