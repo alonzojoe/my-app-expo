@@ -70,10 +70,11 @@ const useEskedForm = (data) => {
     // const createApt = await createOnlineAppointment(payload);
 
     // console.log("create apt", createApt);
-    // Toast.success("Appointment created successfully!", "top");
-    // router.replace("/schedule");
+    Toast.success("Appointment added to waitlisted!", "top");
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    router.replace("/schedule");
 
-    // reset();
+    reset();
   };
 
   return {

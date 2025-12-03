@@ -23,7 +23,7 @@ const EskedFormData = ({ data }) => {
 
   console.log("data", data);
 
-  const age = computeAge(authUser.birthdate);
+  const age = computeAge(authUser?.birthdate);
 
   return (
     <View style={styles.container}>
@@ -60,7 +60,7 @@ const EskedFormData = ({ data }) => {
         </Text>
         {/* )} */}
 
-        {age > 18 && (
+        {age < 18 && (
           <>
             <PaperText variant="titleSmall" style={styles.labelText}>
               Guardian
