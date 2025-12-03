@@ -51,6 +51,10 @@
         "projectId": "c99643bb-4b0a-4397-863f-eb2d7e98a738"
       }
     },
-    "owner": "alonzojoes-organization"
+    "owner": "alonzojoes-organization",
+    "plugins": [
+      "expo-font",
+      "expo-router"
+    ]
   }
 }
