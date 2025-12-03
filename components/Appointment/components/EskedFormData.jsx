@@ -8,12 +8,22 @@ import {
 import ContentTitle from "./../../Transactions/ContentTitle";
 import ToastManager from "toastify-react-native/components/ToastManager";
 import useEskedForm from "../hooks/useEskedForm";
+import { computeAge } from "../../../libs/utils";
 
 const EskedFormData = ({ data }) => {
-  const { Controller, control, handleSubmit, errors, isSubmitting, onSubmit } =
-    useEskedForm();
+  const {
+    Controller,
+    control,
+    handleSubmit,
+    errors,
+    isSubmitting,
+    onSubmit,
+    authUser,
+  } = useEskedForm();
 
   console.log("data", data);
+
+  const age = computeAge(authUser.birthdate);
 
   return (
     <View style={styles.container}>
@@ -23,7 +33,7 @@ const EskedFormData = ({ data }) => {
       <View style={styles.inputContainer}>
         {/* Alternate Phone Number */}
         <PaperText variant="titleSmall" style={styles.labelText}>
-          Alternate Phone Number
+          Alternate Phone Number {JSON.stringify(age)}
         </PaperText>
         <Controller
           control={control}
@@ -50,34 +60,29 @@ const EskedFormData = ({ data }) => {
         </Text>
         {/* )} */}
 
-        {/* Alternate Phone Number */}
-        <PaperText variant="titleSmall" style={styles.labelText}>
-          Guardian
-        </PaperText>
-        <Controller
-          control={control}
-          name="phone"
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              mode="outlined"
-              type="numeric"
-              ewq
-              placeholder="Enter alternate phone number"
-              value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
-              keyboardType="phone-pad"
-              style={styles.input}
-              error={!!errors.phone}
-              maxLength={10}
+        {age > 18 && (
+          <>
+            <PaperText variant="titleSmall" style={styles.labelText}>
+              Guardian
+            </PaperText>
+            <Controller
+              control={control}
+              name="guardian"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  mode="outlined"
+                  ewq
+                  placeholder="Enter guardian name"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  style={styles.input}
+                />
+              )}
             />
-          )}
-        />
-        {/* {errors.phone && ( */}
-        <Text style={styles.errorText}>
-          {errors.phone ? errors.phone.message : ""}
-        </Text>
-        {/* )} */}
+            <Text style={styles.errorText}>{""}</Text>
+          </>
+        )}
 
         {/* Consulatation */}
         <PaperText variant="titleSmall" style={styles.labelText}>

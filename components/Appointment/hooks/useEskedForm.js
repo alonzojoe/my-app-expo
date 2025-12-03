@@ -16,6 +16,7 @@ const useEskedForm = () => {
 
   const defaultValues = {
     phone: "",
+    guardian: "",
     consultation: "",
     month: "",
     experience: "",

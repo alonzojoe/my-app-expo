@@ -69,7 +69,7 @@ export const eskedSchema = z.object({
     .regex(/^9\d{9}$/, {
       message: "Phone must start with 9 and be 10 digits*",
     }),
-
+  guardian: z.string(),
   consultation: z
     .string({
       required_error: "Consultation is required*",
