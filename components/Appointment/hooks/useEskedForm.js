@@ -3,19 +3,24 @@ import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { eskedSchema } from "../../../schema/schema";
+import { computeAge } from "../../../libs/utils";
 import {
   checkSlots,
   createOnlineAppointment,
+  createEskedAppointment,
 } from "./../../../services/Medical/apiCalls";
 import { Toast } from "toastify-react-native";
 
-const useEskedForm = () => {
+const useEskedForm = (data) => {
   const { authUser } = useSelector((state) => state.auth);
   const router = useRouter();
 
   const defaultValues = {
     phone: "",
-    complaints: "",
+    guardian: "",
+    consultation: "",
+    month: "",
+    experience: "",
   };
 
   const {
@@ -30,44 +35,43 @@ const useEskedForm = () => {
 
   const onSubmit = async (formData) => {
     console.log("auth", authUser);
-    console.log("selected slot", data);
     console.log("Form Data:", formData);
+    console.log("age", computeAge(authUser.birthdate));
+    console.log("data", data);
 
-    const slotPayload = {
-      serviceId: data?.serviceId,
-      opdtimeid: data?.selectedSlot?.opdtimeid,
-      date: data?.date,
-    };
+    const { phone, guardian, consultation, month, experience } = formData;
 
-    const res = await checkSlots(slotPayload);
-
-    console.log("checkSlots", res.length);
-
-    if (!res || res.length === 0) {
-      alert("Please select another slot!");
-      return;
-    }
+    const chiefComplaint = `I would like to have a consultation for ${consultation} This started ${month} At Present. I am experiencing ${experience}.`;
 
     const payload = {
-      ...authUser,
-      Barangay: authUser?.BarangayID,
-      BirthDate: authUser?.birthdate,
-      OldNew: 0,
-      ChiefComplaint: formData?.complaints?.toUpperCase(),
-      AltContactNo: formData?.phone,
-      SelectedTime: data?.selectedSlot,
-      SelectedDate: data?.selectedSlot?.date,
-      SelectedDateId: data?.selectedSlot?.opddateslotsid,
-      ServiceType: data?.serviceId,
+      patientNo: authUser?.PatientNo,
+      lastName: authUser?.LastName,
+      firstName: authUser?.FirstName,
+      middleName: authUser?.MiddleName,
+      suffix: "",
+      gender: authUser?.Gender,
+      civilStatus: authUser?.CivilStatus,
+      nationality: authUser?.Nationality,
+      pob: authUser?.PlaceofBirth,
+      street: authUser?.Street,
+      provinceid: authUser?.Province,
+      municipalityid: authUser?.Municipality,
+      barangayid: authUser?.BarangayID,
+      chiefc: chiefComplaint,
+      contactNo: authUser?.ContactNo,
+      altContactNo: phone,
+      dob: authUser?.birthdate,
+      guardianname: guardian,
+      preferredDate: data?.selected,
+      referringDoctor: null,
     };
 
     console.log("updated payload", payload);
-
-    const createApt = await createOnlineAppointment(payload);
-
+    const createApt = await createEskedAppointment(payload);
     console.log("create apt", createApt);
-    Toast.success("Appointment created successfully!", "top");
-    router.replace("/schedule");
+    Toast.success("Appointment added to waitlisted!", "top");
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    router.replace("/(dashboard)/schedule");
 
     reset();
   };
@@ -80,6 +84,7 @@ const useEskedForm = () => {
     isSubmitting,
     reset,
     onSubmit,
+    authUser,
   };
 };
 

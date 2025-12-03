@@ -41,7 +41,7 @@ const Auth = () => {
               variant="titleMedium"
               style={{ color: "#48444E", marginBottom: 10 }}
             >
-              Login your account
+              Login your account {JSON.stringify(isLoading)}
             </PaperText>
           </View>
           <View style={{ marginHorizontal: 40 }}>

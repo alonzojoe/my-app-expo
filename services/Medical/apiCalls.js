@@ -187,3 +187,24 @@ export const cancelAppointment = async (appointmentId) => {
     console.error("Please check your connection.");
   }
 };
+
+export const createEskedAppointment = async (payload) => {
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const res = await apiopd.post(`/insertappointment`, payload, {
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    console.log("create esked response", res.data);
+    return res.data;
+  } catch (error) {
+    clearTimeout(timeout);
+    console.error("Please check your connection.");
+
+    return [];
+  }
+};

@@ -78,3 +78,13 @@ export const extractBeforeDash = (str) => {
   if (!str) return "";
   return str.split("-")[0].trim();
 };
+
+export const computeAge = (dateString) => {
+  const birthDate = moment(dateString, "YYYY-MM-DD", true);
+
+  if (!birthDate.isValid()) {
+    throw new Error('Invalid date format. Expected format: "YYYY-MM-DD"');
+  }
+
+  return moment().diff(birthDate, "years");
+};

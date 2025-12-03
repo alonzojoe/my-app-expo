@@ -9,7 +9,7 @@ import {
 } from "./../../../services/Medical/apiCalls";
 import { Toast } from "toastify-react-native";
 
-const useOnlineAppointment = () => {
+const useOnlineAppointment = (data) => {
   const { authUser } = useSelector((state) => state.auth);
   const router = useRouter();
 
@@ -63,11 +63,13 @@ const useOnlineAppointment = () => {
 
     console.log("updated payload", payload);
 
-    const createApt = await createOnlineAppointment(payload);
+    // await new Promise((resolve) => setTimeout(resolve, 500));
 
-    console.log("create apt", createApt);
+    const createApt = await createOnlineAppointment(payload);
     Toast.success("Appointment created successfully!", "top");
-    router.replace("/schedule");
+    // console.log("create apt", createApt);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    router.replace("/(dashboard)/schedule");
 
     reset();
   };

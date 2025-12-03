@@ -30,7 +30,7 @@ export const MENUS = [
     name: "Appointment",
     Icon: Appointment,
     fn: () => {
-      router.replace("/schedule");
+      router.replace("/(dashboard)/schedule");
     },
   },
   {
@@ -38,7 +38,7 @@ export const MENUS = [
     name: "Map",
     Icon: MapImg,
     fn: () => {
-      router.replace("/map");
+      router.replace("/(dashboard)/map");
     },
   },
   {
@@ -54,7 +54,7 @@ export const MENUS = [
     name: "Profile",
     Icon: Profile,
     fn: () => {
-      router.replace("/profile");
+      router.replace("/(dashboard)/profile");
     },
   },
 ];
