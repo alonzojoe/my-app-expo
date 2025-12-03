@@ -19,7 +19,7 @@ const EskedFormData = ({ data }) => {
     isSubmitting,
     onSubmit,
     authUser,
-  } = useEskedForm();
+  } = useEskedForm(data);
 
   console.log("data", data);
 
@@ -33,7 +33,7 @@ const EskedFormData = ({ data }) => {
       <View style={styles.inputContainer}>
         {/* Alternate Phone Number */}
         <PaperText variant="titleSmall" style={styles.labelText}>
-          Alternate Phone Number {JSON.stringify(age)}
+          Alternate Phone Number
         </PaperText>
         <Controller
           control={control}
