@@ -13,6 +13,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#001C63"
     },
+    "expo": {
+      "updates": {
+        "enabled": true,
+        "fallbackToCacheTimeout": 0
+      }
+    },
     "ios": {
       "bundleIdentifier": "com.myapp",
       "supportsTablet": true,
