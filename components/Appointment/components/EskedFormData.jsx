@@ -50,6 +50,35 @@ const EskedFormData = ({ data }) => {
         </Text>
         {/* )} */}
 
+        {/* Alternate Phone Number */}
+        <PaperText variant="titleSmall" style={styles.labelText}>
+          Guardian
+        </PaperText>
+        <Controller
+          control={control}
+          name="phone"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              mode="outlined"
+              type="numeric"
+              ewq
+              placeholder="Enter alternate phone number"
+              value={value}
+              onChangeText={onChange}
+              onBlur={onBlur}
+              keyboardType="phone-pad"
+              style={styles.input}
+              error={!!errors.phone}
+              maxLength={10}
+            />
+          )}
+        />
+        {/* {errors.phone && ( */}
+        <Text style={styles.errorText}>
+          {errors.phone ? errors.phone.message : ""}
+        </Text>
+        {/* )} */}
+
         {/* Consulatation */}
         <PaperText variant="titleSmall" style={styles.labelText}>
           I would like to have a consulatation for

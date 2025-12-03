@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { eskedSchema } from "../../../schema/schema";
+import { computeAge } from "../../../libs/utils";
 import {
   checkSlots,
   createOnlineAppointment,
@@ -33,7 +34,7 @@ const useEskedForm = () => {
   const onSubmit = async (formData) => {
     console.log("auth", authUser);
     console.log("Form Data:", formData);
-
+    console.log("age", computeAge(authUser.birthdate));
     // const slotPayload = {
     //   serviceId: data?.serviceId,
     //   opdtimeid: data?.selectedSlot?.opdtimeid,
@@ -81,6 +82,7 @@ const useEskedForm = () => {
     isSubmitting,
     reset,
     onSubmit,
+    authUser,
   };
 };
 
