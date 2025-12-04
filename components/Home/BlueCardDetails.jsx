@@ -20,6 +20,7 @@ const BlueCardDetails = ({
   captureWidth = 353.45,
   captureHeight = 221.09,
   renderAsImage = false,
+  className = "",
 }) => {
   const viewRef = useRef();
   const [capturedImage, setCapturedImage] = useState(null);
@@ -105,12 +106,15 @@ const BlueCardDetails = ({
         >
           <Image
             source={{ uri: capturedImage }}
-            style={{
-              width: captureWidth,
-              height: captureHeight,
-              borderRadius: 12,
-              alignSelf: "center",
-            }}
+            style={[
+              {
+                width: captureWidth,
+                height: captureHeight,
+                borderRadius: 12,
+                alignSelf: "center",
+              },
+              className,
+            ]}
             resizeMode="contain"
           />
         </TouchableOpacity>

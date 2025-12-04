@@ -42,20 +42,22 @@ const Home = () => {
           <Image source={BlueF} style={styles.cardImage} />
         </View>
       </View> */}
-      <View style={{ width: "100%", aspectRatio: 353.45 / 221.09 }}>
+      <View style={[styles.blueCardContainer, { width: "94%" }]}>
         <BlueCardDetails
-          captureWidth={353.45}
-          captureHeight={221.09}
+          className={styles.cardImage}
+          captureWidth={355}
+          captureHeight={222.09}
           renderAsImage={true}
         />
       </View>
 
-      <Subtitle label={`Services`} style={{ marginVertical: 15 }} />
+      <Subtitle label={`Services`} style={{ marginVertical: 10 }} />
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: 18,
           flexGrow: 1,
           paddingBottom: 5 + bottom,
+          paddingTop: 5,
         }}
       >
         <View style={[styles.serviceContainer]}>
@@ -260,5 +262,23 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 5,
     marginHorizontal: 20,
+  },
+  blueCardContainer: {
+    width: "95%",
+    aspectRatio: 1.6,
+    borderRadius: 15,
+    alignSelf: "center",
+    borderRadius: 12,
+    overflow: "hidden",
+    // elevation: 1,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 4,
+  },
+  cardImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
 });
