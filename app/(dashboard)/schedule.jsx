@@ -6,7 +6,7 @@ import {
   RefreshControl,
   ScrollView,
 } from "react-native";
-import React, { useState, useRef, useMemo } from "react";
+import React, { useState, useRef, useMemo, useCallback } from "react";
 import SafeView from "../../components/SafeView";
 import Header from "../../components/Header";
 import ListItem from "../../components/Appointment/ListItem";
@@ -29,6 +29,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAppointments } from "../../services/Medical/apiCalls";
 import { useSelector } from "react-redux";
 import ErrorWithRefetch from "../../components/Global/ErrorWithRefetch";
+import { useFocusEffect } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { extractBeforeDash } from "../../libs/utils";
 import moment from "moment";
@@ -50,8 +51,15 @@ const Schedule = () => {
   } = useQuery({
     queryKey: ["appointments", PatientNo],
     queryFn: () => getAppointments(PatientNo),
+    refetchOnMount: "always",
   });
 
+  useFocusEffect(
+    useCallback(() => {
+      handleRefresh();
+      console.log("effect");
+    }, [refetch])
+  );
   console.log("appointemnts", APPOINTMENTS);
 
   const handleCancel = (item) => {

@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useCallback } from "react";
 import {
   Searchbar,
   Portal,
@@ -27,6 +27,7 @@ import { formatDate } from "../libs/utils";
 import ErrorWithRefetch from "../components/Global/ErrorWithRefetch";
 import useMedicalrecords from "./../hooks/features/medical-records/useMedicalrecords";
 import BottomSheet from "../components/Shared/BottomSheet";
+import { useFocusEffect } from "expo-router";
 
 const Medical = () => {
   const { bottom } = useSafeAreaInsets;
@@ -43,6 +44,13 @@ const Medical = () => {
   const bottomSheetRef = useRef(null);
   const [refreshing, setRefreshing] = useState(false);
   const [show, toggleShow] = useToggle(false);
+
+  useFocusEffect(
+    useCallback(() => {
+      handleRefresh();
+      console.log("effect");
+    }, [refetch])
+  );
 
   const SearchHeader = useMemo(() => {
     return (
