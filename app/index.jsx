@@ -27,6 +27,7 @@ const Auth = () => {
   return (
     <SafeView safe={true} style={styles.container}>
       <ToastManager />
+
       <AlertNotificationRoot theme="dark" style={{ marginVertical: 20 }}>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
           <Spacer />
