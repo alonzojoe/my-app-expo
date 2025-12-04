@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import React, { useState, useMemo } from "react";
 import SafeView from "../components/SafeView";
 import {
@@ -37,7 +37,15 @@ const Faqs = () => {
 
   const { bottom } = useSafeAreaInsets();
 
-  const viewItem = () => toggleShow(true);
+  const viewItem = () => {
+    Alert.alert("Information", "This feature is coming soon.", [
+      {
+        text: "OK",
+        onPress: () => console.log("OK Pressed"),
+      },
+    ]);
+    // toggleShow(true);
+  };
 
   return (
     <SafeView>

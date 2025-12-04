@@ -10,7 +10,7 @@ export const PROFILEITEMS = [
     color: "#004C82",
     onPress: () => {
       console.log("My Account clicked");
-      Alert.alert("Information", "This feature is coming soon", [
+      Alert.alert("Information", "This feature is coming soon.", [
         {
           text: "OK",
           onPress: () => console.log("OK Pressed"),
@@ -37,7 +37,7 @@ export const PROFILEITEMS = [
     color: "#004C82",
     onPress: () => {
       console.log("Settings clicked");
-      Alert.alert("Information", "This feature is coming soon", [
+      Alert.alert("Information", "This feature is coming soon.", [
         {
           text: "OK",
           onPress: () => console.log("OK Pressed"),
