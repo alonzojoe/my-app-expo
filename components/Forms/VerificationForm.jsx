@@ -127,7 +127,7 @@ const VerificationForm = () => {
         name="lastname"
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            value={value.toUpperCase()}
+            value={value}
             onChangeText={onChange}
             onBlur={onBlur}
             // label="Last Name"
