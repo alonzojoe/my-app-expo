@@ -6,7 +6,7 @@ import { Stack } from "expo-router";
 const AuthLayout = () => {
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
       <Stack
         screenOptions={{
           headerShown: true,

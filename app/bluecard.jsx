@@ -18,17 +18,20 @@ const BlueCard = () => {
             <Image source={BlueF} style={styles.cardImage} />
           </View> */}
           {/* <View style={styles.cardContainer}> */}
-          <BlueCardDetails
-            captureWidth={353.45}
-            captureHeight={221.09}
-            renderAsImage={true}
-          />
+          <View style={styles.cardContainer2}>
+            <BlueCardDetails
+              captureWidth={353.45}
+              captureHeight={221.09}
+              renderAsImage={true}
+              className={styles.cardImage}
+            />
+          </View>
           {/* </View> */}
           <Spacer height={20} />
           <View style={styles.cardContainer}>
             <Image
-              height={221.09}
-              width={353.45}
+              height={353.45}
+              width={221.09}
               source={BlueB}
               style={styles.cardImage}
             />
@@ -58,6 +61,14 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
+  },
+  cardContainer2: {
+    width: "98%",
+    aspectRatio: 1.6,
+    borderRadius: 15,
+    alignSelf: "center",
+    borderRadius: 12,
+    overflow: "hidden",
   },
   cardImage: {
     width: "100%",

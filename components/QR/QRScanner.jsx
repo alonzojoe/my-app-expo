@@ -17,20 +17,23 @@ const QRScanner = ({ onScan, onClose }) => {
   const [facing, setFacing] = useState(CameraType?.back);
   const [permission, requestPermission] = useCameraPermissions();
 
-  const handleBarCodeScanned = ({ data }) => {
+  const handleBarCodeScanned = async ({ data }) => {
     setScanned(true);
     setScannedData(data);
     onScan(data);
-    Alert.alert("QR Code Scanned: ", data, [
-      {
-        text: "OK",
-        onPress: async () => {
-          setScanned(false);
-          await onScan(data);
-          // onClose();
-        },
-      },
-    ]);
+    // Alert.alert("QR Code Scanned: ", data, [
+    //   {
+    //     text: "OK",
+    //     onPress: async () => {
+    //       setScanned(false);
+    //       await onScan(data);
+    //       // onClose();
+    //     },
+    //   },
+    // ]);
+
+    setScanned(false);
+    await onScan(data);
   };
 
   const toggleCameraFacing = () => {
@@ -157,7 +160,7 @@ const styles = StyleSheet.create({
   },
   scanText: {
     color: "white",
-    marginTop: 20,
+    marginVertical: 10,
     fontSize: 16,
   },
   resultBox: {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import React, { useState, useMemo } from "react";
 import SafeView from "../components/SafeView";
 import {
@@ -16,11 +16,13 @@ import { FAQS } from "../constants/global";
 import FaqItem from "../components/Faq/FaqItem";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import useBackHandler from "../components/Appointment/hooks/useBackHandler";
 
 import useDebounce from "./../hooks/useDebounce";
 import useToggle from "../hooks/useToggle";
 
 const Faqs = () => {
+  useBackHandler({ routePath: "/(dashboard)/home" });
   const [searchQuery, setSearchQuery] = useState("");
   const debounceValue = useDebounce(searchQuery);
   const [show, toggleShow] = useToggle(false);
@@ -35,7 +37,15 @@ const Faqs = () => {
 
   const { bottom } = useSafeAreaInsets();
 
-  const viewItem = () => toggleShow(true);
+  const viewItem = () => {
+    Alert.alert("Information", "This feature is coming soon.", [
+      {
+        text: "OK",
+        onPress: () => console.log("OK Pressed"),
+      },
+    ]);
+    // toggleShow(true);
+  };
 
   return (
     <SafeView>

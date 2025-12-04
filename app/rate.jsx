@@ -9,7 +9,6 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 const OnlineAppointment = () => {
   const { bottom } = useSafeAreaInsets();
   const [ratings, setRatings] = useState(5);
-  const color = Colors["light"];
 
   return (
     <SafeView>

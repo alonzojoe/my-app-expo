@@ -1,4 +1,5 @@
 import { useRouter } from "expo-router";
+import { Alert } from "react-native";
 
 const router = useRouter();
 
@@ -9,6 +10,12 @@ export const PROFILEITEMS = [
     color: "#004C82",
     onPress: () => {
       console.log("My Account clicked");
+      Alert.alert("Information", "This feature is coming soon.", [
+        {
+          text: "OK",
+          onPress: () => console.log("OK Pressed"),
+        },
+      ]);
     },
     Icon: "FontAwesome5",
     iconName: "user-circle-o",
@@ -30,6 +37,12 @@ export const PROFILEITEMS = [
     color: "#004C82",
     onPress: () => {
       console.log("Settings clicked");
+      Alert.alert("Information", "This feature is coming soon.", [
+        {
+          text: "OK",
+          onPress: () => console.log("OK Pressed"),
+        },
+      ]);
     },
     Icon: "FontAwesome",
     iconName: "cog",

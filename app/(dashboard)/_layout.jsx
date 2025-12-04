@@ -8,11 +8,11 @@ import ToastManager from "toastify-react-native/components/ToastManager";
 const DashboardLayout = () => {
   const colorScheme = useColorScheme();
 
-  const theme = Colors[colorScheme] ?? Colors.light;
+  const theme = Colors["light"];
 
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
       <Tabs
         screenOptions={{
           title: "",

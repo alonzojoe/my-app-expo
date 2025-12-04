@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const SafeView = ({ style, safe = false, ...props }) => {
   const colorScheme = useColorScheme;
-  const theme = Colors[colorScheme] ?? Colors.light;
+  const theme = Colors.light;
 
   if (!safe)
     return (

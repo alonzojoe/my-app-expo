@@ -3,11 +3,9 @@ import moment from "moment";
 import { useRouter } from "expo-router";
 import { useDispatch } from "react-redux";
 import { setUser, setScanQR } from "../../../store/slices/auth-slice";
-import { useState } from "react";
-import { ToastMessage } from "../../../libs/utils";
 import { storeUser } from "../../../libs/utils";
 import { useSelector } from "react-redux";
-const tm = new ToastMessage();
+import { Toast } from "toastify-react-native";
 
 const useVerification = (toggleShowVerify, toggleShowQr) => {
   const router = useRouter();
@@ -15,7 +13,7 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
   const { scannedQR } = useSelector((state) => state.auth);
 
   const handleVerify = async (formData) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     try {
       const res = await api.get("/verify/v2", {
@@ -28,27 +26,19 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
       });
       console.log("api res :", res.data);
       if (res.data.data.length === 0) {
-        tm.toast(
-          "DANGER",
-          "Verification Failed",
-          "We couldn't verify your record. Please double-check your information."
-        );
+        Toast.error("Login Failed.", "top");
 
         return;
       }
       storeUser(res.data.data);
       dispatch(setUser({ user: res.data.data }));
       console.log("user", res.data.data);
-      tm.toast(
-        "SUCCESS",
-        "Verification Successful",
-        "Your information has been verified successfully."
-      );
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      Toast.success("Logged in successfully.", "top");
+      await new Promise((resolve) => setTimeout(resolve, 500));
       router.replace("/(dashboard)/home");
     } catch (error) {
       console.log(error);
-      tm.toast("DANGER", "Something went wrong", "Please try again later.");
+      Toast.error("Login Failed.", "top");
     }
   };
 
@@ -62,26 +52,18 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
       });
       console.log("api res :", res.data);
       if (res.data.data.length === 0) {
-        tm.toast(
-          "DANGER",
-          "Verification Failed",
-          "We couldn't verify your QR Code."
-        );
+        Toast.error("We couldn't verify your QR Code.", "top");
         return;
       }
       console.log("qred", res.data.data[0]);
-      tm.toast(
-        "SUCCESS",
-        "Verification Successful",
-        "QR Code has been verified successfully. You may now proceed to verification."
-      );
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      Toast.success("QR Code verified successfully.", "top");
+      await new Promise((resolve) => setTimeout(resolve, 500));
       toggleShowQr(false);
       toggleShowVerify(true);
       dispatch(setScanQR({ qr: pn }));
     } catch (error) {
       console.log(error);
-      tm.toast("DANGER", "Something went wrong", "Please try again later.");
+      Toast.error("We couldn't verify your QR Code.", "top");
     }
   };
 
@@ -95,27 +77,19 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
       });
       console.log("api res :", res.data);
       if (res.data.data.length === 0) {
-        tm.toast(
-          "DANGER",
-          "Verification Failed",
-          "We couldn't verify your record. Please double-check your birthdate."
-        );
+        Toast.error("Verification Failed.", "top");
 
         return;
       }
       storeUser(res.data.data);
       dispatch(setUser({ user: res.data.data }));
       console.log("user", res.data.data);
-      tm.toast(
-        "SUCCESS",
-        "Verification Successful",
-        "Your information has been verified successfully. You may now proceed to the next step."
-      );
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      Toast.success("Logged in successfully.", "top");
+      await new Promise((resolve) => setTimeout(resolve, 500));
       router.replace("/(dashboard)/home");
     } catch (error) {
       console.log(error);
-      tm.toast("DANGER", "Something went wrong", "Please try again later.");
+      Toast.error("Verification Failed.", "top");
     }
   };
 

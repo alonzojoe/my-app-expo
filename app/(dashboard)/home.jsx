@@ -18,8 +18,10 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import BlueCardDetails from "../../components/Home/BlueCardDetails";
+import useBackHandler from "../../components/Appointment/hooks/useBackHandler";
 
 const Home = () => {
+  useBackHandler({ exitOnBack: true });
   const [show, toggleShow] = useToggle(false);
   const showConsultation = () => {
     toggleShow(true);
@@ -40,20 +42,22 @@ const Home = () => {
           <Image source={BlueF} style={styles.cardImage} />
         </View>
       </View> */}
-      <TouchableOpacity onPress={() => router.replace("/bluecard")}>
+      <View style={[styles.blueCardContainer, { width: "94%" }]}>
         <BlueCardDetails
-          captureWidth={353.45}
-          captureHeight={221.09}
+          className={styles.cardImage}
+          captureWidth={355}
+          captureHeight={222.09}
           renderAsImage={true}
         />
-      </TouchableOpacity>
+      </View>
 
-      <Subtitle label={`Services`} style={{ marginVertical: 15 }} />
+      <Subtitle label={`Services`} style={{ marginVertical: 10 }} />
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: 18,
           flexGrow: 1,
           paddingBottom: 5 + bottom,
+          paddingTop: 5,
         }}
       >
         <View style={[styles.serviceContainer]}>
@@ -258,5 +262,23 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 5,
     marginHorizontal: 20,
+  },
+  blueCardContainer: {
+    width: "95%",
+    aspectRatio: 1.6,
+    borderRadius: 15,
+    alignSelf: "center",
+    borderRadius: 12,
+    overflow: "hidden",
+    // elevation: 1,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.1,
+    // shadowRadius: 4,
+  },
+  cardImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
   },
 });

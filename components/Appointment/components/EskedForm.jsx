@@ -53,6 +53,19 @@ const EskedForm = ({ onSubmit }) => {
     onSubmit(appointmentData);
   };
 
+  const forcedLightStyles = {
+    backgroundColor: "#FFFFFF",
+    textColor: "#000000",
+    headerTextColor: "#000000",
+    monthTitleColor: "#000000",
+    dayLabelColor: "#000000",
+
+    selectedBackgroundColor: "#001C63",
+    selectedTextColor: "#FFFFFF",
+
+    todayBorderColor: "#001C63",
+  };
+
   return (
     <>
       <>
@@ -88,10 +101,10 @@ const EskedForm = ({ onSubmit }) => {
           <DateTimePicker
             style={{
               marginTop: 0,
-              backgroundColor: "#FFF",
+              backgroundColor: forcedLightStyles.backgroundColor,
               borderRadius: 10,
-              borderColor: "#001C63",
-              border: 1,
+              borderColor: forcedLightStyles.todayBorderColor,
+              borderWidth: 0.5,
             }}
             mode="single"
             date={selected}
@@ -100,23 +113,65 @@ const EskedForm = ({ onSubmit }) => {
             }}
             styles={{
               ...defaultStyles,
-              today: { borderColor: "#001C63", borderWidth: 1 },
-              selected: { backgroundColor: "#001C63" },
-              selected_label: { color: "white" },
-            }}
-            disabledDates={(date) => {
-              const d = dayjs(date).startOf("day");
-              const today = dayjs().startOf("day");
 
-              const isPast = d.isBefore(today, "day");
+              text: { color: forcedLightStyles.textColor },
+              month: { color: forcedLightStyles.monthTitleColor },
+              year: { color: forcedLightStyles.monthTitleColor },
+              weekday: { color: forcedLightStyles.dayLabelColor },
 
-              const isWeekend = [0, 6].includes(d.day());
+              today: {
+                borderColor: forcedLightStyles.todayBorderColor,
+                borderWidth: 1,
+              },
 
-              const isHoliday = holidays?.some((h) =>
-                dayjs(h).isSame(d, "day")
-              );
+              selected: {
+                backgroundColor: forcedLightStyles.selectedBackgroundColor,
+              },
+              selected_label: {
+                color: forcedLightStyles.selectedTextColor,
+              },
+              month_item: {
+                backgroundColor: forcedLightStyles.backgroundColor,
+                borderRadius: 8,
+                borderWidth: 0.5,
+                borderColor: forcedLightStyles.todayBorderColor,
+              },
 
-              return isPast || isWeekend || isHoliday;
+              month_item_label: {
+                color: forcedLightStyles.textColor,
+              },
+
+              selected_month: {
+                backgroundColor: forcedLightStyles.selectedBackgroundColor,
+                borderRadius: 8,
+              },
+
+              selected_month_label: {
+                color: forcedLightStyles.selectedTextColor,
+                fontWeight: "bold",
+              },
+
+              year_item: {
+                backgroundColor: forcedLightStyles.backgroundColor,
+                borderRadius: 8,
+                borderWidth: 0.5,
+                borderColor: forcedLightStyles.todayBorderColor,
+                paddingVertical: 6,
+              },
+
+              year_item_label: {
+                color: forcedLightStyles.textColor,
+              },
+
+              selected_year: {
+                backgroundColor: forcedLightStyles.selectedBackgroundColor,
+                borderRadius: 8,
+              },
+
+              selected_year_label: {
+                color: forcedLightStyles.selectedTextColor,
+                fontWeight: "bold",
+              },
             }}
           />
         </Card>

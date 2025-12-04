@@ -27,6 +27,7 @@ const Auth = () => {
   return (
     <SafeView safe={true} style={styles.container}>
       <ToastManager />
+
       <AlertNotificationRoot theme="dark" style={{ marginVertical: 20 }}>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
           <Spacer />
@@ -41,7 +42,7 @@ const Auth = () => {
               variant="titleMedium"
               style={{ color: "#48444E", marginBottom: 10 }}
             >
-              Login your account {JSON.stringify(isLoading)}
+              Login your account
             </PaperText>
           </View>
           <View style={{ marginHorizontal: 40 }}>
