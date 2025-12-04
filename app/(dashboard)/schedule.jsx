@@ -34,6 +34,7 @@ import { extractBeforeDash } from "../../libs/utils";
 import moment from "moment";
 const Schedule = () => {
   const [activeTab, setActiveTab] = useState("Upcoming");
+  const [refreshing, setRefreshing] = useState(false);
   const [selected, setSelected] = useState(null);
   const bottomSheetRef = useRef(null);
   const { bottom } = useSafeAreaInsets;
@@ -78,6 +79,12 @@ const Schedule = () => {
     });
   }, [APPOINTMENTS_LISTS, activeTab]);
 
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
+  };
+
   return (
     <SafeView safe={true}>
       <Header />
@@ -116,7 +123,7 @@ const Schedule = () => {
           }}
           ItemSeparatorComponent={() => <View style={{ height: 1 }} />}
           ListEmptyComponent={
-            isFetching ? (
+            isFetching && !refreshing ? (
               <View
                 style={{
                   display: "flex",
@@ -142,8 +149,8 @@ const Schedule = () => {
           }
           refreshControl={
             <RefreshControl
-              refreshing={isFetching}
-              onRefresh={refetch}
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
               tintColor="#007AFF"
               colors={["#007AFF"]}
             />

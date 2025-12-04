@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   Searchbar,
   Portal,
@@ -41,6 +41,7 @@ const Medical = () => {
     selectRecord,
   } = useMedicalrecords();
   const bottomSheetRef = useRef(null);
+  const [refreshing, setRefreshing] = useState(false);
   const [show, toggleShow] = useToggle(false);
 
   const SearchHeader = useMemo(() => {
@@ -58,6 +59,12 @@ const Medical = () => {
 
   const viewMedicalRecord = () => {
     bottomSheetRef.current?.snapToIndex(2);
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await refetch();
+    setRefreshing(false);
   };
 
   return (
@@ -105,7 +112,7 @@ const Medical = () => {
           }}
           ItemSeparatorComponent={() => <View style={{ height: 1 }} />}
           ListEmptyComponent={
-            isFetching ? (
+            isFetching && !refreshing ? (
               <View
                 style={{
                   display: "flex",
@@ -124,15 +131,15 @@ const Medical = () => {
             ) : (
               <View style={{ padding: 20, alignItems: "center" }}>
                 <PaperText style={{ color: "#999" }}>
-                  No transactions found
+                  No transactions found.
                 </PaperText>
               </View>
             )
           }
           refreshControl={
             <RefreshControl
-              refreshing={isFetching}
-              onRefresh={refetch}
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
               tintColor="#007AFF"
               colors={["#007AFF"]}
             />
