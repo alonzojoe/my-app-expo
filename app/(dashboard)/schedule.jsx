@@ -151,9 +151,11 @@ const Schedule = () => {
               </View>
             ) : (
               <View style={{ padding: 20, alignItems: "center" }}>
-                <PaperText style={{ color: "#999" }}>
-                  No scheduled appointments found
-                </PaperText>
+                {!refreshing && (
+                  <PaperText style={{ color: "#999" }}>
+                    No scheduled appointments found
+                  </PaperText>
+                )}
               </View>
             )
           }
