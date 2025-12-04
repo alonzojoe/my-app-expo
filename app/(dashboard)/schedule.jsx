@@ -33,7 +33,9 @@ import { useFocusEffect } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { extractBeforeDash } from "../../libs/utils";
 import moment from "moment";
+import useBackHandler from "../../components/Appointment/hooks/useBackHandler";
 const Schedule = () => {
+  useBackHandler({ routePath: "/(dashboard)/home" });
   const [activeTab, setActiveTab] = useState("Upcoming");
   const [refreshing, setRefreshing] = useState(false);
   const [selected, setSelected] = useState(null);

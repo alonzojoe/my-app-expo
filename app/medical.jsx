@@ -28,8 +28,10 @@ import ErrorWithRefetch from "../components/Global/ErrorWithRefetch";
 import useMedicalrecords from "./../hooks/features/medical-records/useMedicalrecords";
 import BottomSheet from "../components/Shared/BottomSheet";
 import { useFocusEffect } from "expo-router";
+import useBackHandler from "../components/Appointment/hooks/useBackHandler";
 
 const Medical = () => {
+  useBackHandler({ routePath: "/(dashboard)/home" });
   const { bottom } = useSafeAreaInsets;
   const {
     searchQuery,
