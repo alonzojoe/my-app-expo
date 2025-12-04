@@ -40,13 +40,13 @@ const Home = () => {
           <Image source={BlueF} style={styles.cardImage} />
         </View>
       </View> */}
-      <TouchableOpacity onPress={() => router.replace("/bluecard")}>
+      <View style={{ width: "100%", aspectRatio: 353.45 / 221.09 }}>
         <BlueCardDetails
           captureWidth={353.45}
           captureHeight={221.09}
           renderAsImage={true}
         />
-      </TouchableOpacity>
+      </View>
 
       <Subtitle label={`Services`} style={{ marginVertical: 15 }} />
       <ScrollView

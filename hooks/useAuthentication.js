@@ -10,28 +10,43 @@ const useAuthentication = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const checkUser = async () => {
+    let mounted = true;
+
+    const checkAuthentication = async () => {
       try {
         const storedUser = await AsyncStorage.getItem("auth-user");
+
+        if (!mounted) return;
 
         if (storedUser) {
           const userData = JSON.parse(storedUser);
           dispatch(setUser({ user: userData }));
-          console.log("Redirecting, user found:", userData);
-
-          setTimeout(() => {
-            router.replace("/(dashboard)/home");
-          }, 100);
+          router.replace("/(dashboard)/home");
         }
       } catch (error) {
-        console.log("Error checking user authentication:", error);
+        console.error("Authentication check failed:", error);
       } finally {
-        setIsLoading(false);
+        if (mounted) {
+          setIsLoading(false);
+        }
       }
     };
 
-    checkUser();
-  }, []);
+    checkAuthentication();
+
+    // Fallback timeout to prevent infinite loading
+    const timeoutId = setTimeout(() => {
+      if (mounted) {
+        console.warn("Auth check timeout reached");
+        setIsLoading(false);
+      }
+    }, 3000);
+
+    return () => {
+      mounted = false;
+      clearTimeout(timeoutId);
+    };
+  }, [dispatch, router]);
 
   return { isLoading };
 };

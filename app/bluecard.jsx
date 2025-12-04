@@ -18,11 +18,13 @@ const BlueCard = () => {
             <Image source={BlueF} style={styles.cardImage} />
           </View> */}
           {/* <View style={styles.cardContainer}> */}
-          <BlueCardDetails
-            captureWidth={353.45}
-            captureHeight={221.09}
-            renderAsImage={true}
-          />
+          <View style={{ width: "100%", aspectRatio: 353.45 / 221.09 }}>
+            <BlueCardDetails
+              captureWidth={353.45}
+              captureHeight={221.09}
+              renderAsImage={true}
+            />
+          </View>
           {/* </View> */}
           <Spacer height={20} />
           <View style={styles.cardContainer}>
