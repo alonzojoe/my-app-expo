@@ -13,7 +13,7 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
   const { scannedQR } = useSelector((state) => state.auth);
 
   const handleVerify = async (formData) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     try {
       const res = await api.get("/verify/v2", {
@@ -34,7 +34,7 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
       dispatch(setUser({ user: res.data.data }));
       console.log("user", res.data.data);
       Toast.success("Logged in successfully.", "top");
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       router.replace("/(dashboard)/home");
     } catch (error) {
       console.log(error);
@@ -85,7 +85,7 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
       dispatch(setUser({ user: res.data.data }));
       console.log("user", res.data.data);
       Toast.success("Logged in successfully.", "top");
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 500));
       router.replace("/(dashboard)/home");
     } catch (error) {
       console.log(error);

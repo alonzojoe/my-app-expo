@@ -3,7 +3,7 @@ import apiopd from "../opd";
 import { Toast } from "toastify-react-native";
 
 export const fetchTransactions = async (PatientID) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
@@ -27,7 +27,7 @@ export const fetchTransactions = async (PatientID) => {
 };
 
 export const fetchPhysicians = async (PatientHistoryID, ReferID) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
@@ -51,7 +51,7 @@ export const fetchPhysicians = async (PatientHistoryID, ReferID) => {
 };
 
 export const fetchDiagnosis = async (PatientHistoryID, ReferID) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
@@ -75,7 +75,7 @@ export const fetchDiagnosis = async (PatientHistoryID, ReferID) => {
 };
 
 export const fetchLabResults = async (PatientHistoryID) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
@@ -98,7 +98,7 @@ export const fetchLabResults = async (PatientHistoryID) => {
 };
 
 export const checkSlots = async (payload) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
@@ -130,7 +130,7 @@ export const checkSlots = async (payload) => {
 };
 
 export const createOnlineAppointment = async (payload) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
@@ -151,7 +151,7 @@ export const createOnlineAppointment = async (payload) => {
 };
 
 export const getAppointments = async (PatientNo) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
@@ -171,7 +171,7 @@ export const getAppointments = async (PatientNo) => {
 };
 
 export const cancelAppointment = async (appointmentId) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
@@ -194,7 +194,7 @@ export const cancelAppointment = async (appointmentId) => {
 };
 
 export const createEskedAppointment = async (payload) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
