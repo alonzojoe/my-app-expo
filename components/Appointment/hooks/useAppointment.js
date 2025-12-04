@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import api from "../../../services";
 import moment from "moment";
+import { Toast } from "toastify-react-native";
 
 const useAppointment = (serviceID) => {
   const [timeslots, setTimeslots] = useState([]);
@@ -61,7 +62,8 @@ const getDateSlots = async (serviceTypeID) => {
     console.log("date slots", res.data);
     return res.data;
   } catch (error) {
-    console.error(`Error fetching date slots: ${serviceTypeID}`, error);
+    // console.error(`Error fetching date slots: ${serviceTypeID}`, error);
+    Toast.error("Please try again later.", "top");
     return [];
   }
 };

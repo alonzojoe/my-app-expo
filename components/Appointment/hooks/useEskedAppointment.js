@@ -27,7 +27,7 @@ const getDateSlots = async () => {
     console.log("holidays dates", res.data.data);
     return res.data.data;
   } catch (error) {
-    console.error(`Error fetching holidays`, error);
+    Toast.error("Please try again later.", "top");
     return [];
   }
 };
