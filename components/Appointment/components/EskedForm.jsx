@@ -53,11 +53,17 @@ const EskedForm = ({ onSubmit }) => {
     onSubmit(appointmentData);
   };
 
-  const lightModeStyles = {
-    backgroundColor: "#FFF",
-    borderColor: "#001C63",
+  const forcedLightStyles = {
+    backgroundColor: "#FFFFFF",
+    textColor: "#000000",
+    headerTextColor: "#000000",
+    monthTitleColor: "#000000",
+    dayLabelColor: "#000000",
+
     selectedBackgroundColor: "#001C63",
-    selectedTextColor: "white",
+    selectedTextColor: "#FFFFFF",
+
+    todayBorderColor: "#001C63",
   };
 
   return (
@@ -95,10 +101,10 @@ const EskedForm = ({ onSubmit }) => {
           <DateTimePicker
             style={{
               marginTop: 0,
-              backgroundColor: lightModeStyles.backgroundColor,
+              backgroundColor: forcedLightStyles.backgroundColor,
               borderRadius: 10,
-              borderColor: lightModeStyles.borderColor,
-              border: 1,
+              borderColor: forcedLightStyles.todayBorderColor,
+              borderWidth: 0.5,
             }}
             mode="single"
             date={selected}
@@ -107,28 +113,65 @@ const EskedForm = ({ onSubmit }) => {
             }}
             styles={{
               ...defaultStyles,
+
+              text: { color: forcedLightStyles.textColor },
+              month: { color: forcedLightStyles.monthTitleColor },
+              year: { color: forcedLightStyles.monthTitleColor },
+              weekday: { color: forcedLightStyles.dayLabelColor },
+
               today: {
-                borderColor: lightModeStyles.borderColor,
+                borderColor: forcedLightStyles.todayBorderColor,
                 borderWidth: 1,
               },
+
               selected: {
-                backgroundColor: lightModeStyles.selectedBackgroundColor,
+                backgroundColor: forcedLightStyles.selectedBackgroundColor,
               },
-              selected_label: { color: lightModeStyles.selectedTextColor },
-            }}
-            disabledDates={(date) => {
-              const d = dayjs(date).startOf("day");
-              const today = dayjs().startOf("day");
+              selected_label: {
+                color: forcedLightStyles.selectedTextColor,
+              },
+              month_item: {
+                backgroundColor: forcedLightStyles.backgroundColor,
+                borderRadius: 8,
+                borderWidth: 0.5,
+                borderColor: forcedLightStyles.todayBorderColor,
+              },
 
-              const isPast = d.isBefore(today, "day");
+              month_item_label: {
+                color: forcedLightStyles.textColor,
+              },
 
-              const isWeekend = [0, 6].includes(d.day());
+              selected_month: {
+                backgroundColor: forcedLightStyles.selectedBackgroundColor,
+                borderRadius: 8,
+              },
 
-              const isHoliday = holidays?.some((h) =>
-                dayjs(h).isSame(d, "day")
-              );
+              selected_month_label: {
+                color: forcedLightStyles.selectedTextColor,
+                fontWeight: "bold",
+              },
 
-              return isPast || isWeekend || isHoliday;
+              year_item: {
+                backgroundColor: forcedLightStyles.backgroundColor,
+                borderRadius: 8,
+                borderWidth: 0.5,
+                borderColor: forcedLightStyles.todayBorderColor,
+                paddingVertical: 6,
+              },
+
+              year_item_label: {
+                color: forcedLightStyles.textColor,
+              },
+
+              selected_year: {
+                backgroundColor: forcedLightStyles.selectedBackgroundColor,
+                borderRadius: 8,
+              },
+
+              selected_year_label: {
+                color: forcedLightStyles.selectedTextColor,
+                fontWeight: "bold",
+              },
             }}
           />
         </Card>
