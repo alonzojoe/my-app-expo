@@ -73,6 +73,12 @@ const OnlineForm = ({ onSubmit }) => {
 
   console.log("timeslots", timeslots);
 
+  const lightModeStyles = {
+    backgroundColor: "#FFF",
+    borderColor: "#001C63",
+    selectedBackgroundColor: "#001C63",
+    selectedTextColor: "white",
+  };
   return (
     <>
       <>
@@ -108,9 +114,9 @@ const OnlineForm = ({ onSubmit }) => {
           <DateTimePicker
             style={{
               marginTop: 0,
-              backgroundColor: "#FFF",
+              backgroundColor: lightModeStyles.backgroundColor,
               borderRadius: 10,
-              borderColor: "#001C63",
+              borderColor: lightModeStyles.borderColor,
               border: 1,
             }}
             mode="single"
@@ -120,9 +126,14 @@ const OnlineForm = ({ onSubmit }) => {
             }}
             styles={{
               ...defaultStyles,
-              today: { borderColor: "#001C63", borderWidth: 1 },
-              selected: { backgroundColor: "#001C63" },
-              selected_label: { color: "white" },
+              today: {
+                borderColor: lightModeStyles.borderColor,
+                borderWidth: 1,
+              },
+              selected: {
+                backgroundColor: lightModeStyles.selectedBackgroundColor,
+              },
+              selected_label: { color: lightModeStyles.selectedTextColor },
             }}
             enabledDates={availableDates?.map((d) => d.datesched || [])}
           />

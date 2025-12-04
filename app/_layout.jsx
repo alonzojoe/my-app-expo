@@ -38,7 +38,7 @@ const RootLayout = () => {
       <QueryClientProvider client={queryClient}>
         <Provider store={store}>
           <PaperProvider theme={appTheme}>
-            <StatusBar style="auto" />
+            <StatusBar style="dark" />
             <Stack
               screenOptions={{
                 headerStyle: {
