@@ -5,20 +5,20 @@
     "slug": "lingad-care",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo-final.png",
+    "icon": "./assets/app-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/logo-final.png",
+      "image": "./assets/logo-finalv.png",
       "resizeMode": "contain",
-      "backgroundColor": "#001C63"
+      "backgroundColor": "#FFFFFF"
     },
     "updates": {
       "enabled": true,
       "fallbackToCacheTimeout": 0
     },
     "ios": {
-      "bundleIdentifier": "com.myapp",
+      "bundleIdentifier": "com.alonzojoe.lingadcare",
       "supportsTablet": true,
       "infoPlist": {
         "NSAppTransportSecurity": {
@@ -28,15 +28,23 @@
       }
     },
     "android": {
-      "icon": "./assets/logo-final.png",
+      "icon": "./assets/app-icon.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo-final.png",
-        "backgroundColor": "#001C63"
+        "foregroundImage": "./assets/app-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "splash": {
+        "image": "./assets/logo-finalv.png",
+        "resizeMode": "contain",
+        "backgroundColor": "#FFFFFF",
+        "mdpi": "./assets/logo-finalv.png",
+        "hdpi": "./assets/logo-finalv.png",
+        "xhdpi": "./assets/logo-finalv.png",
+        "xxhdpi": "./assets/logo-finalv.png",
+        "xxxhdpi": "./assets/logo-finalv.png"
       },
       "edgeToEdgeEnabled": true,
       "permissions": [
-        "INTERNET",
-        "CAMERA",
         "INTERNET",
         "CAMERA"
       ],
