@@ -19,6 +19,7 @@ export const fetchTransactions = async (PatientID) => {
   } catch (error) {
     clearTimeout(timeout);
     Toast.error("Please try again later.", "top");
+    return [];
     // console.error("Please check your connection.");
     // throw new Error(
     //   "Request failed or timed out—please check your connection."
@@ -167,6 +168,7 @@ export const getAppointments = async (PatientNo) => {
   } catch (error) {
     clearTimeout(timeout);
     Toast.error("Please try again later.", "top");
+    return [];
   }
 };
 

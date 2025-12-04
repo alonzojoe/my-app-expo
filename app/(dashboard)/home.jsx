@@ -18,8 +18,10 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import BlueCardDetails from "../../components/Home/BlueCardDetails";
+import useBackHandler from "../../components/Appointment/hooks/useBackHandler";
 
 const Home = () => {
+  useBackHandler({ exitOnBack: true });
   const [show, toggleShow] = useToggle(false);
   const showConsultation = () => {
     toggleShow(true);
