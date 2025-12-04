@@ -22,7 +22,7 @@ const Auth = () => {
   const { isLoading } = useAuthentication();
   const { scanQR } = useVerification(toggleShowVerify, toggleShowQr);
 
-  if (isLoading) return <FSLoader />;
+  // if (isLoading) return <FSLoader />;
 
   return (
     <SafeView safe={true} style={styles.container}>

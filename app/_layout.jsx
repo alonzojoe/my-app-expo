@@ -26,7 +26,7 @@ const appTheme = {
 const RootLayout = () => {
   const colorScheme = useColorScheme();
   const hasNet = useNetInfo();
-  const theme = Colors[colorScheme] ?? Colors.light;
+  const theme = Colors.light;
   const router = useRouter();
   const queryClient = new QueryClient();
   console.log(theme);
