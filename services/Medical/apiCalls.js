@@ -1,5 +1,6 @@
 import api from "../index";
 import apiopd from "../opd";
+import { Toast } from "toastify-react-native";
 
 export const fetchTransactions = async (PatientID) => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -17,10 +18,11 @@ export const fetchTransactions = async (PatientID) => {
     return res.data.data;
   } catch (error) {
     clearTimeout(timeout);
-    console.error("Please check your connection.");
-    throw new Error(
-      "Request failed or timed out—please check your connection."
-    );
+    Toast.error("Please try again later.", "top");
+    // console.error("Please check your connection.");
+    // throw new Error(
+    //   "Request failed or timed out—please check your connection."
+    // );
   }
 };
 
@@ -40,10 +42,11 @@ export const fetchPhysicians = async (PatientHistoryID, ReferID) => {
     return res.data.data;
   } catch (error) {
     clearTimeout(timeout);
-    console.error("Please check your connection.");
-    throw new Error(
-      "Request failed or timed out—please check your connection."
-    );
+    Toast.error("Please try again later.", "top");
+    // console.error("Please check your connection.");
+    // throw new Error(
+    //   "Request failed or timed out—please check your connection."
+    // );
   }
 };
 
@@ -63,10 +66,11 @@ export const fetchDiagnosis = async (PatientHistoryID, ReferID) => {
     return res.data.data[0];
   } catch (error) {
     clearTimeout(timeout);
-    console.error("Please check your connection.");
-    throw new Error(
-      "Request failed or timed out—please check your connection."
-    );
+    Toast.error("Please try again later.", "top");
+    // console.error("Please check your connection.");
+    // throw new Error(
+    //   "Request failed or timed out—please check your connection."
+    // );
   }
 };
 
@@ -85,10 +89,11 @@ export const fetchLabResults = async (PatientHistoryID) => {
     return res.data.data;
   } catch (error) {
     clearTimeout(timeout);
-    console.error("Please check your connection.");
-    throw new Error(
-      "Request failed or timed out—please check your connection."
-    );
+    Toast.error("Please try again later.", "top");
+    // console.error("Please check your connection.");
+    // throw new Error(
+    //   "Request failed or timed out—please check your connection."
+    // );
   }
 };
 
@@ -139,7 +144,7 @@ export const createOnlineAppointment = async (payload) => {
     return res.data;
   } catch (error) {
     clearTimeout(timeout);
-    console.error("Please check your connection.");
+    Toast.error("Please try again later.", "top");
 
     return [];
   }
@@ -161,7 +166,7 @@ export const getAppointments = async (PatientNo) => {
     return res.data;
   } catch (error) {
     clearTimeout(timeout);
-    console.error("Please check your connection.");
+    Toast.error("Please try again later.", "top");
   }
 };
 
@@ -184,7 +189,7 @@ export const cancelAppointment = async (appointmentId) => {
     console.log("cancel", res.data);
   } catch (error) {
     clearTimeout(timeout);
-    console.error("Please check your connection.");
+    Toast.error("Please try again later.", "top");
   }
 };
 
@@ -203,7 +208,7 @@ export const createEskedAppointment = async (payload) => {
     return res.data;
   } catch (error) {
     clearTimeout(timeout);
-    console.error("Please check your connection.");
+    Toast.error("Please try again later.", "top");
 
     return [];
   }
