@@ -56,7 +56,7 @@ const Home = () => {
         contentContainerStyle={{
           paddingHorizontal: 18,
           flexGrow: 1,
-          paddingBottom: 5 + bottom,
+          paddingBottom: 100 + bottom,
           paddingTop: 5,
         }}
       >

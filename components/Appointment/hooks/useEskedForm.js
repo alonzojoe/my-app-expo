@@ -4,15 +4,12 @@ import { useRouter } from "expo-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { eskedSchema } from "../../../schema/schema";
 import { computeAge } from "../../../libs/utils";
-import {
-  checkSlots,
-  createOnlineAppointment,
-  createEskedAppointment,
-} from "./../../../services/Medical/apiCalls";
+import { createEskedAppointment } from "./../../../services/Medical/apiCalls";
 import { Toast } from "toastify-react-native";
 
 const useEskedForm = (data) => {
   const { authUser } = useSelector((state) => state.auth);
+  console.log("authuser", authUser);
   const router = useRouter();
 
   const defaultValues = {
@@ -67,11 +64,11 @@ const useEskedForm = (data) => {
     };
 
     console.log("updated payload", payload);
-    const createApt = await createEskedAppointment(payload);
-    console.log("create apt", createApt);
+    // const createApt = await createEskedAppointment(payload);
+    // console.log("create apt", createApt);
     Toast.success("Appointment added to waitlisted!", "top");
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    router.replace("/(dashboard)/schedule");
+    // await new Promise((resolve) => setTimeout(resolve, 500));
+    // router.replace("/(dashboard)/schedule");
 
     reset();
   };

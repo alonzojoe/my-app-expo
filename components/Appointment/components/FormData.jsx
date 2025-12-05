@@ -33,7 +33,7 @@ const FormData = ({ data }) => {
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
-              keyboardType="phone-pad"
+              keyboardType="numeric"
               style={styles.input}
               error={!!errors.phone}
               maxLength={10}

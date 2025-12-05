@@ -6,7 +6,6 @@ import {
   ActivityIndicator,
 } from "react-native-paper";
 import ContentTitle from "./../../Transactions/ContentTitle";
-import ToastManager from "toastify-react-native/components/ToastManager";
 import useEskedForm from "../hooks/useEskedForm";
 import { computeAge } from "../../../libs/utils";
 
@@ -23,11 +22,10 @@ const EskedFormData = ({ data }) => {
 
   console.log("data", data);
 
-  const age = computeAge(authUser?.birthdate);
+  const age = authUser?.birthdate ? computeAge(authUser.birthdate) : 18;
 
   return (
     <View style={styles.container}>
-      <ToastManager />
       <ContentTitle title={`Complete the form to proceed`} mb={0} />
 
       <View style={styles.inputContainer}>
@@ -45,7 +43,7 @@ const EskedFormData = ({ data }) => {
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
-              keyboardType="phone-pad"
+              keyboardType="numeric"
               style={styles.input}
               error={!!errors.phone}
               maxLength={10}
@@ -58,7 +56,7 @@ const EskedFormData = ({ data }) => {
         </Text>
         {/* )} */}
 
-        {age < 18 && (
+        {!isNaN(age) && age < 18 && (
           <>
             <PaperText variant="titleSmall" style={styles.labelText}>
               Guardian
