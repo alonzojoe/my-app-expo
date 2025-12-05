@@ -18,10 +18,10 @@ export default function ConfirmDialogContent({
 
   const handleCancel = async () => {
     setIsLoading(true);
+    onCancel();
     await cancelAppointment(selected?.id);
     setIsLoading(false);
     refetch();
-    onCancel();
     Toast.success("Appointment cancelled!", position);
   };
 
