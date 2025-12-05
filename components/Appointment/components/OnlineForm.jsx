@@ -84,6 +84,7 @@ const OnlineForm = ({ onSubmit }) => {
     selectedTextColor: "#FFFFFF",
 
     todayBorderColor: "#001C63",
+    todayBorderRadius: 10,
   };
   return (
     <>
@@ -131,24 +132,96 @@ const OnlineForm = ({ onSubmit }) => {
               handleSelectDate(date);
             }}
             styles={{
-              ...defaultStyles,
+              header: {
+                backgroundColor: "white",
+                marginVertical: 8,
+              },
 
-              text: { color: forcedLightStyles.textColor },
-              month: { color: forcedLightStyles.monthTitleColor },
-              year: { color: forcedLightStyles.monthTitleColor },
-              weekday: { color: forcedLightStyles.dayLabelColor },
+              headerTitle: {
+                fontSize: 20,
+                color: "red",
+                fontWeight: "600",
+              },
+
+              headerTextContainerStyle: {
+                backgroundColor: "white",
+                paddingVertical: 8,
+              },
+
+              headerTextStyle: {
+                fontSize: 20,
+                color: forcedLightStyles.textColor,
+                fontWeight: "600",
+              },
+
+              weekdaysContainer: {
+                paddingVertical: 10,
+              },
+              calendarTextStyle: {
+                color: forcedLightStyles.dayLabelColor,
+                fontSize: 14,
+                fontWeight: "500",
+              },
+
+              text: {
+                color: forcedLightStyles.textColor,
+                fontSize: 15,
+              },
+              month: {
+                color: forcedLightStyles.monthTitleColor,
+              },
+              year: {
+                color: forcedLightStyles.monthTitleColor,
+              },
+
+              day: {
+                color: forcedLightStyles.textColor,
+              },
+
+              day_label: {
+                padding: 1.5,
+              },
+
+              weekday_label: {
+                fontSize: 12,
+                marginBottom: 5,
+                textTransform: "uppercase",
+              },
+
+              month_label: {
+                fontSize: 15,
+              },
 
               today: {
                 borderColor: forcedLightStyles.todayBorderColor,
                 borderWidth: 1,
+                borderRadius: 8,
               },
 
               selected: {
                 backgroundColor: forcedLightStyles.selectedBackgroundColor,
+                borderRadius: 8,
               },
+
               selected_label: {
-                color: forcedLightStyles.selectedTextColor,
+                color: "#FFFFFF",
+                fontWeight: "bold",
               },
+
+              selectedItemText: {
+                color: "#FFFFFF",
+                fontWeight: "bold",
+              },
+
+              disabled: {
+                opacity: 0.3,
+              },
+
+              disabled_text: {
+                color: "#999999",
+                textDecorationLine: "line-through",
+              },
+
               month_item: {
                 backgroundColor: forcedLightStyles.backgroundColor,
                 borderRadius: 8,
@@ -166,7 +239,7 @@ const OnlineForm = ({ onSubmit }) => {
               },
 
               selected_month_label: {
-                color: forcedLightStyles.selectedTextColor,
+                color: "#FFFFFF",
                 fontWeight: "bold",
               },
 
@@ -188,7 +261,7 @@ const OnlineForm = ({ onSubmit }) => {
               },
 
               selected_year_label: {
-                color: forcedLightStyles.selectedTextColor,
+                color: "#FFFFFF",
                 fontWeight: "bold",
               },
             }}
