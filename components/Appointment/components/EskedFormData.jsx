@@ -41,8 +41,6 @@ const EskedFormData = ({ data }) => {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               mode="outlined"
-              type="numeric"
-              ewq
               placeholder="Enter alternate phone number"
               value={value}
               onChangeText={onChange}
@@ -71,7 +69,6 @@ const EskedFormData = ({ data }) => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
                   mode="outlined"
-                  ewq
                   placeholder="Enter guardian name"
                   value={value}
                   onChangeText={onChange}
@@ -119,7 +116,6 @@ const EskedFormData = ({ data }) => {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               mode="flat"
-              ewq
               placeholder=""
               value={value}
               onChangeText={onChange}

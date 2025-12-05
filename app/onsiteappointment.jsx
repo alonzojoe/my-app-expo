@@ -23,8 +23,17 @@ const OnsiteAppointment = () => {
   const handleSubmit = async (formData) => {
     console.log("test");
     console.log(formData);
+
+    if (!formData) {
+      console.error("Form data is null");
+      return;
+    }
+
     setAppointmentData(formData);
-    handleProceed();
+
+    setTimeout(() => {
+      handleProceed();
+    }, 100);
   };
 
   const handleProceed = () => {
