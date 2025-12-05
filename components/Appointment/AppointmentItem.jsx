@@ -5,12 +5,12 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 const ListItem = ({ sched, service, appointment, onPress }) => {
-  const { id, status } = sched;
+  const { id, status, isPast } = sched;
   console.log("sched id status", { id, status });
+  console.log("isPast", isPast);
 
-  const pressFn = () => {
-    status == 0 ? onPress() : () => console.log("disabled");
-  };
+  const pressFn =
+    status === 0 && !isPast ? onPress : () => console.log("disabled");
 
   return (
     <View style={styles.card}>
@@ -44,7 +44,7 @@ const ListItem = ({ sched, service, appointment, onPress }) => {
           </View>
 
           <TouchableOpacity onPress={pressFn} style={styles.menu}>
-            {status == 0 ? (
+            {status == 0 && !isPast ? (
               <FontAwesome6 name="times-circle" size={23} color="#DD3353" />
             ) : (
               <MaterialCommunityIcons name="cancel" size={24} color="#DD3353" />
