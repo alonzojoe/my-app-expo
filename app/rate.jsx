@@ -6,7 +6,9 @@ import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Colors } from "../constants/Colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import useBackHandler from "../components/Appointment/hooks/useBackHandler";
 const OnlineAppointment = () => {
+  useBackHandler({ routePath: "/(dashboard)/profile" });
   const { bottom } = useSafeAreaInsets();
   const [ratings, setRatings] = useState(5);
 

@@ -29,13 +29,11 @@ const FormData = ({ data }) => {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               mode="outlined"
-              type="numeric"
-              ewq
               placeholder="Enter alternate phone number"
               value={value}
               onChangeText={onChange}
               onBlur={onBlur}
-              keyboardType="phone-pad"
+              keyboardType="numeric"
               style={styles.input}
               error={!!errors.phone}
               maxLength={10}

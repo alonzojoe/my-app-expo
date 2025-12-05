@@ -6,6 +6,7 @@ import { setUser, setScanQR } from "../../../store/slices/auth-slice";
 import { storeUser } from "../../../libs/utils";
 import { useSelector } from "react-redux";
 import { Toast } from "toastify-react-native";
+import { useRef } from "react";
 
 const useVerification = (toggleShowVerify, toggleShowQr) => {
   const router = useRouter();
@@ -42,8 +43,23 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
     }
   };
 
+  const isProcessing = useRef(false);
+  const lastScannedCode = useRef(null);
+
   const handleSearch = async (pn) => {
+    if (isProcessing.current) {
+      return;
+    }
+
+    if (lastScannedCode.current === pn) {
+      console.log("Same QR code, ignoring...");
+      return;
+    }
+
+    isProcessing.current = true;
+    lastScannedCode.current = pn;
     console.log("patt", pn);
+
     try {
       const res = await api.get("/search", {
         params: {
@@ -53,6 +69,7 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
       console.log("api res :", res.data);
       if (res.data.data.length === 0) {
         Toast.error("We couldn't verify your QR Code.", "top");
+        lastScannedCode.current = null;
         return;
       }
       console.log("qred", res.data.data[0]);
@@ -64,6 +81,9 @@ const useVerification = (toggleShowVerify, toggleShowQr) => {
     } catch (error) {
       console.log(error);
       Toast.error("We couldn't verify your QR Code.", "top");
+      lastScannedCode.current = null;
+    } finally {
+      isProcessing.current = false;
     }
   };
 

@@ -64,7 +64,10 @@ const EskedForm = ({ onSubmit }) => {
     selectedTextColor: "#FFFFFF",
 
     todayBorderColor: "#001C63",
+    todayBorderRadius: 10,
   };
+
+  console.log("default styles", defaultStyles);
 
   return (
     <>
@@ -83,7 +86,7 @@ const EskedForm = ({ onSubmit }) => {
         <DropDownPicker
           style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
           value={212}
-          items={[{ label: "eSKED - TBD", value: 212 }]}
+          items={[{ label: "eSKED", value: 212 }]}
           disabled={true}
         />
       </>
@@ -112,24 +115,99 @@ const EskedForm = ({ onSubmit }) => {
               handleSelectDate(date);
             }}
             styles={{
-              ...defaultStyles,
+              header: {
+                backgroundColor: "white",
+                marginVertical: 8,
+              },
 
-              text: { color: forcedLightStyles.textColor },
-              month: { color: forcedLightStyles.monthTitleColor },
-              year: { color: forcedLightStyles.monthTitleColor },
-              weekday: { color: forcedLightStyles.dayLabelColor },
+              button_prev_image: { tintColor: "black" },
+              button_next_image: { tintColor: "black" },
+
+              headerTitle: {
+                fontSize: 20,
+                color: "red",
+                fontWeight: "600",
+              },
+
+              headerTextContainerStyle: {
+                backgroundColor: "white",
+                paddingVertical: 8,
+              },
+
+              headerTextStyle: {
+                fontSize: 20,
+                color: forcedLightStyles.textColor,
+                fontWeight: "600",
+              },
+
+              weekdaysContainer: {
+                paddingVertical: 10,
+              },
+              calendarTextStyle: {
+                color: forcedLightStyles.dayLabelColor,
+                fontSize: 14,
+                fontWeight: "500",
+              },
+
+              text: {
+                color: forcedLightStyles.textColor,
+                fontSize: 15,
+              },
+              month: {
+                color: forcedLightStyles.monthTitleColor,
+              },
+              year: {
+                color: forcedLightStyles.monthTitleColor,
+              },
+
+              day: {
+                color: forcedLightStyles.textColor,
+              },
+
+              day_label: {
+                padding: 1.5,
+              },
+
+              weekday_label: {
+                fontSize: 12,
+                marginBottom: 5,
+                textTransform: "uppercase",
+              },
+
+              month_label: {
+                fontSize: 15,
+              },
 
               today: {
                 borderColor: forcedLightStyles.todayBorderColor,
                 borderWidth: 1,
+                borderRadius: 8,
               },
 
               selected: {
                 backgroundColor: forcedLightStyles.selectedBackgroundColor,
+                borderRadius: 8,
               },
+
               selected_label: {
-                color: forcedLightStyles.selectedTextColor,
+                color: "#FFFFFF",
+                fontWeight: "bold",
               },
+
+              selectedItemText: {
+                color: "#FFFFFF",
+                fontWeight: "bold",
+              },
+
+              disabled: {
+                opacity: 0.3,
+              },
+
+              disabled_text: {
+                color: "#999999",
+                textDecorationLine: "line-through",
+              },
+
               month_item: {
                 backgroundColor: forcedLightStyles.backgroundColor,
                 borderRadius: 8,
@@ -147,7 +225,7 @@ const EskedForm = ({ onSubmit }) => {
               },
 
               selected_month_label: {
-                color: forcedLightStyles.selectedTextColor,
+                color: "#FFFFFF",
                 fontWeight: "bold",
               },
 
@@ -169,9 +247,23 @@ const EskedForm = ({ onSubmit }) => {
               },
 
               selected_year_label: {
-                color: forcedLightStyles.selectedTextColor,
+                color: "#FFFFFF",
                 fontWeight: "bold",
               },
+            }}
+            disabledDates={(date) => {
+              const d = dayjs(date).startOf("day");
+              const today = dayjs().startOf("day");
+
+              const isPast = d.isBefore(today, "day");
+
+              const isWeekend = [0, 6].includes(d.day());
+
+              const isHoliday = holidays?.some((h) =>
+                dayjs(h).isSame(d, "day")
+              );
+
+              return isPast || isWeekend || isHoliday;
             }}
           />
         </Card>

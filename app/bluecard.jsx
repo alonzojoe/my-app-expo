@@ -7,7 +7,10 @@ import BlueF from "../assets/image/bluef.jpg";
 import BlueB from "../assets/image/blueb.jpg";
 import Spacer from "../components/Spacer";
 import BlueCardDetails from "../components/Home/BlueCardDetails";
+import useBackHandler from "../components/Appointment/hooks/useBackHandler";
+
 const BlueCard = () => {
+  useBackHandler({ routePath: "/(dashboard)/profile" });
   const { bottom } = useSafeAreaInsets;
 
   return (

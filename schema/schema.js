@@ -72,20 +72,20 @@ export const eskedSchema = z.object({
   guardian: z.string(),
   consultation: z
     .string({
-      required_error: "Consultation is required*",
+      required_error: "This field is required.*",
     })
     .trim()
-    .nonempty({ message: "Consultation is required*" }),
+    .nonempty({ message: "This field is required.*" }),
   month: z
     .string({
-      required_error: "Month is required*",
+      required_error: "This field is required.*",
     })
     .trim()
-    .nonempty({ message: "Month is required*" }),
+    .nonempty({ message: "This field is required.*" }),
   experience: z
     .string({
-      required_error: "Experience is required*",
+      required_error: "This field is required.*",
     })
     .trim()
-    .nonempty({ message: "Experience is required*" }),
+    .nonempty({ message: "This field is required.*" }),
 });

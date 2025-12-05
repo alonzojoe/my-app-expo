@@ -75,18 +75,23 @@ const Schedule = () => {
 
   const FILTERED_APPOINTMENTS = useMemo(() => {
     const now = moment();
-    if (FILTERED_APPOINTMENTS?.length === 0) return [];
-    return APPOINTMENTS_LISTS?.filter((appointment) => {
+    if (!APPOINTMENTS_LISTS || APPOINTMENTS_LISTS.length === 0) return [];
+
+    return APPOINTMENTS_LISTS.filter((appointment) => {
       const appointmentDateTime = moment(
         `${appointment.datesked} ${appointment.timeformat}`,
         "YYYY-MM-DD HH:mm:ss"
       );
+
       if (activeTab === "Upcoming") {
         return appointmentDateTime.isSameOrAfter(now);
       } else {
         return appointmentDateTime.isBefore(now);
       }
-    });
+    }).map((appointment) => ({
+      ...appointment,
+      isPast: activeTab !== "Upcoming",
+    }));
   }, [APPOINTMENTS_LISTS, activeTab]);
 
   const handleRefresh = async () => {
@@ -176,7 +181,7 @@ const Schedule = () => {
         snapPoints={["45%", "60%", "80%"]}
       >
         <ConfirmDialog
-          refetch={refetch}
+          refetch={handleRefresh}
           selected={selected}
           onCancel={closeDialog}
         />
