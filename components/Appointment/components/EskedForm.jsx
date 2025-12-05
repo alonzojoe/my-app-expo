@@ -67,7 +67,7 @@ const EskedForm = ({ onSubmit }) => {
     todayBorderRadius: 10,
   };
 
-
+  console.log("default styles", defaultStyles);
 
   return (
     <>
@@ -86,7 +86,7 @@ const EskedForm = ({ onSubmit }) => {
         <DropDownPicker
           style={{ marginTop: 10, borderColor: "#001C63", marginBottom: 5 }}
           value={212}
-          items={[{ label: "eSKED - TBD", value: 212 }]}
+          items={[{ label: "eSKED", value: 212 }]}
           disabled={true}
         />
       </>
@@ -120,12 +120,15 @@ const EskedForm = ({ onSubmit }) => {
                 marginVertical: 8,
               },
 
+              button_prev_image: { tintColor: "black" },
+              button_next_image: { tintColor: "black" },
+
               headerTitle: {
                 fontSize: 20,
                 color: "red",
                 fontWeight: "600",
               },
-     
+
               headerTextContainerStyle: {
                 backgroundColor: "white",
                 paddingVertical: 8,
@@ -137,21 +140,18 @@ const EskedForm = ({ onSubmit }) => {
                 fontWeight: "600",
               },
 
-           
               weekdaysContainer: {
                 paddingVertical: 10,
               },
               calendarTextStyle: {
-            
                 color: forcedLightStyles.dayLabelColor,
                 fontSize: 14,
                 fontWeight: "500",
               },
 
-           
               text: {
                 color: forcedLightStyles.textColor,
-                fontSize: 15, 
+                fontSize: 15,
               },
               month: {
                 color: forcedLightStyles.monthTitleColor,
@@ -160,7 +160,6 @@ const EskedForm = ({ onSubmit }) => {
                 color: forcedLightStyles.monthTitleColor,
               },
 
-             
               day: {
                 color: forcedLightStyles.textColor,
               },
@@ -185,7 +184,6 @@ const EskedForm = ({ onSubmit }) => {
                 borderRadius: 8,
               },
 
-
               selected: {
                 backgroundColor: forcedLightStyles.selectedBackgroundColor,
                 borderRadius: 8,
@@ -201,7 +199,6 @@ const EskedForm = ({ onSubmit }) => {
                 fontWeight: "bold",
               },
 
-      
               disabled: {
                 opacity: 0.3,
               },
@@ -211,7 +208,6 @@ const EskedForm = ({ onSubmit }) => {
                 textDecorationLine: "line-through",
               },
 
-     
               month_item: {
                 backgroundColor: forcedLightStyles.backgroundColor,
                 borderRadius: 8,

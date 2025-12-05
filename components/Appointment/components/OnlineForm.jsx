@@ -143,6 +143,9 @@ const OnlineForm = ({ onSubmit }) => {
                 fontWeight: "600",
               },
 
+              button_prev_image: { tintColor: "black" },
+              button_next_image: { tintColor: "black" },
+
               headerTextContainerStyle: {
                 backgroundColor: "white",
                 paddingVertical: 8,
