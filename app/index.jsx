@@ -40,9 +40,9 @@ const Auth = () => {
             </PaperText>
             <PaperText
               variant="titleMedium"
-              style={{ color: "#48444E", marginBottom: 10 }}
+              style={{ color: "#48444E", marginBottom: 15 }}
             >
-              Login your account
+              Please login your account
             </PaperText>
           </View>
           <View style={{ marginHorizontal: 40 }}>
@@ -78,11 +78,12 @@ export default Auth;
 
 const styles = StyleSheet.create({
   container: {
+    display: "flex",
     flex: 1,
     flexDirection: "column",
     // alignItems: "center",
-
-    backgroundColor: "#fff",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
   },
   title: {
     fontWeight: "bold",

@@ -142,6 +142,7 @@ export const createOnlineAppointment = async (payload) => {
     });
     clearTimeout(timeout);
     console.log("create appointment response", res.data);
+    Toast.success("Appointment created successfully!", "top");
     return res.data;
   } catch (error) {
     clearTimeout(timeout);
@@ -189,6 +190,7 @@ export const cancelAppointment = async (appointmentId) => {
 
     clearTimeout(timeout);
     console.log("cancel", res.data);
+    Toast.success("Appointment cancelled succesfully!", "top");
   } catch (error) {
     clearTimeout(timeout);
     Toast.error("Please try again later.", "top");
@@ -206,7 +208,7 @@ export const createEskedAppointment = async (payload) => {
       signal: controller.signal,
     });
     clearTimeout(timeout);
-    console.log("create esked response", res.data);
+    Toast.success("Appointment added to waitlisted!", "top");
     return res.data;
   } catch (error) {
     clearTimeout(timeout);

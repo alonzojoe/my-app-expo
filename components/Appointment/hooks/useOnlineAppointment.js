@@ -66,7 +66,7 @@ const useOnlineAppointment = (data) => {
     // await new Promise((resolve) => setTimeout(resolve, 500));
 
     const createApt = await createOnlineAppointment(payload);
-    Toast.success("Appointment created successfully!", "top");
+
     // console.log("create apt", createApt);
     await new Promise((resolve) => setTimeout(resolve, 500));
     router.replace("/(dashboard)/schedule");
