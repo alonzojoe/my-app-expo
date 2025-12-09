@@ -52,10 +52,10 @@ export const eappointmentForm = z.object({
 
   complaints: z
     .string({
-      required_error: "Chief complaints is required*",
+      required_error: "Chief complaint is required*",
     })
     .trim()
-    .nonempty({ message: "Chief complaints is required*" }),
+    .nonempty({ message: "Chief complaint is required*" }),
 });
 
 export const eskedSchema = z.object({
