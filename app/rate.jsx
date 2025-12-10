@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import React, { useState } from "react";
 import SafeView from "../components/SafeView";
 import { Card, Text as PaperText, Button, TextInput } from "react-native-paper";
@@ -11,6 +11,15 @@ const OnlineAppointment = () => {
   useBackHandler({ routePath: "/(dashboard)/profile" });
   const { bottom } = useSafeAreaInsets();
   const [ratings, setRatings] = useState(5);
+
+  const handleSubmit = () => {
+    Alert.alert("Information", "This feature is coming soon.", [
+      {
+        text: "OK",
+        onPress: () => console.log("OK Pressed"),
+      },
+    ]);
+  };
 
   return (
     <SafeView>
@@ -62,6 +71,7 @@ const OnlineAppointment = () => {
                 mode="contained"
                 onPress={() => {
                   console.log("test");
+                  handleSubmit();
                 }}
                 style={styles.btn}
               >

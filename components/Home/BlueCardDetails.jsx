@@ -194,7 +194,9 @@ const BlueCardDetails = ({
           <View style={styles.textContainer}>
             <Text style={styles.patientno}>{PatientInfo.patientno}</Text>
             <Text style={styles.name}>{PatientInfo.name}</Text>
-            <Text style={styles.bday}>{PatientInfo.birthdate}</Text>
+            <Text style={styles.bday}>
+              {PatientInfo.birthdate?.toUpperCase()}
+            </Text>
             <Text style={styles.address}>{PatientInfo.address}</Text>
             <Text style={styles.gender}>{PatientInfo.gender}</Text>
             <Text style={styles.civil}>{PatientInfo.civilstatus}</Text>
