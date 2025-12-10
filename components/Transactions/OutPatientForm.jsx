@@ -122,19 +122,19 @@ const OutPatientForm = ({ selected, onToggle }) => {
                 <>
                   <ContentData
                     title="Subjective"
-                    content={DIAGNOSIS?.Subjective.toUpperCase() || "-"}
+                    content={DIAGNOSIS?.Subjective?.toUpperCase() || "-"}
                   />
                   <ContentData
                     title="Objective"
-                    content={DIAGNOSIS?.Objective.toUpperCase() || "-"}
+                    content={DIAGNOSIS?.Objective?.toUpperCase() || "-"}
                   />
                   <ContentData
                     title="Assessment"
-                    content={DIAGNOSIS?.Assessment.toUpperCase() || "-"}
+                    content={DIAGNOSIS?.Assessment?.toUpperCase() || "-"}
                   />
                   <ContentData
                     title="Plan"
-                    content={DIAGNOSIS?.PlanText.toUpperCase() || "-"}
+                    content={DIAGNOSIS?.PlanText?.toUpperCase() || "-"}
                   />
                 </>
               )}
