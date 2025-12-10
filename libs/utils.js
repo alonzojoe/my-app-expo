@@ -47,6 +47,7 @@ export const formatDate = (val) => {
 };
 
 export const trimmedName = (desc) => {
+  if (!desc) return;
   const formatted = desc.length > 7 ? `${desc.slice(0, 7)}...` : desc;
 
   return formatted.toUpperCase();
