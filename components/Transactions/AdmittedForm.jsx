@@ -94,7 +94,9 @@ const AdmittedForm = ({ selected, onToggle }) => {
                 ) : (
                   <View style={{ marginBottom: 10 }}>
                     {PHYSICIANS.length === 0 ? (
-                      <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+                      <PaperText style={{ paddingLeft: 5, marginVertical: 10 }}>
+                        -
+                      </PaperText>
                     ) : (
                       PHYSICIANS.map((p, index) => (
                         <PhysicianItem
@@ -122,11 +124,11 @@ const AdmittedForm = ({ selected, onToggle }) => {
               <>
                 <ContentData
                   title={`Initial Diagnosis`}
-                  content={DIAGNOSIS.initial.toUpperCase() || "-"}
+                  content={DIAGNOSIS?.initial?.toUpperCase() || "-"}
                 />
                 <ContentData
                   title={`Final Diagnosis`}
-                  content={DIAGNOSIS.final.toUpperCase() || "-"}
+                  content={DIAGNOSIS?.final?.toUpperCase() || "-"}
                 />
               </>
             )}
@@ -144,11 +146,11 @@ const AdmittedForm = ({ selected, onToggle }) => {
               <>
                 <ContentData
                   title={`Main Operation`}
-                  content={DIAGNOSIS.MainOperation.toUpperCase() || "-"}
+                  content={DIAGNOSIS?.MainOperation?.toUpperCase() || "-"}
                 />
                 <ContentData
                   title={`Other Operation`}
-                  content={DIAGNOSIS.OtherOperation.toUpperCase() || "-"}
+                  content={DIAGNOSIS?.OtherOperation?.toUpperCase() || "-"}
                 />
               </>
             )}

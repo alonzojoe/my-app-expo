@@ -93,7 +93,9 @@ const OutPatientForm = ({ selected, onToggle }) => {
                 ) : (
                   <View style={{ marginBottom: 10 }}>
                     {PHYSICIANS.length === 0 ? (
-                      <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+                      <PaperText style={{ paddingLeft: 5, marginVertical: 10 }}>
+                        -
+                      </PaperText>
                     ) : (
                       PHYSICIANS.map((p, index) => (
                         <PhysicianItem
@@ -158,7 +160,7 @@ const OutPatientForm = ({ selected, onToggle }) => {
                     contentContainerStyle={styles.scrollContent}
                   >
                     {LAB_RESULTS?.length === 0 ? (
-                      <PaperText style={{ paddingLeft: 5 }}>-</PaperText>
+                      <PaperText style={{ paddingLeft: 0 }}>-</PaperText>
                     ) : (
                       LAB_RESULTS?.map((res) => (
                         <TouchableOpacity
