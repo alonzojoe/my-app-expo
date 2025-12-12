@@ -134,7 +134,7 @@ export default Faqs;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 10,
+    marginTop: 20,
     paddingHorizontal: 18,
   },
   modalContainer: {
