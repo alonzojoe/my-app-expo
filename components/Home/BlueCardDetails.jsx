@@ -200,7 +200,7 @@ const BlueCardDetails = ({
             <Text style={styles.address}>{PatientInfo.address}</Text>
             <Text style={styles.gender}>{PatientInfo.gender}</Text>
             <Text style={styles.civil}>{PatientInfo.civilstatus}</Text>
-            <Text style={styles.issued}>{PatientInfo.dateissued}</Text>
+            <Text style={styles.issued}>(DIGITAL COPY ONLY)</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -243,7 +243,7 @@ const BlueCardDetails = ({
                 <Text style={styles.address}>{PatientInfo.address}</Text>
                 <Text style={styles.gender}>{PatientInfo.gender}</Text>
                 <Text style={styles.civil}>{PatientInfo.civilstatus}</Text>
-                <Text style={styles.issued}>{PatientInfo.dateissued}</Text>
+                <Text style={styles.issued}>(DIGITAL COPY ONLY)</Text>
               </View>
             </View>
           </Animated.View>

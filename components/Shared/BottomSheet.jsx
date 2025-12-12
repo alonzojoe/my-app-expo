@@ -57,7 +57,7 @@ const BottomSheet = forwardRef(
       requestAnimationFrame(() => {
         setVisible(true);
         setCurrentIndex(snapIndex);
-        setCurrentHeight(WINDOW_HEIGHT - snapValues[snapIndex]); // set height dynamically
+        setCurrentHeight(WINDOW_HEIGHT - snapValues[snapIndex]);
       });
 
       const targetValue = snapValues[snapIndex];
@@ -168,14 +168,11 @@ const BottomSheet = forwardRef(
     return (
       <>
         <TouchableWithoutFeedback onPress={close}>
-          <Animated.View style={[styles.overlay, { opacity, zIndex: 999 }]} />
+          <Animated.View style={[styles.overlay, { opacity }]} />
         </TouchableWithoutFeedback>
 
         <Animated.View
-          style={[
-            styles.bottomSheet,
-            { transform: [{ translateY }], zIndex: 1000 },
-          ]}
+          style={[styles.bottomSheet, { transform: [{ translateY }] }]}
         >
           <View style={styles.handleWrapper} {...panResponder.panHandlers}>
             <View style={styles.handle} />
@@ -209,6 +206,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 8,
     elevation: 20,
+    zIndex: 10000,
   },
   overlay: {
     position: "absolute",
@@ -216,7 +214,10 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    width: WINDOW_WIDTH,
+    height: WINDOW_HEIGHT,
     backgroundColor: "#000000",
+    zIndex: 9999,
   },
   handleWrapper: {
     paddingVertical: 12,
