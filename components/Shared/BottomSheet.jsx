@@ -4,7 +4,6 @@ import React, {
   useImperativeHandle,
   useRef,
   useEffect,
-  useCallback,
 } from "react";
 import {
   View,
@@ -32,26 +31,54 @@ const BottomSheet = forwardRef(
     const [visible, setVisible] = useState(index >= 0);
     const [currentIndex, setCurrentIndex] = useState(index);
     const [currentHeight, setCurrentHeight] = useState(0);
-    const isAnimating = useRef(false);
 
     const { bottom } = useSafeAreaInsets();
-    const opacity = useRef(new Animated.Value(index >= 0 ? 0.5 : 0)).current;
-    const translateY = useRef(new Animated.Value(WINDOW_HEIGHT)).current;
+    const { current: opacity } = useRef(
+      new Animated.Value(index >= 0 ? 0.5 : 0)
+    );
+    const { current: translateY } = useRef(new Animated.Value(WINDOW_HEIGHT));
 
-    const snapValues = useRef(
-      snapPoints.map((point) => {
-        if (typeof point === "string" && point.includes("%")) {
-          const percentage = parseFloat(point) / 100;
-          return WINDOW_HEIGHT - WINDOW_HEIGHT * percentage;
-        }
-        return WINDOW_HEIGHT - point;
-      })
-    ).current;
+    const snapValues = snapPoints.map((point) => {
+      if (typeof point === "string" && point.includes("%")) {
+        const percentage = parseFloat(point) / 100;
+        return WINDOW_HEIGHT - WINDOW_HEIGHT * percentage;
+      }
+      return WINDOW_HEIGHT - point;
+    });
 
-    const close = useCallback(() => {
-      if (isAnimating.current) return;
-      isAnimating.current = true;
+    const animateToSnapPoint = (snapIndex, callback) => {
+      if (snapIndex < 0) {
+        close();
+        return;
+      }
 
+      translateY.flattenOffset();
+
+      requestAnimationFrame(() => {
+        setVisible(true);
+        setCurrentIndex(snapIndex);
+        setCurrentHeight(WINDOW_HEIGHT - snapValues[snapIndex]);
+      });
+
+      const targetValue = snapValues[snapIndex];
+
+      const a1 = Animated.spring(translateY, {
+        toValue: targetValue,
+        useNativeDriver: true,
+        damping: 20,
+        stiffness: 90,
+      });
+
+      const a2 = Animated.timing(opacity, {
+        toValue: 0.5,
+        duration: 200,
+        useNativeDriver: true,
+      });
+
+      Animated.parallel([a1, a2]).start(callback);
+    };
+
+    const close = () => {
       translateY.flattenOffset();
 
       const a1 = Animated.spring(translateY, {
@@ -66,74 +93,29 @@ const BottomSheet = forwardRef(
       });
 
       Animated.parallel([a1, a2]).start(() => {
-        isAnimating.current = false;
-        setVisible(false);
-        setCurrentIndex(-1);
+        requestAnimationFrame(() => {
+          setVisible(false);
+          setCurrentIndex(-1);
+        });
       });
-    }, [translateY, opacity]);
+    };
 
-    const animateToSnapPoint = useCallback(
-      (snapIndex, callback) => {
-        if (snapIndex < 0) {
-          close();
-          return;
+    const findClosestSnapPoint = (currentY) => {
+      let closest = 0;
+      let minDistance = Math.abs(snapValues[0] - currentY);
+
+      snapValues.forEach((value, index) => {
+        const distance = Math.abs(value - currentY);
+        if (distance < minDistance) {
+          minDistance = distance;
+          closest = index;
         }
+      });
 
-        if (isAnimating.current) return;
-        isAnimating.current = true;
+      return closest;
+    };
 
-        translateY.flattenOffset();
-
-        const targetValue = snapValues[snapIndex];
-        const newHeight = WINDOW_HEIGHT - snapValues[snapIndex];
-
-        // Batch state updates
-        if (!visible) {
-          setVisible(true);
-        }
-        setCurrentIndex(snapIndex);
-        setCurrentHeight(newHeight);
-
-        const a1 = Animated.spring(translateY, {
-          toValue: targetValue,
-          useNativeDriver: true,
-          damping: 20,
-          stiffness: 90,
-        });
-
-        const a2 = Animated.timing(opacity, {
-          toValue: 0.5,
-          duration: 200,
-          useNativeDriver: true,
-        });
-
-        Animated.parallel([a1, a2]).start(() => {
-          isAnimating.current = false;
-          callback?.();
-        });
-      },
-      [translateY, opacity, snapValues, visible, close]
-    );
-
-    const findClosestSnapPoint = useCallback(
-      (currentY) => {
-        let closest = 0;
-        let minDistance = Math.abs(snapValues[0] - currentY);
-
-        snapValues.forEach((value, index) => {
-          const distance = Math.abs(value - currentY);
-          if (distance < minDistance) {
-            minDistance = distance;
-            closest = index;
-          }
-        });
-
-        return closest;
-      },
-      [snapValues]
-    );
-
-    const panResponder = useRef(
+    const { current: panResponder } = useRef(
       PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onMoveShouldSetPanResponder: (_, gestureState) => {
@@ -165,31 +147,26 @@ const BottomSheet = forwardRef(
           animateToSnapPoint(closestIndex);
         },
       })
-    ).current;
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        expand: () => animateToSnapPoint(snapValues.length - 1),
-        collapse: close,
-        snapToIndex: (snapIndex) => animateToSnapPoint(snapIndex),
-      }),
-      [animateToSnapPoint, close, snapValues.length]
     );
+
+    useImperativeHandle(ref, () => ({
+      expand: () => animateToSnapPoint(snapValues.length - 1),
+      collapse: close,
+      snapToIndex: (snapIndex) => animateToSnapPoint(snapIndex),
+    }));
 
     useEffect(() => {
       if (index >= 0 && index < snapValues.length) {
-        // Use a microtask to avoid state updates during render
-        Promise.resolve().then(() => {
+        setTimeout(() => {
           animateToSnapPoint(index);
-        });
+        }, 0);
       }
     }, []);
 
     if (!visible) return null;
 
     return (
-      <View style={styles.container}>
+      <>
         <TouchableWithoutFeedback onPress={close}>
           <Animated.View style={[styles.overlay, { opacity }]} />
         </TouchableWithoutFeedback>
@@ -209,22 +186,12 @@ const BottomSheet = forwardRef(
             <View style={styles.contentWrapper}>{children}</View>
           </ScrollView>
         </Animated.View>
-      </View>
+      </>
     );
   }
 );
 
 const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    width: WINDOW_WIDTH,
-    height: WINDOW_HEIGHT,
-    zIndex: 9999,
-  },
   bottomSheet: {
     backgroundColor: "#FFFFFF",
     borderTopLeftRadius: 24,
@@ -239,7 +206,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 8,
     elevation: 20,
-    zIndex: 2,
+    zIndex: 10000,
   },
   overlay: {
     position: "absolute",
@@ -250,7 +217,7 @@ const styles = StyleSheet.create({
     width: WINDOW_WIDTH,
     height: WINDOW_HEIGHT,
     backgroundColor: "#000000",
-    zIndex: 1,
+    zIndex: 9999,
   },
   handleWrapper: {
     paddingVertical: 12,
