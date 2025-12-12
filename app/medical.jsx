@@ -13,14 +13,12 @@ import {
   View,
   FlatList,
   RefreshControl,
-  TouchableOpacity,
 } from "react-native";
 import SafeView from "../components/SafeView";
 import { MedicalItem } from "../components/Transactions/TransactionItem";
 import { ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import useToggle from "../hooks/useToggle";
-import { PHYSICIANS, DIAGNOSIS, SOAP } from "../constants/global";
 import AdmittedForm from "../components/Transactions/AdmittedForm";
 import OutPatientForm from "../components/Transactions/OutPatientForm";
 import { formatDate } from "../libs/utils";
@@ -79,21 +77,6 @@ const Medical = () => {
 
   return (
     <SafeView>
-      {/* <TouchableOpacity onPress={() => bottomSheetRef.current?.expand()}>
-        <PaperText>Open</PaperText>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => bottomSheetRef.current?.collapse()}>
-        <PaperText>Close</PaperText>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => bottomSheetRef.current?.snapToIndex(0)}>
-        <PaperText>30%</PaperText>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => bottomSheetRef.current?.snapToIndex(1)}>
-        <PaperText>50%</PaperText>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => bottomSheetRef.current?.snapToIndex(2)}>
-        <PaperText>90%</PaperText>
-      </TouchableOpacity> */}
       {error ? (
         <ScrollView style={{ paddingBottom: bottom }}>
           <ErrorWithRefetch refresh={() => refetch()} />
@@ -163,32 +146,9 @@ const Medical = () => {
         {selected && selected.TransactionNo.toLowerCase().includes("opd") ? (
           <OutPatientForm selected={selected} onToggle={toggleShow} />
         ) : (
-          <AdmittedForm
-            selected={selected}
-            physicians={PHYSICIANS}
-            diagnosis={DIAGNOSIS}
-            onToggle={toggleShow}
-          />
+          <AdmittedForm selected={selected} onToggle={toggleShow} />
         )}
       </BottomSheet>
-      {/* <Portal>
-        <Modal
-          visible={show}
-          onDismiss={() => toggleShow(false)}
-          contentContainerStyle={styles.modalContainer}
-        >
-          {selected && selected.TransactionNo.toLowerCase().includes("opd") ? (
-            <OutPatientForm selected={selected} onToggle={toggleShow} />
-          ) : (
-            <AdmittedForm
-              selected={selected}
-              physicians={PHYSICIANS}
-              diagnosis={DIAGNOSIS}
-              onToggle={toggleShow}
-            />
-          )}
-        </Modal>
-      </Portal> */}
     </SafeView>
   );
 };
