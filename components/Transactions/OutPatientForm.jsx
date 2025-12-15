@@ -48,6 +48,8 @@ const OutPatientForm = ({ selected, onToggle }) => {
     await constructURL(DocumentPath);
   };
 
+  console.log("service Type", selected);
+
   return (
     <>
       <View
@@ -80,6 +82,28 @@ const OutPatientForm = ({ selected, onToggle }) => {
         showsVerticalScrollIndicator={true}
       >
         <View>
+          <>
+            <ContentTitle title="Service Type" mb={0} />
+            {error ? (
+              <ErrorFetching size={15} mt={10}>
+                Something went wrong
+              </ErrorFetching>
+            ) : (
+              <>
+                {isFetching ? (
+                  <LoaderSpinner />
+                ) : (
+                  <View style={{ marginVertical: 10 }}>
+                    <ContentData
+                      title="Main and Subspecialty"
+                      content={selected?.ServiceType?.toUpperCase() || "-"}
+                    />
+                  </View>
+                )}
+              </>
+            )}
+          </>
+
           <>
             <ContentTitle title="Physicians" mb={0} />
             {error ? (
