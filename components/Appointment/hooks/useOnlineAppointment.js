@@ -7,16 +7,27 @@ import {
   checkSlots,
   createOnlineAppointment,
 } from "./../../../services/Medical/apiCalls";
-import { Toast } from "toastify-react-native";
+import { useEffect } from "react";
 
 const useOnlineAppointment = (data) => {
   const { authUser } = useSelector((state) => state.auth);
   const router = useRouter();
 
   const defaultValues = {
+    mainPhone: "",
     phone: "",
     complaints: "",
   };
+
+  useEffect(() => {
+    if (authUser?.ContactNo) {
+      reset({
+        mainPhone: authUser.ContactNo.toString(),
+        phone: "",
+        complaints: "",
+      });
+    }
+  }, [authUser, reset]);
 
   const {
     control,

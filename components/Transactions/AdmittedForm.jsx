@@ -82,6 +82,28 @@ const AdmittedForm = ({ selected, onToggle }) => {
       >
         <View>
           <>
+            <ContentTitle title="Service Type" mb={0} />
+            {error ? (
+              <ErrorFetching size={15} mt={10}>
+                Something went wrong
+              </ErrorFetching>
+            ) : (
+              <>
+                {isFetching ? (
+                  <LoaderSpinner />
+                ) : (
+                  <View style={{ marginVertical: 10 }}>
+                    <ContentData
+                      title="Main"
+                      content={selected?.ServiceType?.toUpperCase() || "-"}
+                    />
+                  </View>
+                )}
+              </>
+            )}
+          </>
+
+          <>
             <ContentTitle title="Physicians" mb={0} />
             {error ? (
               <ErrorFetching size={15} mt={10}>

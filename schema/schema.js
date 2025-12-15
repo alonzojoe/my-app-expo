@@ -39,6 +39,16 @@ export const qrVerifySchema = z.object({
 });
 
 export const eappointmentForm = z.object({
+  mainPhone: z
+    .string({
+      required_error: "Phone number is required*",
+      invalid_type_error: "Phone number is required*",
+    })
+    .trim()
+    .nonempty({ message: "Phone number is required*" })
+    .regex(/^9\d{9}$/, {
+      message: "Phone must start with 9 and be 10 digits*",
+    }),
   phone: z
     .string({
       required_error: "Alternate phone number is required*",
@@ -59,6 +69,16 @@ export const eappointmentForm = z.object({
 });
 
 export const eskedSchema = z.object({
+  mainPhone: z
+    .string({
+      required_error: "Phone number is required*",
+      invalid_type_error: "Phone number is required*",
+    })
+    .trim()
+    .nonempty({ message: "Phone number is required*" })
+    .regex(/^9\d{9}$/, {
+      message: "Phone must start with 9 and be 10 digits*",
+    }),
   phone: z
     .string({
       required_error: "Alternate phone number is required*",

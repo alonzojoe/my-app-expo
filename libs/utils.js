@@ -1,21 +1,9 @@
-import { Toast, ALERT_TYPE } from "react-native-alert-notification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import * as WebBrowser from "expo-web-browser";
 import moment from "moment";
 
 const router = useRouter();
-export class ToastMessage {
-  toast(type, title, body) {
-    Toast.show({
-      type: ALERT_TYPE[type],
-      title,
-      textBody: body,
-      button: "Close",
-    });
-  }
-}
-
 export const storeUser = async (userData) => {
   let storedUser = null;
   try {
