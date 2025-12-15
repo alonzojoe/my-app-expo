@@ -1,4 +1,13 @@
-import { StyleSheet, View, Image, KeyboardAvoidingView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { Link } from "expo-router";
 import AppLogo from "../assets/lingadcare.png";
 import SafeView from "../components/SafeView";
@@ -6,7 +15,6 @@ import { Text as PaperText } from "react-native-paper";
 import Spacer from "../components/Spacer";
 import { Button } from "react-native-paper";
 import VerificationForm from "../components/Forms/VerificationForm";
-import { AlertNotificationRoot } from "react-native-alert-notification";
 import QRPopup from "../components/QR/QRPopup";
 import QRVerify from "../components/QR/QRVerify";
 import useToggle from "../hooks/useToggle";
@@ -15,6 +23,7 @@ import FSLoader from "../components/Global/FSLoader";
 import useVerification from "../components/Forms/hooks/useVerification";
 import useNetInfo from "../hooks/useNetInfo";
 import ToastManager from "toastify-react-native";
+
 const Auth = () => {
   const hasNet = useNetInfo();
   const [showQr, toggleShowQr] = useToggle(false);
@@ -26,50 +35,59 @@ const Auth = () => {
 
   return (
     <SafeView safe={true} style={styles.container}>
-      <ToastManager />
-
-      <AlertNotificationRoot theme="dark" style={{ marginVertical: 20 }}>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
-          <Spacer />
-          <View style={styles.textGroup}>
-            <Image source={AppLogo} style={[styles.img, styles.textGroup]} />
-          </View>
-          <View style={styles.textGroup}>
-            <PaperText variant="headlineMedium" style={{ color: "#001C63" }}>
-              Welcome back!
-            </PaperText>
-            <PaperText
-              variant="titleMedium"
-              style={{ color: "#48444E", marginBottom: 15 }}
-            >
-              Please login your account
-            </PaperText>
-          </View>
-          <View style={{ marginHorizontal: 40 }}>
-            <VerificationForm />
-            <QRPopup onScan={scanQR} show={showQr} toggleQR={toggleShowQr} />
-            <QRVerify show={showVerify} toggleQR={toggleShowVerify} />
-          </View>
-          <View style={styles.textCreate}>
-            <Link href="/nointernet" style={styles.create}>
-              OR
-            </Link>
-          </View>
-          <View style={styles.textGroup}>
-            <Button
-              icon="qrcode"
-              mode="contained"
-              onPress={() => toggleShowQr(true)}
-              style={[
-                styles.btn,
-                { backgroundColor: "#3A71FA", marginTop: 18 },
-              ]}
-            >
-              Login using QR
-            </Button>
-          </View>
-        </KeyboardAvoidingView>
-      </AlertNotificationRoot>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            <ToastManager />
+            <Spacer />
+            <View style={styles.textGroup}>
+              <Image source={AppLogo} style={[styles.img, styles.textGroup]} />
+            </View>
+            <View style={styles.textGroup}>
+              <PaperText variant="headlineMedium" style={{ color: "#001C63" }}>
+                Welcome back!
+              </PaperText>
+              <PaperText
+                variant="titleMedium"
+                style={{ color: "#48444E", marginBottom: 15 }}
+              >
+                Please login your account
+              </PaperText>
+            </View>
+            <View style={{ marginHorizontal: 40 }}>
+              <VerificationForm />
+              <QRPopup onScan={scanQR} show={showQr} toggleQR={toggleShowQr} />
+              <QRVerify show={showVerify} toggleQR={toggleShowVerify} />
+            </View>
+            <View style={styles.textCreate}>
+              <Link href="/nointernet" style={styles.create}>
+                OR
+              </Link>
+            </View>
+            <View style={styles.textGroup}>
+              <Button
+                icon="qrcode"
+                mode="contained"
+                onPress={() => toggleShowQr(true)}
+                style={[
+                  styles.btn,
+                  { backgroundColor: "#3A71FA", marginTop: 18 },
+                ]}
+              >
+                Login using QR
+              </Button>
+            </View>
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </SafeView>
   );
 };
@@ -78,12 +96,13 @@ export default Auth;
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
     flex: 1,
-    flexDirection: "column",
-    // alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#FFFFFF",
+  },
+  scrollContent: {
+    flexGrow: 1,
+    justifyContent: "center",
+    paddingBottom: 120,
   },
   title: {
     fontWeight: "bold",
@@ -124,7 +143,6 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   create: {
-    // color: "white",
     marginTop: 10,
     fontSize: 16,
     color: "#001C63",

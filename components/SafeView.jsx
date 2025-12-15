@@ -18,7 +18,6 @@ const SafeView = ({ style, safe = false, ...props }) => {
     <View
       style={[
         {
-          flex: 1,
           backgroundColor: theme.background,
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
