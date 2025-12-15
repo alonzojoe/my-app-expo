@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useRouter } from "expo-router";
@@ -13,12 +14,26 @@ const useEskedForm = (data) => {
   const router = useRouter();
 
   const defaultValues = {
+    mainPhone: authUser?.ContactNo?.toString() || "",
     phone: "",
     guardian: "",
     consultation: "",
     month: "",
     experience: "",
   };
+
+  useEffect(() => {
+    if (authUser?.ContactNo) {
+      reset({
+        mainPhone: authUser.ContactNo.toString(),
+        phone: "",
+        guardian: "",
+        consultation: "",
+        month: "",
+        experience: "",
+      });
+    }
+  }, [authUser, reset]);
 
   const {
     control,
