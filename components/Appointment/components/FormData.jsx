@@ -19,38 +19,36 @@ const FormData = ({ data }) => {
       <ContentTitle title={`Complete the form to proceed`} mb={0} />
 
       <View style={styles.inputContainer}>
-        <View style={styles.inputContainer}>
-          {/*Phone Number */}
-          <PaperText variant="titleSmall" style={styles.labelText}>
-            Phone Number
-          </PaperText>
-          <Controller
-            control={control}
-            name="mainPhone"
-            render={({ field: { onChange, onBlur, value } }) => {
-              console.log("inputval", value);
+        {/*Phone Number */}
+        <PaperText variant="titleSmall" style={styles.labelText}>
+          Phone Number
+        </PaperText>
+        <Controller
+          control={control}
+          name="mainPhone"
+          render={({ field: { onChange, onBlur, value } }) => {
+            console.log("inputval", value);
 
-              return (
-                <TextInput
-                  mode="outlined"
-                  placeholder="Enter phone number"
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  keyboardType="numeric"
-                  style={styles.input}
-                  error={!!errors.mainPhone}
-                  maxLength={10}
-                />
-              );
-            }}
-          />
-          {/* {errors.mainPhone && ( */}
-          <Text style={styles.errorText}>
-            {errors.mainPhone ? errors.mainPhone.message : ""}
-          </Text>
-          {/* )} */}
-        </View>
+            return (
+              <TextInput
+                mode="outlined"
+                placeholder="Enter phone number"
+                value={value}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                keyboardType="numeric"
+                style={styles.input}
+                error={!!errors.mainPhone}
+                maxLength={10}
+              />
+            );
+          }}
+        />
+        {/* {errors.mainPhone && ( */}
+        <Text style={styles.errorText}>
+          {errors.mainPhone ? errors.mainPhone.message : ""}
+        </Text>
+        {/* )} */}
 
         {/* Alternate Phone Number */}
         <PaperText variant="titleSmall" style={styles.labelText}>

@@ -70,6 +70,7 @@ const useOnlineAppointment = (data) => {
       SelectedDate: data?.selectedSlot?.date,
       SelectedDateId: data?.selectedSlot?.opddateslotsid,
       ServiceType: data?.serviceId,
+      ContactNo: formData?.mainPhone,
     };
 
     console.log("updated payload", payload);
