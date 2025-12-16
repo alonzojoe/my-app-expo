@@ -70,17 +70,18 @@ const useOnlineAppointment = (data) => {
       SelectedDate: data?.selectedSlot?.date,
       SelectedDateId: data?.selectedSlot?.opddateslotsid,
       ServiceType: data?.serviceId,
+      ContactNo: formData?.mainPhone,
     };
 
     console.log("updated payload", payload);
 
     // await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const createApt = await createOnlineAppointment(payload);
+    // const createApt = await createOnlineAppointment(payload);
 
     // console.log("create apt", createApt);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    router.replace("/(dashboard)/schedule");
+    // await new Promise((resolve) => setTimeout(resolve, 500));
+    // router.replace("/(dashboard)/schedule");
 
     reset();
   };
