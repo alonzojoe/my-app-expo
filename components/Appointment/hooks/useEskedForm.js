@@ -51,7 +51,8 @@ const useEskedForm = (data) => {
     console.log("age", computeAge(authUser.birthdate));
     console.log("data", data);
 
-    const { phone, guardian, consultation, month, experience } = formData;
+    const { mainPhone, phone, guardian, consultation, month, experience } =
+      formData;
 
     const chiefComplaint = `I would like to have a consultation for ${consultation} This started ${month} At Present. I am experiencing ${experience}.`;
 
@@ -70,7 +71,7 @@ const useEskedForm = (data) => {
       municipalityid: authUser?.Municipality,
       barangayid: authUser?.BarangayID,
       chiefc: chiefComplaint,
-      contactNo: authUser?.ContactNo,
+      contactNo: mainPhone,
       altContactNo: phone,
       dob: authUser?.birthdate,
       guardianname: guardian,
@@ -79,12 +80,12 @@ const useEskedForm = (data) => {
     };
 
     console.log("updated payload", payload);
-    const createApt = await createEskedAppointment(payload);
-    console.log("create apt", createApt);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    router.replace("/(dashboard)/schedule");
+    // const createApt = await createEskedAppointment(payload);
+    // console.log("create apt", createApt);
+    // await new Promise((resolve) => setTimeout(resolve, 500));
+    // router.replace("/(dashboard)/schedule");
 
-    reset();
+    // reset();
   };
 
   return {
