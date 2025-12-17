@@ -1,5 +1,9 @@
 import { useState, useMemo, useCallback } from "react";
 import { useQuery, useQueries } from "@tanstack/react-query";
+import {
+  createAppointmentQueryOptions,
+  createWaitlistedQueryOptions,
+} from "./queryOptions/appointmentQueryOptions";
 import { getAppointments } from "../../../services/Medical/apiCalls";
 import { useSelector } from "react-redux";
 import { useFocusEffect } from "expo-router";
@@ -12,16 +16,14 @@ const useAppointmentLists = () => {
 
   const PatientNo = authUser?.PatientNo;
 
-  const {
-    data: APPOINTMENTS_LISTS,
-    isFetching,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["appointments", PatientNo],
-    queryFn: () => getAppointments(PatientNo),
-    refetchOnMount: "always",
+  const [appointments, waitlists] = useQueries({
+    queries: [
+      createAppointmentQueryOptions(PatientNo),
+      createWaitlistedQueryOptions(authUser),
+    ],
   });
+
+  const { data: APPOINTMENTS_LISTS, isFetching, error, refetch } = appointments;
 
   useFocusEffect(
     useCallback(() => {
