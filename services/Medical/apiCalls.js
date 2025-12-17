@@ -226,14 +226,16 @@ export const getWaitlisted = async (payload) => {
 
   const { birthdate, ContactNo } = payload;
 
+  console.log("payload", payload);
+
   try {
     const res = await apiopd.get(`/waitlisted`, {
       params: { mobileno: ContactNo, birthday: birthdate },
       signal: controller.signal,
     });
     clearTimeout(timeout);
-    console.log("waitlisted", res.data);
-    return res.data;
+    console.log("waitlisted", res.data.data);
+    return res.data.data;
   } catch (error) {
     clearTimeout(timeout);
     Toast.error("Please try again later.", "top");
