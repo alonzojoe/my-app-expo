@@ -10,7 +10,7 @@ import { useFocusEffect } from "expo-router";
 import moment from "moment";
 
 const useAppointmentLists = () => {
-  const [activeTab, setActiveTab] = useState("Upcoming");
+  const [activeTab, setActiveTab] = useState("Upcoming"); // Upcoming | Past | Pending
   const [refreshing, setRefreshing] = useState(false);
   const { authUser } = useSelector((state) => state.auth);
 
@@ -24,6 +24,12 @@ const useAppointmentLists = () => {
   });
 
   const { data: APPOINTMENTS_LISTS, isFetching, error, refetch } = appointments;
+  const {
+    data: WAITLISTED_LISTS,
+    isFetching: isFetchingv2,
+    error: error2,
+    refetch: refetch2,
+  } = waitlists;
 
   useFocusEffect(
     useCallback(() => {
@@ -34,24 +40,31 @@ const useAppointmentLists = () => {
 
   const FILTERED_APPOINTMENTS = useMemo(() => {
     const now = moment();
-    if (!APPOINTMENTS_LISTS || APPOINTMENTS_LISTS.length === 0) return [];
 
-    return APPOINTMENTS_LISTS.filter((appointment) => {
-      const appointmentDateTime = moment(
-        `${appointment.datesked} ${appointment.timeformat}`,
-        "YYYY-MM-DD HH:mm:ss"
-      );
+    if (activeTab === "Pending") {
+      if (!WAITLISTED_LISTS || WAITLISTED_LISTS.length === 0) return [];
 
-      if (activeTab === "Upcoming") {
-        return appointmentDateTime.isSameOrAfter(now);
-      } else {
-        return appointmentDateTime.isBefore(now);
-      }
-    }).map((appointment) => ({
-      ...appointment,
-      isPast: activeTab !== "Upcoming",
-    }));
-  }, [APPOINTMENTS_LISTS, activeTab]);
+      return WAITLISTED_LISTS;
+    } else {
+      if (!APPOINTMENTS_LISTS || APPOINTMENTS_LISTS.length === 0) return [];
+
+      return APPOINTMENTS_LISTS.filter((appointment) => {
+        const appointmentDateTime = moment(
+          `${appointment.datesked} ${appointment.timeformat}`,
+          "YYYY-MM-DD HH:mm:ss"
+        );
+
+        if (activeTab === "Upcoming") {
+          return appointmentDateTime.isSameOrAfter(now);
+        } else {
+          return appointmentDateTime.isBefore(now);
+        }
+      }).map((appointment) => ({
+        ...appointment,
+        isPast: activeTab !== "Upcoming",
+      }));
+    }
+  }, [APPOINTMENTS_LISTS, WAITLISTED_LISTS, activeTab]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -67,6 +80,11 @@ const useAppointmentLists = () => {
     error,
     FILTERED_APPOINTMENTS,
     handleRefresh,
+
+    WAITLISTED_LISTS,
+    isFetchingv2,
+    error2,
+    refetch2,
   };
 };
 
