@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueries } from "@tanstack/react-query";
 import { getAppointments } from "../../../services/Medical/apiCalls";
 import { useSelector } from "react-redux";
 import { useFocusEffect } from "expo-router";
