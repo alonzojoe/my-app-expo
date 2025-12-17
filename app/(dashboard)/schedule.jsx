@@ -1,22 +1,14 @@
 import {
   StyleSheet,
-  Text,
   View,
   FlatList,
   RefreshControl,
   ScrollView,
 } from "react-native";
-import React, { useState, useRef, useMemo, useCallback } from "react";
+import { useState, useRef } from "react";
 import SafeView from "../../components/SafeView";
 import Header from "../../components/Header";
-import ListItem from "../../components/Appointment/ListItem";
-import { APPOINTMENTS } from "../../constants/Appointments";
-import useToggle from "./../../hooks/useToggle";
 import {
-  Button,
-  Dialog,
-  Portal,
-  PaperProvider,
   Text as PaperText,
   ActivityIndicator,
   MD2Colors,
@@ -25,44 +17,33 @@ import TabSwitcher from "../../components/Global/Shared/TabSwitcher";
 import AppointmentItem from "../../components/Appointment/AppointmentItem";
 import BottomSheet from "../../components/Shared/BottomSheet";
 import ConfirmDialog from "../../components/Shared/ConfirmDialog";
-import { useQuery } from "@tanstack/react-query";
-import { getAppointments } from "../../services/Medical/apiCalls";
-import { useSelector } from "react-redux";
 import ErrorWithRefetch from "../../components/Global/ErrorWithRefetch";
-import { useFocusEffect } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { extractBeforeDash } from "../../libs/utils";
-import moment from "moment";
 import useBackHandler from "../../components/Appointment/hooks/useBackHandler";
+import useAppointmentLists from "../../hooks/features/appointments/useAppointmentLists";
+
 const Schedule = () => {
   useBackHandler({ routePath: "/(dashboard)/home" });
-  const [activeTab, setActiveTab] = useState("Upcoming");
-  const [refreshing, setRefreshing] = useState(false);
+
+  const {
+    activeTab,
+    setActiveTab,
+    refreshing,
+    isFetching,
+    error,
+    FILTERED_APPOINTMENTS,
+    handleRefresh,
+
+    WAITLISTED_LISTS,
+    isFetchingv2,
+    error2,
+    refetch2,
+  } = useAppointmentLists();
+
   const [selected, setSelected] = useState(null);
   const bottomSheetRef = useRef(null);
   const { bottom } = useSafeAreaInsets;
-  const { authUser } = useSelector((state) => state.auth);
-
-  const PatientNo = authUser?.PatientNo;
-
-  const {
-    data: APPOINTMENTS_LISTS,
-    isFetching,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["appointments", PatientNo],
-    queryFn: () => getAppointments(PatientNo),
-    refetchOnMount: "always",
-  });
-
-  useFocusEffect(
-    useCallback(() => {
-      handleRefresh();
-      console.log("effect");
-    }, [refetch])
-  );
-  console.log("appointemnts", APPOINTMENTS);
 
   const handleCancel = (item) => {
     setSelected(item);
@@ -71,33 +52,6 @@ const Schedule = () => {
 
   const closeDialog = () => {
     bottomSheetRef?.current?.collapse();
-  };
-
-  const FILTERED_APPOINTMENTS = useMemo(() => {
-    const now = moment();
-    if (!APPOINTMENTS_LISTS || APPOINTMENTS_LISTS.length === 0) return [];
-
-    return APPOINTMENTS_LISTS.filter((appointment) => {
-      const appointmentDateTime = moment(
-        `${appointment.datesked} ${appointment.timeformat}`,
-        "YYYY-MM-DD HH:mm:ss"
-      );
-
-      if (activeTab === "Upcoming") {
-        return appointmentDateTime.isSameOrAfter(now);
-      } else {
-        return appointmentDateTime.isBefore(now);
-      }
-    }).map((appointment) => ({
-      ...appointment,
-      isPast: activeTab !== "Upcoming",
-    }));
-  }, [APPOINTMENTS_LISTS, activeTab]);
-
-  const handleRefresh = async () => {
-    setRefreshing(true);
-    await refetch();
-    setRefreshing(false);
   };
 
   return (
@@ -118,8 +72,16 @@ const Schedule = () => {
             <AppointmentItem
               sched={item}
               key={item.id}
-              service={extractBeforeDash(item.servicedesc)}
-              appointment={`${item.formatted_date} ${item.timedesc}`}
+              service={
+                activeTab === "Pending"
+                  ? item.AppointmentStatus
+                  : extractBeforeDash(item.servicedesc)
+              }
+              appointment={
+                activeTab === "Pending"
+                  ? `${item.dateadded}`
+                  : `${item.formatted_date} ${item.timedesc}`
+              }
               onPress={() => handleCancel(item)}
             />
           )}

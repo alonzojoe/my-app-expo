@@ -217,3 +217,28 @@ export const createEskedAppointment = async (payload) => {
     return [];
   }
 };
+
+export const getWaitlisted = async (payload) => {
+  // await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  const { birthdate, ContactNo } = payload;
+
+  console.log("payload", payload);
+
+  try {
+    const res = await apiopd.get(`/waitlisted`, {
+      params: { mobileno: ContactNo, birthday: birthdate },
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    console.log("waitlisted", res.data.data);
+    return res.data.data;
+  } catch (error) {
+    clearTimeout(timeout);
+    Toast.error("Please try again later.", "top");
+    return [];
+  }
+};

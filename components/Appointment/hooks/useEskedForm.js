@@ -80,12 +80,12 @@ const useEskedForm = (data) => {
     };
 
     console.log("updated payload", payload);
-    // const createApt = await createEskedAppointment(payload);
-    // console.log("create apt", createApt);
-    // await new Promise((resolve) => setTimeout(resolve, 500));
-    // router.replace("/(dashboard)/schedule");
+    const createApt = await createEskedAppointment(payload);
+    console.log("create apt", createApt);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    router.replace("/(dashboard)/schedule");
 
-    // reset();
+    reset();
   };
 
   return {
