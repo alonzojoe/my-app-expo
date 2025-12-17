@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Text as PaperText } from "react-native-paper";
 
 const TabSwitcher = ({ activeTab, onSelect }) => {
-  const tabs = ["Upcoming", "Past"];
+  const tabs = ["Upcoming", "Past", "Pending"];
 
   return (
     <View style={styles.container}>

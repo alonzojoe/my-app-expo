@@ -34,6 +34,11 @@ const Schedule = () => {
     error,
     FILTERED_APPOINTMENTS,
     handleRefresh,
+
+    WAITLISTED_LISTS,
+    isFetchingv2,
+    error2,
+    refetch2,
   } = useAppointmentLists();
 
   const [selected, setSelected] = useState(null);
