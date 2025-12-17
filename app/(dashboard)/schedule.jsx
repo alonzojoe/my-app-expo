@@ -72,8 +72,16 @@ const Schedule = () => {
             <AppointmentItem
               sched={item}
               key={item.id}
-              service={extractBeforeDash(item.servicedesc)}
-              appointment={`${item.formatted_date} ${item.timedesc}`}
+              service={
+                activeTab === "Pending"
+                  ? item.AppointmentStatus
+                  : extractBeforeDash(item.servicedesc)
+              }
+              appointment={
+                activeTab === "Pending"
+                  ? `${item.dateadded}`
+                  : `${item.formatted_date} ${item.timedesc}`
+              }
               onPress={() => handleCancel(item)}
             />
           )}
