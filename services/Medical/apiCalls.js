@@ -278,3 +278,21 @@ export const getPrescriptionHistory = async (referId) => {
     return [];
   }
 };
+
+export const getRadHistory = async (referId) => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const res = await api.get(`/rad-history/${referId}`, {
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    console.log("rad history", res.data.data);
+    return res.data.data;
+  } catch (error) {
+    clearTimeout(timeout);
+    Toast.error("Please try again later.", "top");
+    return [];
+  }
+};
