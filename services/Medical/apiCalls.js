@@ -242,3 +242,21 @@ export const getWaitlisted = async (payload) => {
     return [];
   }
 };
+
+export const getLabHistory = async (referId) => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+
+  try {
+    const res = await apiopd.get(`/lab-history/${referId}`, {
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    console.log("lab history", res.data.data);
+    return res.data.data;
+  } catch (error) {
+    clearTimeout(timeout);
+    Toast.error("Please try again later.", "top");
+    return [];
+  }
+};
