@@ -44,7 +44,10 @@ const useAppointmentLists = () => {
     if (activeTab === "Pending") {
       if (!WAITLISTED_LISTS || WAITLISTED_LISTS.length === 0) return [];
 
-      return WAITLISTED_LISTS;
+      return WAITLISTED_LISTS.map((data) => ({
+        ...data,
+        isPending: true,
+      }));
     } else {
       if (!APPOINTMENTS_LISTS || APPOINTMENTS_LISTS.length === 0) return [];
 
@@ -62,6 +65,7 @@ const useAppointmentLists = () => {
       }).map((appointment) => ({
         ...appointment,
         isPast: activeTab !== "Upcoming",
+        isPending: false,
       }));
     }
   }, [APPOINTMENTS_LISTS, WAITLISTED_LISTS, activeTab]);
