@@ -83,6 +83,7 @@ const Schedule = () => {
                   : `${item.formatted_date} ${item.timedesc}`
               }
               onPress={() => handleCancel(item)}
+              isPending={item.isPending}
             />
           )}
           ListHeaderComponent={

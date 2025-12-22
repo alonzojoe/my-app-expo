@@ -4,13 +4,29 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
-const ListItem = ({ sched, service, appointment, onPress }) => {
+const ListItem = ({ sched, service, appointment, onPress, isPending }) => {
   const { id, status, isPast } = sched;
   console.log("sched id status", { id, status });
   console.log("isPast", isPast);
 
   const pressFn =
     status === 0 && !isPast ? onPress : () => console.log("disabled");
+
+  const dateLabel = isPending ? "Preferred" : "Appointment";
+
+  const indicatorBg = isPending
+    ? "#FEDF40"
+    : status == 0
+    ? "#3AC17B"
+    : "#DD3353";
+
+  const AppointmentIcon = isPending ? (
+    <FontAwesome6 name="circle-pause" size={23} color="#FEDF40" />
+  ) : status == 0 && !isPast ? (
+    <FontAwesome6 name="times-circle" size={23} color="#DD3353" />
+  ) : (
+    <MaterialCommunityIcons name="cancel" size={24} color="#DD3353" />
+  );
 
   return (
     <View style={styles.card}>
@@ -19,7 +35,7 @@ const ListItem = ({ sched, service, appointment, onPress }) => {
         style={[
           styles.leftBar,
           {
-            backgroundColor: status == 0 ? "#3AC17B" : "#DD3353",
+            backgroundColor: indicatorBg,
           },
         ]}
       />
@@ -36,7 +52,7 @@ const ListItem = ({ sched, service, appointment, onPress }) => {
           <View style={styles.col}>
             <Text
               style={styles.appointmentTextHeader}
-            >{`Appointment date`}</Text>
+            >{`${dateLabel} date`}</Text>
             <View style={[styles.row]}>
               <FontAwesome name="clock-o" size={16} color="#000000" />
               <Text style={styles.appointmentText}>{appointment}</Text>
@@ -44,11 +60,7 @@ const ListItem = ({ sched, service, appointment, onPress }) => {
           </View>
 
           <TouchableOpacity onPress={pressFn} style={styles.menu}>
-            {status == 0 && !isPast ? (
-              <FontAwesome6 name="times-circle" size={23} color="#DD3353" />
-            ) : (
-              <MaterialCommunityIcons name="cancel" size={24} color="#DD3353" />
-            )}
+            {AppointmentIcon}
           </TouchableOpacity>
         </View>
 
